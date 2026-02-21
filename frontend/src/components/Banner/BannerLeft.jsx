@@ -23,8 +23,8 @@ const HeaderLeft = () => {
           {promotion_data.text}
         </p>
       </div>
-      <Link
-        to="#speciality"
+      <a
+        href="#speciality"
         className="header__left-link w-60 bg-white text-black font-bold pl-8 pr-4 py-2 rounded-3xl mt-6 hover:bg-green-200 transition-colors duration-300 cursor-pointer"
       >
         Book Appointment{" "}
@@ -33,7 +33,7 @@ const HeaderLeft = () => {
           alt="banner arrow icon"
           className="w-5 inline-block ml-5 mb-0.5 -rotate-90"
         />
-      </Link>
+      </a>
     </div>
   );
 };

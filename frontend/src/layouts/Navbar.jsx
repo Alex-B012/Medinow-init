@@ -11,7 +11,7 @@ const Navbar = () => {
   const [token, setShowToken] = useState(true);
 
   return (
-    <div className="navbar flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400 ">
+    <div className="navbar flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
       <Logo />
       <ul className="navbar__links items-start gap-5 font-medium hidden md:block md:flex">
         {navbar_links.map((link) => (
@@ -40,7 +40,7 @@ const Navbar = () => {
               alt="dropdown icon"
             />
             <div className="navbar__profile-container">
-              <div className="navbar__profile-menu w-35 absolute right-0 top-full bg-gray-50 rounded-lg shadow-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
+              <div className="navbar__profile-menu w-35 absolute right-0 top-full bg-gray-50 rounded-lg shadow-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300 z-100">
                 {auth_links.map((link) => {
                   if (link.name === "Login") return null;
                   const logout = link.name === "Logout" ? true : false;
