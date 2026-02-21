@@ -1,5 +1,6 @@
 import { assets, header_images } from "../../assets/assets";
 import { Link } from "react-router-dom";
+import { promotion_data } from "../../data/data";
 
 const HeaderLeft = () => {
   return (
@@ -19,8 +20,7 @@ const HeaderLeft = () => {
           ))}
         </div>
         <p className="header__left-description flex text-xl w-full">
-          Simply browse throught our extensive list of trusted doctors, select
-          your preferred doctor, and schedule your appointment hassle-free.
+          {promotion_data.text}
         </p>
       </div>
       <Link

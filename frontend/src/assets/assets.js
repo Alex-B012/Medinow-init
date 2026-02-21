@@ -17,6 +17,13 @@ import doc13 from "./images/doctors/doctor_13.webp";
 import doc14 from "./images/doctors/doctor_14.webp";
 import doc15 from "./images/doctors/doctor_15.webp";
 
+import physician from "./images/specialities/physician.webp";
+import gynecologist from "./images/specialities/mother.webp";
+import dermatologist from "./images/specialities/dermatologist.webp";
+import pediatrician from "./images/specialities/pediatrician.webp";
+import neurologist from "./images/specialities/neurosurgeon.webp";
+import gastroenterologist from "./images/specialities/gastroenterologist.webp";
+
 import profile_pic from "./images/profile_pic.webp";
 import dropdown_icon from "./icons/keyboard_arrow_down.webp";
 
@@ -56,3 +63,12 @@ export const doctors = {
 
 export const header_doctors_image = header_doctors;
 export const header_images = [person1, person2, person3];
+
+export const speciality_images = {
+  physician: physician,
+  gynecologist: gynecologist,
+  dermatologist: dermatologist,
+  pediatrician: pediatrician,
+  neurologist: neurologist,
+  gastroenterologist: gastroenterologist,
+};
