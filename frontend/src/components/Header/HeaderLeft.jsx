@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const HeaderLeft = () => {
   return (
-    <div className="header__left flex flex-col justify-center gap-4 py-10 m-auto lg:gap-24 md:gap-12">
-      <p className="header__left-title text-4xl font-bold mb-6 md:w-1/2 md:">
+    <div className="header__left md:w-1/2 flex flex-col justify-center gap-4 py-10 m-auto md:py-[5vw] md:-mb-7.5 md:pt-0">
+      <p className="header__left-title text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight md:leading-tight">
         Book Appointment <br /> With Trusted Doctors
       </p>
       <div className="header__left-bottom flex gap-5 ">
