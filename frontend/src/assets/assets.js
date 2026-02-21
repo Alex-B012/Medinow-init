@@ -20,6 +20,12 @@ import doc15 from "./images/doctors/doctor_15.webp";
 import profile_pic from "./images/profile_pic.webp";
 import dropdown_icon from "./icons/keyboard_arrow_down.webp";
 
+import person1 from "./images/persons/person_4.webp";
+import person2 from "./images/persons/person_5.webp";
+import person3 from "./images/persons/person_17.webp";
+
+import header_doctors from "./images/header_doctors.webp";
+
 export const assets = {
   profile_pic: profile_pic,
   dropdown_icon: dropdown_icon,
@@ -47,3 +53,6 @@ export const doctors = {
   doc14: doc14,
   doc15: doc15,
 };
+
+export const header_doctors_image = header_doctors;
+export const header_images = [person1, person2, person3];

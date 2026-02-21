@@ -1,5 +1,12 @@
+import Header from "../components/Header/Header";
+
 const Home = () => {
-  return <div className="home bg-primary">Home 47:12</div>;
+  return (
+    <div className="home">
+      Home 53:22
+      <Header />
+    </div>
+  );
 };
 
 export default Home;

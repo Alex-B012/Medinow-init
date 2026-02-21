@@ -9,4 +9,5 @@ export const auth_links = [
   { name: "Login", path: "/login" },
   { name: "My Profile", path: "/my-profile" },
   { name: "My Appointment", path: "/my-appointment" },
+  { name: "Logout", path: "/" },
 ];

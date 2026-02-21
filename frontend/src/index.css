@@ -3,3 +3,15 @@
 .active .navbar__hr {
   @apply opacity-75;
 }
+
+.bg-primary {
+  background-color: #5f6fff;
+}
+
+.bg-secondary {
+  background-color: #95d6ac;
+}
+
+.main-text-color {
+  color: #008235;
+}
