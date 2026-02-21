@@ -1,14 +1,14 @@
-import { header_images } from "../../assets/assets";
+import { assets, header_images } from "../../assets/assets";
 import { Link } from "react-router-dom";
 
 const HeaderLeft = () => {
   return (
-    <div className="header__left  flex flex-col justify-center gap-4">
-      <p className="header__left-title text-3xl font-bold mb-6">
+    <div className="header__left flex flex-col justify-center gap-5 pr-2 lg:gap-24 md:gap-12">
+      <p className="header__left-title text-4xl font-bold mb-6">
         Book Appointment <br /> With Trusted Doctors
       </p>
-      <div className="header__left-bottom flex ">
-        <div className="header__left-images flex mr-3">
+      <div className="header__left-bottom flex gap-5 ">
+        <div className="header__left-images flex w-35">
           {header_images.map((image, index) => (
             <img
               key={index}
@@ -18,15 +18,19 @@ const HeaderLeft = () => {
             />
           ))}
         </div>
-        <p className="header__left-description">
-          Simply browse throught our extensive list of trusted doctors,
-          <br /> select your preferred doctor, and schedule your appointment
-          hassle-free.
+        <p className="header__left-description flex text-xl w-full">
+          Simply browse throught our extensive list of trusted doctors, select
+          your preferred doctor, and schedule your appointment hassle-free.
         </p>
       </div>
       <Link to="/doctors">
-        <button className="header__left-button bg-white text-black font-bold px-8 py-2 rounded-3xl mt-6 hover:bg-green-700 transition-colors duration-300 cursor-pointer">
-          Book Now
+        <button className="header__left-button bg-white text-black font-bold pl-8 pr-4 py-2 rounded-3xl mt-6 hover:bg-green-700 transition-colors duration-300 cursor-pointer">
+          Book Appointment{" "}
+          <img
+            src={assets.dropdown_icon}
+            alt="banner arrow icon"
+            className="w-5 inline-block ml-5 mb-0.5 -rotate-90"
+          />
         </button>
       </Link>
     </div>

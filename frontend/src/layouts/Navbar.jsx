@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <div className="navbar flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400 ">
       <Logo />
-      <ul className="navbar__links md:flex items-start gap-5 font-medium ">
+      <ul className="navbar__links items-start gap-5 font-medium hidden md:block md:flex">
         {navbar_links.map((link) => (
           <NavLink
             to={link.path}
@@ -26,7 +26,7 @@ const Navbar = () => {
           </NavLink>
         ))}
       </ul>
-      <div className="navbar__button-container flex items-center gap-4">
+      <div className="navbar__button-container flex items-center gap-4 ">
         {token ? (
           <div className="navbar__profile-wrapper flex items-center justify-end gap-2 cursor-pointer group relative">
             <img
