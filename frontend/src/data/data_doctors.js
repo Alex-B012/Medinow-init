@@ -2,7 +2,7 @@ import { doctors } from "../assets/assets";
 
 export const doctorsData = [
   {
-    _id: `doc1`,
+    _id: 1,
     name: "Dr. John Doe",
     specialty: "General physician",
     degree: "MBBS",
@@ -18,7 +18,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc2`,
+    _id: 2,
     name: "Dr. Emma Williams",
     specialty: "Pediatrician",
     degree: "MBBS",
@@ -34,7 +34,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc3`,
+    _id: 3,
     name: "Dr. George Smith",
     specialty: "Cardiologist",
     degree: "MBBS, MD",
@@ -50,7 +50,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc4`,
+    _id: 4,
     name: "Dr. Charles Brown",
     specialty: "Orthopedic Surgeon",
     degree: "MBBS, MS Orth",
@@ -66,7 +66,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc5`,
+    _id: 5,
     name: "Dr. Benjamin Taylor",
     specialty: "Neurologist",
     degree: "MBBS, MD Neurology",
@@ -82,7 +82,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc6`,
+    _id: 6,
     name: "Dr. Olivia Clark",
     specialty: "Dermatologist",
     degree: "MBBS, MD Dermatology",
@@ -98,7 +98,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc7`,
+    _id: 7,
     name: "Dr. Sophia Johnson",
     specialty: "Gynecologist",
     degree: "MBBS, MD Gynecology",
@@ -114,7 +114,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc8`,
+    _id: 8,
     name: "Dr. William Davis",
     specialty: "ENT Specialist",
     degree: "MBBS, MS ENT",
@@ -130,7 +130,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc9`,
+    _id: 9,
     name: "Dr. James Walker",
     specialty: "Endocrinologist",
     degree: "MBBS, MD Endocrinology",
@@ -146,7 +146,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc10`,
+    _id: 10,
     name: "Dr. Isabella Harris",
     specialty: "Psychiatrist",
     degree: "MBBS, MD Psychiatry",
@@ -162,7 +162,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc11`,
+    _id: 11,
     name: "Dr. Henry Moore",
     specialty: "Urologist",
     degree: "MBBS, MS Urology",
@@ -178,7 +178,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc12`,
+    _id: 12,
     name: "Dr. Lily Parker",
     specialty: "Ophthalmologist",
     degree: "MBBS, MD Ophthalmology",
@@ -194,7 +194,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc13`,
+    _id: 13,
     name: "Dr. Charlotte Lewis",
     specialty: "Gastroenterologist",
     degree: "MBBS, MD Gastroenterology",
@@ -210,7 +210,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc14`,
+    _id: 14,
     name: "Dr. Robert King",
     specialty: "Surgeon",
     degree: "MBBS, MS General Surgery",
@@ -226,7 +226,7 @@ export const doctorsData = [
     },
   },
   {
-    _id: `doc15`,
+    _id: 15,
     name: "Dr. Emily Taylor",
     specialty: "Allergist",
     degree: "MBBS, MD Allergy",

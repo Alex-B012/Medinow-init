@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { auth_links, navbar_links } from "../data/navbar_links";
+import { auth_links, navbar_links } from "../data/links";
 import Logo from "../components/Logo";
 import { useState } from "react";
 import { assets } from "../assets/assets";
@@ -13,7 +13,7 @@ const Navbar = () => {
   return (
     <div className="navbar flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
       <Logo />
-      <ul className="navbar__links items-start gap-5 font-medium hidden md:block md:flex">
+      <ul className="navbar__links items-start gap-5 font-medium hidden md:flex">
         {navbar_links.map((link) => (
           <NavLink
             to={link.path}

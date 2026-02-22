@@ -11,3 +11,7 @@ export const auth_links = [
   { name: "My Appointment", path: "/my-appointment" },
   { name: "Logout", path: "/" },
 ];
+
+export const appointment_links = [
+  { name: "Appointment", path: "/appointment" },
+];

@@ -8,7 +8,7 @@ const SpecialityMenu = () => {
   return (
     <div
       id="speciality"
-      className="speciality-menu flex flex-col items-center gap-4 py-8 px-4"
+      className="speciality-menu flex flex-col items-center gap-4 py-5 px-4"
     >
       <TitleDescription
         title={"Find by Speciality"}

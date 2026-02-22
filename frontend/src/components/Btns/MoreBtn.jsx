@@ -1,6 +1,13 @@
-const MoreBtn = ({ text }) => {
+import { useNavigate } from "react-router-dom";
+
+const MoreBtn = ({ text, url }) => {
+  const navigate = useNavigate();
+
   return (
-    <button className="more-btn bg-gray-100 py-2 px-8 rounded-3xl hover:bg-green-100 transition duration-300 cursor-pointer shadow-md">
+    <button
+      onClick={() => url && navigate(url)}
+      className="more-btn bg-gray-100 text-gray-600 py-3 px-12 rounded-full mt-10 hover:bg-green-200 transition duration-300 cursor-pointer shadow-md font-bold"
+    >
       {text || "More"}
     </button>
   );
