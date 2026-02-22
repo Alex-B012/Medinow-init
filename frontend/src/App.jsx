@@ -14,7 +14,7 @@ import Navbar from "./layouts/Navbar";
 
 function App() {
   return (
-    <div className="App mx-4 md:mx-[10%] sm:mx-[5%] ">
+    <div className="App mx-4 md:mx-[10%] sm:mx-[5%] pb-24">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

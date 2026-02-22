@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 
 import BannerTitle from "./BannerTitle";
 import BannerPromo from "./BannerPromo";
+import BannerImg from "./BannerImg";
+
+const BUTTON_CLASSES =
+  "header__left-link size-fit bg-white text-gray-600 font-bold pl-8 pr-4 py-2 rounded-3xl mt-6 flex justify-between hover:scale-105 transition-all duration-300 cursor-pointer";
 
 const BannerLeft = ({ title, three_images, text, button }) => {
   return (
@@ -10,31 +14,21 @@ const BannerLeft = ({ title, three_images, text, button }) => {
       <BannerTitle title={title} />
       <BannerPromo data={three_images} text={text} />
 
-      {button && button.same_page_link && button.text ? (
-        <a
-          href={`#${button.same_page_link}`}
-          className="header__left-link w-60 bg-white text-black font-bold pl-8 pr-4 py-2 rounded-3xl mt-6 hover:bg-green-200 transition-colors duration-300 cursor-pointer"
-        >
-          {button.text}
-          <img
-            src={assets.dropdown_icon}
-            alt="banner arrow icon"
-            className="w-5 inline-block ml-5 mb-0.5 -rotate-90"
-          />
-        </a>
-      ) : button && button.link ? (
-        <Link
-          to={button.link}
-          className="header__left-link w-60 bg-white text-black font-bold pl-8 pr-4 py-2 rounded-3xl mt-6 hover:bg-green-200 transition-colors duration-300 cursor-pointer"
-        >
-          {button.text}
-          <img
-            src={assets.dropdown_icon}
-            alt="banner arrow icon"
-            className="w-5 inline-block ml-5 mb-0.5 -rotate-90"
-          />
-        </Link>
-      ) : null}
+      {button && button.text && (
+        <>
+          {button.same_page_link ? (
+            <a href={`#${button.same_page_link}`} className={BUTTON_CLASSES}>
+              {button.text}
+              <BannerImg src={assets.dropdown_icon} alt="banner arrow icon" />
+            </a>
+          ) : button.link ? (
+            <Link to={button.link} className={BUTTON_CLASSES}>
+              {button.text}
+              <BannerImg src={assets.dropdown_icon} alt="banner arrow icon" />
+            </Link>
+          ) : null}
+        </>
+      )}
     </div>
   );
 };

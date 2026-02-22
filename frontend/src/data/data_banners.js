@@ -1,6 +1,11 @@
-import { header_doctors_image, header_images } from "../assets/assets";
+import {
+  banner_doctors_image,
+  banner_appointment_image,
+  header_images,
+} from "../assets/assets";
+
 import { promotion_data } from "./data";
-import { appointment_links } from "./links";
+import { auth_links } from "./links";
 
 export const welcome_banner = {
   title: {
@@ -12,7 +17,7 @@ export const welcome_banner = {
   },
 
   text: promotion_data.text,
-  img: header_doctors_image,
+  img: banner_doctors_image,
 
   button: {
     text: "Book Appointment",
@@ -26,10 +31,10 @@ export const appointment_banner = {
     line2: "With 100+ Trusted Doctors",
   },
 
-  img: header_doctors_image,
+  img: banner_appointment_image,
 
   button: {
     text: "Create account",
-    link: appointment_links[0],
+    link: auth_links[0].path,
   },
 };

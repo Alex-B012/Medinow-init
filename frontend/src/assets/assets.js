@@ -31,7 +31,8 @@ import person1 from "./images/persons/person_4.webp";
 import person2 from "./images/persons/person_5.webp";
 import person3 from "./images/persons/person_17.webp";
 
-import header_doctors from "./images/header_doctors.webp";
+import header_doctors from "./images/banners/header_doctors.webp";
+import banner_appointment from "./images/banners/banner_appointment.webp";
 
 export const assets = {
   profile_pic: profile_pic,
@@ -61,7 +62,9 @@ export const doctors = {
   doc15: doc15,
 };
 
-export const header_doctors_image = header_doctors;
+export const banner_doctors_image = header_doctors;
+export const banner_appointment_image = banner_appointment;
+
 export const header_images = [person1, person2, person3];
 
 export const speciality_images = {
