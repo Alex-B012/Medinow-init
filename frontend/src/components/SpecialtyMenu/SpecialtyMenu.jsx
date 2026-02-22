@@ -4,7 +4,7 @@ import { specialties_data } from "../../data/data_specialties";
 import { createSlug } from "../../utils/slug";
 import TitleDescription from "../TitleDescription";
 
-const SpecialityMenu = () => {
+const SpecialtyMenu = () => {
   return (
     <div
       id="specialty"
@@ -36,4 +36,4 @@ const SpecialityMenu = () => {
   );
 };
 
-export default SpecialityMenu;
+export default SpecialtyMenu;
