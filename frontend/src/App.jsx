@@ -11,10 +11,11 @@ import Appointment from "./pages/Appointment";
 import NotFound from "./pages/NotFound";
 
 import Navbar from "./layouts/Navbar";
+import Footer from "./layouts/Footer";
 
 function App() {
   return (
-    <div className="App mx-4 md:mx-[10%] sm:mx-[5%] pb-24">
+    <div className="App mx-4 md:mx-[10%] sm:mx-[5%]">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -28,6 +29,7 @@ function App() {
         <Route path="/appointment/:docId" element={<Appointment />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 }
