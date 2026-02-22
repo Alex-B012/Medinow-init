@@ -1,3 +1,3 @@
 export const promotion_data = {
-  text: "Simply browse throught our extensive list of trusted doctors, select your preferred doctor, and schedule your appointment hassle-free.",
+  text: "Just explore our detailed list of trusted doctors, choose your ideal doctor, and schedule your appointment seamlessly.",
 };
