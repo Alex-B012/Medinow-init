@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Doctors from "./pages/Doctors";
+import Doctors from "./pages/Doctors/Doctors";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Login from "./pages/Login";
 import MyProfile from "./pages/MyProfile";
 import MyAppointment from "./pages/MyAppointment";
-import Appointment from "./pages/Appointment";
+import Appointment from "./pages/Appointment/Appointment";
 import NotFound from "./pages/NotFound/NotFound";
 
 import Navbar from "./layouts/Navbar";
@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/doctors" element={<Doctors />} />
-        {/* <Route path="/doctors/:speciality" element={<Doctors />} /> */}
+        <Route path="/doctors/:specialty" element={<Doctors />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />

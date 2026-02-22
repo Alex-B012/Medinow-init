@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
-      <Logo />
+      <Logo isLink={true} />
       <ul className="navbar__links items-start gap-5 font-medium hidden md:flex">
         {navbar_links.map((link) => (
           <NavLink
