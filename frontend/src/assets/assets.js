@@ -26,6 +26,7 @@ import gastroenterologist from "./images/specialities/gastroenterologist.webp";
 
 import profile_pic from "./images/profile_pic.webp";
 import dropdown_icon from "./icons/keyboard_arrow_down.webp";
+import not_found from "./images/not_found.webp";
 
 import person1 from "./images/persons/person_4.webp";
 import person2 from "./images/persons/person_5.webp";
@@ -64,8 +65,8 @@ export const doctors = {
 
 export const banner_doctors_image = header_doctors;
 export const banner_appointment_image = banner_appointment;
-
 export const header_images = [person1, person2, person3];
+export const not_found_image = not_found;
 
 export const speciality_images = {
   physician: physician,

@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import MyProfile from "./pages/MyProfile";
 import MyAppointment from "./pages/MyAppointment";
 import Appointment from "./pages/Appointment";
-import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
 
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
