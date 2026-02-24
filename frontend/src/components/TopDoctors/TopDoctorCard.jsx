@@ -5,7 +5,7 @@ const TopDoctorCard = ({ doctor }) => {
   return (
     <Link
       to={`${appointment_links[0].path}/${doctor._id}`}
-      className="top-doctor-card border border-blue-200 w-60 m-4 rounded-xl overflow-hidden shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-500"
+      className="top-doctor-card border border-blue-200 w-60 min-w-60 m-4 rounded-xl overflow-hidden shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-500"
     >
       {doctor.image && (
         <img

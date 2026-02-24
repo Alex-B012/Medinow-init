@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 
-import TitleDescription from "../TitleDescription";
+import TitleDescription from "../Titles/TitleDescription";
 import TopDoctorCard from "./TopDoctorCard";
 import MoreBtn from "../Btns/MoreBtn";
 import { navbar_links } from "../../data/links";

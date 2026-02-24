@@ -9,13 +9,9 @@ import { formatSpecialty } from "../../utils/utils";
 
 const Doctors = () => {
   const { specialty } = useParams();
-
-  console.log("specialty", formatSpecialty(specialty));
-
   const [selectedSpecialty, setSelectedSpecialty] = useState(
     formatSpecialty(specialty) || "All",
   );
-
   const { doctors } = useContext(AppContext);
 
   const filteredDoctors =
@@ -47,7 +43,7 @@ const Doctors = () => {
           ))}
         </div>
 
-        <div className="doctors__list w-full flex flex-wrap justify-center md:justify-start gap-4 lg:pl-10 xl:pl-18 2xl: pl-23">
+        <div className="doctors__list w-full flex flex-wrap justify-center md:justify-start gap-4 lg:pl-10 xl:pl-18 2xl:pl-23">
           {filteredDoctors.map((doctor) => (
             <TopDoctorCard doctor={doctor} key={doctor._id} />
           ))}

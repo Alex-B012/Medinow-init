@@ -66,7 +66,7 @@ const Navbar = () => {
         ) : (
           <button
             onClick={() => navigate(auth_links[0].path)}
-            className="navbar__button bg-blue-900 text-white px-8 py-3 rounded-full font-light  md:block w-39"
+            className="navbar__button bg-blue-900 text-white px-6 py-3 rounded-full font-light  md:block w-39"
           >
             Create account
           </button>

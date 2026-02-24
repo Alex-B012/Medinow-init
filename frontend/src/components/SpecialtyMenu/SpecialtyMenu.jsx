@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import { promotion_data } from "../../data/data";
 import { specialties_data } from "../../data/data_specialties";
 import { createSlug } from "../../utils/slug";
-import TitleDescription from "../TitleDescription";
+
+import TitleDescription from "../Titles/TitleDescription";
 
 const SpecialtyMenu = () => {
   return (
