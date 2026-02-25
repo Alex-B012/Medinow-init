@@ -7,7 +7,7 @@ import AboutChooseUsCard from "./AboutChooseUsCard";
 
 const About = () => {
   return (
-    <div className="about w-full pb-10 flex flex-col gap-6 items-center ">
+    <div className="about w-full pb-10 flex flex-col gap-6 items-center">
       <TitleDescription title={"About Us"} case_class={"uppercase"} />
       <div className="about__container flex flex-col gap-6 items-center w-full max-w-7xl">
         <AboutInfo data={about_data} img={about_data.img} />

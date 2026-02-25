@@ -40,7 +40,7 @@ const Navbar = () => {
               alt="dropdown icon"
             />
             <div className="navbar__profile-container">
-              <div className="navbar__profile-menu w-35 absolute right-0 top-full bg-gray-50 rounded-lg shadow-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300 z-100">
+              <div className="navbar__profile-menu w-36 absolute right-0 top-full bg-gray-50 rounded-lg shadow-lg p-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300 z-100">
                 {auth_links.map((link) => {
                   if (link.name === "Login") return null;
                   const logout = link.name === "Logout" ? true : false;
@@ -66,7 +66,7 @@ const Navbar = () => {
         ) : (
           <button
             onClick={() => navigate(auth_links[0].path)}
-            className="navbar__button bg-blue-900 text-white px-6 py-3 rounded-full font-light  md:block w-39"
+            className="navbar__button w-35 py-3 bg-blue-900 text-white rounded-full font-light cursor-pointer transition-colors duration-700 hover:bg-blue-800 md:block md:w-28 md:py-2 lg:w-35 lg:py-3"
           >
             Create account
           </button>

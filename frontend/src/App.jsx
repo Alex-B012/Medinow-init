@@ -5,16 +5,16 @@ import Doctors from "./pages/Doctors/Doctors";
 import About from "./pages/About/About";
 import Contact from "./pages/Contact/Contact";
 import Career from "./pages/Career.jsx";
-import Login from "./pages/Login";
-import MyProfile from "./pages/MyProfile";
-import MyAppointment from "./pages/MyAppointment";
+import LoginCreateAccount from "./pages/LoginCreateAccount/LoginCreateAccount.jsx";
+import MyProfile from "./pages/MyProfile/MyProfile";
+import MyAppointments from "./pages/MyAppointments/MyAppointments.jsx";
 import Appointment from "./pages/Appointment/Appointment";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import NotFound from "./pages/NotFound/NotFound";
 
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import ScrollToTop from "./components/ScrollToTop.jsx";
-import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 
 function App() {
   const location = useLocation();
@@ -34,9 +34,9 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/career" element={<Career />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginCreateAccount />} />
         <Route path="/my-profile" element={<MyProfile />} />
-        <Route path="/my-appointment" element={<MyAppointment />} />
+        <Route path="/my-appointments" element={<MyAppointments />} />
         <Route
           path="/appointment/:docId"
           element={<Appointment key={location.pathname} />}

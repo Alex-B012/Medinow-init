@@ -4,7 +4,10 @@ const company_profile = {
   name: "MediNow",
   phone: "+1 (234) 123-4567",
   email: "contact@medinow.com",
-  address: { line1: "Suite 123, 75, John Street", line2: "New York, NY, USA" },
+  address: {
+    line1: "Suite 123, 75, John Street",
+    line2: "New York, NY 10579",
+  },
 };
 
 export const promotion_data = {
