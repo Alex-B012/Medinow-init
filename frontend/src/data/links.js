@@ -26,5 +26,6 @@ export const footer_links = [
     name: "Contact Us",
     path: navbar_links.find((link) => link.name === "Contact").path,
   },
+  { name: "Career", path: "/career" },
   { name: "Privacy Policy", path: "/privacy-policy" },
 ];

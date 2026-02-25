@@ -38,6 +38,7 @@ import header_doctors from "./images/banners/header_doctors.webp";
 import banner_appointment from "./images/banners/banner_appointment.webp";
 
 import about_greeting from "./images/about/About_greeting.webp";
+import contact_us_img from "./images/contact_us_img.webp";
 
 export const assets = {
   profile_pic: profile_pic,
@@ -86,3 +87,5 @@ export const specialty_images = {
 export const about_images = {
   about_greeting: about_greeting,
 };
+
+export const contact_img = contact_us_img;

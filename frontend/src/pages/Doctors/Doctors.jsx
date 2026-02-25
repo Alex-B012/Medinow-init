@@ -5,6 +5,7 @@ import { specialties_data } from "../../data/data_specialties";
 
 import DoctorsFilterBtn from "./DoctorsFilterBtn";
 import TopDoctorCard from "../../components/TopDoctors/TopDoctorCard";
+import TitleDescription from "../../components/Titles/TitleDescription";
 import { formatSpecialty } from "../../utils/utils";
 
 const Doctors = () => {
@@ -20,9 +21,10 @@ const Doctors = () => {
       : doctors.filter((doc) => doc.specialty === selectedSpecialty);
 
   return (
-    <div className="doctors flex flex-col gap-6 items-center w-full pt-10 md:pb-10 lg:pb-25">
+    <div className="doctors flex flex-col gap-6 items-center w-full md:pb-10 lg:pb-25">
+      <TitleDescription title={"Our Doctors"} case_class={"uppercase"} />
       <p className="doctors__text w-full text-left">
-        Browse our doctors by specialty.
+        Browse our doctors by specialty
       </p>
 
       <div className="doctors__content w-full flex flex-col items-start md:flex-row">

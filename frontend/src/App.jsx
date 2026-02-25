@@ -2,8 +2,9 @@ import { Route, Routes, useLocation } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Doctors from "./pages/Doctors/Doctors";
-import Contact from "./pages/Contact";
 import About from "./pages/About/About";
+import Contact from "./pages/Contact/Contact";
+import Career from "./pages/Career.jsx";
 import Login from "./pages/Login";
 import MyProfile from "./pages/MyProfile";
 import MyAppointment from "./pages/MyAppointment";
@@ -13,6 +14,7 @@ import NotFound from "./pages/NotFound/NotFound";
 import Navbar from "./layouts/Navbar";
 import Footer from "./layouts/Footer";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 
 function App() {
   const location = useLocation();
@@ -28,8 +30,10 @@ function App() {
           path="/doctors/:specialty"
           element={<Doctors key={location.pathname} />}
         />
-        <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/career" element={<Career />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/login" element={<Login />} />
         <Route path="/my-profile" element={<MyProfile />} />
         <Route path="/my-appointment" element={<MyAppointment />} />

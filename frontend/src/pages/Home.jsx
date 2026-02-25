@@ -6,7 +6,7 @@ import { appointment_banner, welcome_banner } from "../data/data_banners";
 
 const Home = () => {
   return (
-    <div className="home flex flex-col gap-6 items-center w-full">
+    <div className="home w-full pb-10 flex flex-col gap-6 items-center ">
       <Banner banner_data={welcome_banner} />
       <SpecialtyMenu />
       <TopDoctors />

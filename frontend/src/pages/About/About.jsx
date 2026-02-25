@@ -1,4 +1,3 @@
-import { about_images } from "../../assets/assets";
 import { about_data } from "../../data/data";
 
 import TitleDescription from "../../components/Titles/TitleDescription";
@@ -8,10 +7,10 @@ import AboutChooseUsCard from "./AboutChooseUsCard";
 
 const About = () => {
   return (
-    <div className="about flex flex-col gap-6 items-center w-full">
+    <div className="about w-full pb-10 flex flex-col gap-6 items-center ">
       <TitleDescription title={"About Us"} case_class={"uppercase"} />
       <div className="about__container flex flex-col gap-6 items-center w-full max-w-7xl">
-        <AboutInfo data={about_data} img={about_images.about_greeting} />
+        <AboutInfo data={about_data} img={about_data.img} />
         {about_data.chooseUs.title && (
           <SectionTitle title={about_data.chooseUs.title} />
         )}
