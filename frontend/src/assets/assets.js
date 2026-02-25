@@ -37,6 +37,8 @@ import person3 from "./images/persons/person_17.webp";
 import header_doctors from "./images/banners/header_doctors.webp";
 import banner_appointment from "./images/banners/banner_appointment.webp";
 
+import about_greeting from "./images/about/About_greeting.webp";
+
 export const assets = {
   profile_pic: profile_pic,
   dropdown_icon: dropdown_icon,
@@ -79,4 +81,8 @@ export const specialty_images = {
   pediatrician: pediatrician,
   neurologist: neurologist,
   gastroenterologist: gastroenterologist,
+};
+
+export const about_images = {
+  about_greeting: about_greeting,
 };

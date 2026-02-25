@@ -24,7 +24,7 @@ const Footer = () => {
                 <Link
                   key={index}
                   to={link.path}
-                  className="footer__link block my-2"
+                  className="footer__link block my-2 hover:text-emerald-400"
                 >
                   {link.name}
                 </Link>
@@ -39,7 +39,7 @@ const Footer = () => {
 
             <address className="footer__contacts-container not-italic">
               {footer_data.contacts.phone && (
-                <p className="footer__contacts-phone my-2">
+                <p className="footer__contacts-phone my-2 hover:text-emerald-400">
                   <a href={`tel:${footer_data.contacts.phone}`}>
                     {footer_data.contacts.phone}
                   </a>
@@ -47,7 +47,7 @@ const Footer = () => {
               )}
 
               {footer_data.contacts.email && (
-                <p className="footer__contacts-email my-2">
+                <p className="footer__contacts-email my-2 hover:text-emerald-400">
                   <a href={`mailto:${footer_data.contacts.email}`}>
                     {footer_data.contacts.email}
                   </a>

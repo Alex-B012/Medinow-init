@@ -17,12 +17,12 @@ const Navbar = () => {
         {navbar_links.map((link) => (
           <NavLink
             to={link.path}
-            className="navbar__link uppercase py-1"
+            className="navbar__link uppercase py-1 hover:text-emerald-400"
             key={link.name}
             activeClassName="active"
           >
             <li className="navbar__li py-1"> {link.name}</li>
-            <hr className="navbar__hr border-none outline-none h-0.5 bg-secondary w-3/5 m-auto opacity-0" />
+            <hr className="navbar__hr border-none outline-none h-0.5 bg-emerald-400 secondary w-3/5 m-auto opacity-0" />
           </NavLink>
         ))}
       </ul>
@@ -52,7 +52,7 @@ const Navbar = () => {
                       key={link.name}
                     >
                       <p
-                        className="navbar__li py-1 hover:text-green-700"
+                        className="navbar__li py-1 hover:text-emerald-400"
                         onClick={() => logout && setShowToken(false)}
                       >
                         {link.name}

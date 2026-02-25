@@ -1,8 +1,10 @@
-const TitleDescription = ({ title, description }) => {
+const TitleDescription = ({ title, description, case_class = "" }) => {
   return (
     <div className="title-description w-full flex flex-col items-center gap-4 py-8 px-4">
       {title && (
-        <h2 className="title-description__title text-3xl font-medium">
+        <h2
+          className={`title-description__title text-3xl font-medium ${case_class}`}
+        >
           {title}
         </h2>
       )}

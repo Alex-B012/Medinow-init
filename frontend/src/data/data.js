@@ -21,3 +21,45 @@ export const footer_data = {
     },
   },
 };
+
+export const about_data = {
+  text: [
+    {
+      id: 1,
+      para: "At MediNow, we believe healthcare should be accessible, compassionate, and centered on each individual. Our mission is to connect people with reliable medical services through modern technology and trusted expertise. From primary care to preventive screenings, we provide a seamless experience supporting patients at every stage of life.",
+    },
+    {
+      id: 2,
+      para: "Founded to modernize healthcare delivery, MediNow combines innovation with personalized service. We offer virtual consultations, in-clinic visits, chronic care management, and diagnostics via a secure platform. By reducing wait times and improving communication, we make healthcare efficient, convenient, and accessible for everyone.",
+    },
+  ],
+  values: {
+    title: "Our values",
+    text: [
+      {
+        id: 1,
+        para: "Our values shape every patient experience and guide our care. We stand for compassion, integrity, innovation, and excellence. Through transparent, respectful service and smart technology, MediNow delivers reliable, personalized healthcare that builds trust and expands access to quality care for every community we serve.",
+      },
+    ],
+  },
+  chooseUs: {
+    title: "Why choose us",
+    text: [
+      {
+        id: 1,
+        title: "Efficiency",
+        para: "Fast appointments, reduced wait times, and streamlined digital healthcare services.",
+      },
+      {
+        id: 2,
+        title: "Convenience",
+        para: "Book online, access virtual care, and manage health anytime.",
+      },
+      {
+        id: 3,
+        title: "Personalization",
+        para: "Tailored treatment plans designed around individual patient needs.",
+      },
+    ],
+  },
+};
