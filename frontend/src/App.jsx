@@ -12,7 +12,7 @@ import Appointment from "./pages/Appointment/Appointment";
 import PrivacyPolicy from "./pages/PrivacyPolicy.jsx";
 import NotFound from "./pages/NotFound/NotFound";
 
-import Navbar from "./layouts/Navbar";
+import Navbar from "./layouts/Navbar/Navbar";
 import Footer from "./layouts/Footer";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 
