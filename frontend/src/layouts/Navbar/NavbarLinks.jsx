@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom";
 
-const NavbarLinks = ({ data }) => {
+const NavbarLinks = ({ data, mobile = false }) => {
+  console.log("links:", data);
+  let classes_display = `items-start gap-5 hidden md:flex`;
+  if (mobile) classes_display = ` mt-[7vh] flex flex-col text-lg md:hidden `;
+
   return (
-    <ul className="navbar-links items-start gap-5 font-medium hidden md:flex">
+    <ul className={`navbar-links font-medium ${classes_display}`}>
       {data.map((link) => (
         <NavLink
           to={link.path}

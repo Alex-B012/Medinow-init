@@ -23,7 +23,9 @@ const NavbarProfile = ({ assets, auth_links, setShowToken }) => {
               >
                 <p
                   className="navbar__li py-1 hover:text-emerald-400"
-                  onClick={() => logout && setShowToken(false)}
+                  onClick={() => {
+                    logout && setShowToken(false);
+                  }}
                 >
                   {link.name}
                 </p>

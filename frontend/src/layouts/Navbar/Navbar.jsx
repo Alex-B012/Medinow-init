@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth_links, navbar_links } from "../../data/links";
 import { assets } from "../../assets/assets";
@@ -14,6 +14,18 @@ const Navbar = () => {
 
   const [showMenu, setShowMenu] = useState(false);
   const [token, setShowToken] = useState(true);
+
+  useEffect(() => {
+    if (showMenu) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showMenu]);
 
   return (
     <div className="navbar flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
@@ -38,7 +50,16 @@ const Navbar = () => {
         {/* <img src={"menu_btn"} alt="Menu button" /> */}
       </div>
       <HamburgerMenu showMenu={showMenu} setShowMenu={setShowMenu} />
-      {showMenu && <MobileMenu />}
+      {showMenu && (
+        <MobileMenu
+          links={navbar_links}
+          auth_links={auth_links}
+          token={token}
+          assets={assets}
+          setShowToken={setShowToken}
+          setShowMenu={setShowMenu}
+        />
+      )}
     </div>
   );
 };
