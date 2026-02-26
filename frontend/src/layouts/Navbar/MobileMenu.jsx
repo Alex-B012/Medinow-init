@@ -13,7 +13,6 @@ const MobileMenu = ({
 
   return (
     <div className="mobile-menu fixed inset-0 bg-white opacity-90 z-40 flex flex-col items-center pt-[12vh]">
-      4:21:07
       <Logo />
       <div className="mobile-menu__container flex justify-center items-center gap-20 [@media(min-height:450px)]:flex-col [@media(min-height:450px)]:gap-10">
         <NavbarLinks data={links} mobile={true} setShowMenu={setShowMenu} />

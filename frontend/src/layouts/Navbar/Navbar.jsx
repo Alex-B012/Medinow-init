@@ -27,6 +27,20 @@ const Navbar = () => {
     };
   }, [showMenu]);
 
+  useEffect(() => {
+    const checkWidth = () => {
+      if (window.innerWidth > 768) {
+        setShowMenu(false);
+      }
+    };
+
+    const interval = setInterval(checkWidth, 4000);
+
+    checkWidth();
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="navbar flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
       <Logo isLink={true} />
