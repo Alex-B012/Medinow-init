@@ -1,12 +1,16 @@
-import { useState } from "react";
-import { assets } from "../../assets/assets";
+import { useContext, useState } from "react";
+import { AdminContext } from "../../context/AppContext";
+import axios from "axios";
 
 import LoginInputField from "./LoginInputField";
 import LoginBtn from "./LoginBtn";
 import LoginToggleText from "./LoginText";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [role, setRole] = useState("Admin");
+  const { setAToken, backendUrl } = useContext(AdminContext);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,11 +23,36 @@ const Login = () => {
     });
   };
 
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      if (role === "Admin") {
+        const url = backendUrl + "/api/admin/login";
+
+        const { data } = await axios.post(url, {
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (data.success) {
+          localStorage.setItem("aToken", data.token);
+          setAToken(data.token);
+        } else {
+          toast.error(data.message);
+        }
+      }
+    } catch (err) {
+      console.log("Temp console -", err);
+    }
+  };
+
   return (
     <div className="login w-full pb-10 flex flex-col gap-6">
-      <form className="login__form min-h-[80vh] flex items-center">
+      <form
+        onSubmit={onSubmitHandler}
+        className="login__form min-h-[80vh] flex items-center"
+      >
         <div className="flex flex-col items-center gap-3 m-auto item-start p-8 min-w-60 sm:min-w-96 border border-primary rounded-xl text-zinc-700 shadow-lg">
-          6:31:16
           <h1 className="login__title text-2xl font-semibold m-auto">
             <span className="text-primary">{role}</span> Login
           </h1>

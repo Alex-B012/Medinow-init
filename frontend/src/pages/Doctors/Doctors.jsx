@@ -37,7 +37,7 @@ const Doctors = () => {
   }, []);
 
   return (
-    <div className="doctors flex flex-col gap-6 items-center w-full md:pb-10 lg:pb-25">
+    <div className="doctors w-full flex flex-col gap-6 items-center md:pb-10 lg:pb-25">
       <TitleDescription title={"Our Doctors"} case_class={"uppercase"} />
       <p className="doctors__text w-full text-left">
         Browse our doctors by specialty
