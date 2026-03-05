@@ -12,6 +12,8 @@ import axios from "axios";
 
 import { useEffect } from "react";
 import { seedDoctorsToServer } from "../../utils/seedDoctors";
+import AdminTitle from "./components/AdminTitle.jsx";
+import AdminContent from "./components/AdminContent.jsx";
 
 const SEED = false;
 const INITIAL_DOCTOR = {
@@ -115,8 +117,9 @@ const AddDoctor = () => {
       onSubmit={onSubmitHandler}
       className="add-doctor w-full pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100"
     >
-      <h3 className="add-doctor__title py-6 font-bold text-xl">Add Doctor</h3>
-      <div className="add-doctor__content lg:max-w-175 xl:max-w-220 2xl:max-w-270 px-2 py-6 sm:px-6 bg-white border border-gray-200 drop-shadow-sm">
+      <AdminTitle title={"Add Doctor"} />
+
+      <AdminContent>
         <div className="h-28 flex gap-5 items-center">
           <label className="" htmlFor="doc_img_id">
             <img
@@ -261,7 +264,7 @@ const AddDoctor = () => {
           <label className="text-left font-semibold">About Doctor</label>
 
           <textarea
-            className="min-h-80 max-w-200 sm:min-h-40 mt-2 p-2 border border-gray-300 rounded-sm"
+            className="min-h-80 max-w-200 sm:min-h-25 mt-2 p-2 border border-gray-300 rounded-sm"
             name="about"
             placeholder="About Doctor"
             required
@@ -273,7 +276,7 @@ const AddDoctor = () => {
         <div className="add-doctor__btn-container w-full max-w-200 h-15 flex justify-center items-end">
           <RegularBtn text={"Add Doctor"} type={"submit"} />
         </div>
-      </div>
+      </AdminContent>
     </form>
   );
 };

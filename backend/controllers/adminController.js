@@ -5,6 +5,7 @@ import validateDoctorData from "../utils.js/utilsDoctor.js";
 import jwt from "jsonwebtoken";
 
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
+
 //add doctor
 export const addDoctor = async (req, res) => {
   console.log("AddDoctor");
@@ -61,7 +62,6 @@ export const addDoctor = async (req, res) => {
 
     res.json({ success: true, message: "Doctor added" });
   } catch (error) {
-    // console.log("ERROR:", error);
     console.log("ERROR message:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
@@ -81,6 +81,19 @@ export const loginAdmin = async (req, res) => {
     } else {
       res.json({ success: false, message: "Invalid credentials" });
     }
+  } catch (error) {
+    console.log("ERROR:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+//API to fetch all doctors for the admin panel
+export const getAllDoctors = async (req, res) => {
+  try {
+    const doctors = await doctorModel
+      .find({})
+      .select("-__v -date -createdAt -updatedAt");
+    res.json({ success: true, doctors });
   } catch (error) {
     console.log("ERROR:", error);
     res.status(500).json({ success: false, message: error.message });

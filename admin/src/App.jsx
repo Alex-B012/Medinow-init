@@ -15,10 +15,8 @@ import DoctorsList from "./pages/Admin/DoctorsList.jsx";
 import { admin_links } from "./data/data.js";
 
 const App = () => {
-  // const location = useLocation();
-
   const { aToken } = useContext(AdminContext);
-  console.log("aToken", aToken);
+  // console.log("aToken", aToken);
 
   return aToken ? (
     <div className="App mx-4 md:mx-[10%] sm:mx-[5%]">
