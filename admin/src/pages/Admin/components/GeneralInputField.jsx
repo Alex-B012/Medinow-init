@@ -7,8 +7,8 @@ const GeneralInputField = ({ label, inputs = [], required = false }) => {
 
       {inputs.map((input, index) => (
         <input
-          key={index}
-          className="add-doctor__input w-full max-w-75 px-2 py-0.5 mt-1 border border-gray-300 rounded-sm"
+          key={input.id}
+          className="add-doctor__input w-full max-w-75 px-3 py-1 mt-2 border border-gray-300 rounded-sm"
           type={input.type || "text"}
           id={input.id}
           name={input.name}

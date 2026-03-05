@@ -1,29 +1,142 @@
+import { useContext, useState } from "react";
 import { assets } from "../../assets/assets";
-
 import { specialties_data, years_data } from "../../data/data.js";
+import { AdminContext } from "../../context/AppContext.jsx";
 
-import GeneralInputField from "./GeneralInputField";
-import SelectField from "./SelectField";
+import InfoContainer from "./components/InfoContainer";
+import GeneralInputField from "./components/GeneralInputField";
+import SelectField from "./components/SelectField";
+import RegularBtn from "../../components/Btns/RegularBtn";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const AddDoctor = () => {
+  const [docImg, setDocImg] = useState(false);
+  const [doctorData, setDoctorData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    experience: `${years_data[0].name}`,
+    fees: "",
+    specialty: `${specialties_data[0].name}`,
+    degree: "",
+    address: { line1: "", line2: "" },
+    about: "",
+    image: "",
+  });
+
+  const { backendURL, aToken } = useContext(AdminContext);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+
+      setDoctorData((prev) => ({
+        ...prev,
+        [parent]: {
+          ...prev[parent],
+          [child]: value,
+        },
+      }));
+    } else {
+      setDoctorData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    try {
+      if (!docImg) return toast.error("Image Not Selected");
+
+      const formDataToSend = new FormData();
+
+      formDataToSend.append("name", doctorData.name);
+      formDataToSend.append("email", doctorData.email);
+      formDataToSend.append("password", doctorData.password);
+      formDataToSend.append("experience", doctorData.experience);
+      formDataToSend.append("fees", Number(doctorData.fees));
+      formDataToSend.append("specialty", doctorData.specialty);
+      formDataToSend.append("degree", doctorData.degree);
+      formDataToSend.append("about", doctorData.about);
+      formDataToSend.append(
+        "address",
+        JSON.stringify({
+          line1: doctorData.address.line1,
+          line2: doctorData.address.line2,
+        }),
+      );
+
+      formDataToSend.append("image", docImg);
+
+      console.log("ADD Doctor - Form Data:", formDataToSend);
+      formDataToSend.forEach((value, key) => {
+        console.log(key, ":", value);
+      });
+
+      const { data } = await axios.post(
+        backendURL + "/api/admin/add-doctor",
+        formDataToSend,
+        { headers: { aToken } },
+      );
+
+      // 7:50:00
+    } catch (error) {}
+
+    // try {
+    //   if (role === "Admin") {
+    //     const url = backendUrl + "/api/admin/login";
+
+    //     const { data } = await axios.post(url, {
+    //       email: doctorData.email,
+    //       password: doctorData.password,
+    //     });
+
+    //     if (data.success) {
+    //       localStorage.setItem("aToken", data.token);
+    //       setAToken(data.token);
+    //     } else {
+    //       toast.error(data.message);
+    //     }
+    //   }
+    // } catch (err) {
+    //   console.log("Temp console -", err);
+    // }
+  };
+
   return (
-    <form className="add-doctor w-full pb-10 px-0 sm:px-6 ">
+    <form
+      onSubmit={onSubmitHandler}
+      className="add-doctor w-full pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100"
+    >
       <h3 className="add-doctor__title py-6 font-bold text-xl">Add Doctor</h3>
-      <div className="add-doctor__content px-2 py-6 sm:px-6 bg-white border border-gray-200">
+      <div className="add-doctor__content lg:max-w-175 xl:max-w-220 2xl:max-w-270 px-2 py-6 sm:px-6 bg-white border border-gray-200 drop-shadow-sm">
         <div className="flex gap-5 items-center">
           <label htmlFor="doc_img_id">
             <img
-              className="add-doctor__icon flex w-15 cursor-pointer"
-              src={assets.upload_area}
+              className="add-doctor__icon flex w-20 h-20 cursor-pointer rounded-full"
+              src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
               alt={"Upload Photo"}
             />
           </label>
-          <input type="file" id="doc_img_id" hidden />
+
+          <input
+            type="file"
+            id="doc_img_id"
+            hidden
+            onChange={(e) => setDocImg(e.target.files[0])}
+          />
+
           <p className="flex w-26">Upload doctor picture</p>
         </div>
 
-        <div className="add-doctor__info w-full mt-10 flex flex-col gap-7 lg:flex-row xl:gap-x-15">
-          <div className="add-doctor__info-container max-w-130 flex flex-col gap-7 lg:min-w-70">
+        <div className="add-doctor__info mt-10 flex flex-col gap-7 md:flex-row md:gap-x-10">
+          <InfoContainer>
             <GeneralInputField
               label="Your name"
               required
@@ -33,6 +146,8 @@ const AddDoctor = () => {
                   id: "add_doctor_name_id",
                   name: "name",
                   placeholder: "Name",
+                  value: doctorData.name,
+                  onChange: handleChange,
                 },
               ]}
             />
@@ -46,6 +161,8 @@ const AddDoctor = () => {
                   id: "add_doctor_email_id",
                   name: "email",
                   placeholder: "Email",
+                  value: doctorData.email,
+                  onChange: handleChange,
                 },
               ]}
             />
@@ -59,6 +176,8 @@ const AddDoctor = () => {
                   id: "add_doctor_password_id",
                   name: "password",
                   placeholder: "Password",
+                  value: doctorData.password,
+                  onChange: handleChange,
                 },
               ]}
             />
@@ -68,8 +187,8 @@ const AddDoctor = () => {
               id="add_doctor_experience_id"
               name="experience"
               options={years_data}
-              // value={formData.experience}
-              // onChange={handleChange}
+              value={doctorData.experience}
+              onChange={handleChange}
             />
 
             <GeneralInputField
@@ -83,18 +202,21 @@ const AddDoctor = () => {
                   placeholder: "Your fees",
                   min: "0",
                   step: "0.01",
+                  value: doctorData.fees,
+                  onChange: handleChange,
                 },
               ]}
             />
-          </div>
-          <div className="add-doctor__info-container max-w-130 flex flex-col gap-7 lg:min-w-70">
+          </InfoContainer>
+
+          <InfoContainer>
             <SelectField
               label="Specialty"
               id="add_doctor_specialty_id"
               name="specialty"
               options={specialties_data}
-              // value={formData.specialty}
-              // onChange={handleChange}
+              value={doctorData.specialty}
+              onChange={handleChange}
             />
 
             <GeneralInputField
@@ -103,8 +225,10 @@ const AddDoctor = () => {
               inputs={[
                 {
                   id: "add_doctor_eduction_id",
-                  name: "education",
-                  placeholder: "Education",
+                  name: "degree",
+                  placeholder: "Degree",
+                  value: doctorData.degree,
+                  onChange: handleChange,
                 },
               ]}
             />
@@ -115,34 +239,38 @@ const AddDoctor = () => {
               inputs={[
                 {
                   id: "add_doctor_address_id",
-                  name: "address1",
-                  placeholder: "Address line 1",
-                  // value: formData.address1,
-                  // onChange: handleChange,
+                  name: "address.line1",
+                  placeholder: "Address 1",
+                  value: doctorData.address.line1,
+                  onChange: handleChange,
                 },
                 {
                   id: "add_doctor_address_id_2",
-                  name: "address2",
-                  placeholder: "Address line 2",
-                  // value: formData.address2,
-                  // onChange: handleChange,
+                  name: "address.line2",
+                  placeholder: "Address 2",
+                  value: doctorData.address.line2,
+                  onChange: handleChange,
                 },
               ]}
             />
-          </div>
+          </InfoContainer>
         </div>
-        <div className="flex flex-col mt-6">
+
+        <div className="flex flex-col mt-5">
           <label className="text-left font-semibold">About Doctor</label>
+
           <textarea
-            className="min-h-80 max-w-200 sm:min-h-40 mt-1 p-2 border border-gray-300 rounded-sm"
-            text="text"
+            className="min-h-80 max-w-200 sm:min-h-40 mt-2 p-2 border border-gray-300 rounded-sm"
+            name="about"
             placeholder="About Doctor"
             required
+            onChange={handleChange}
+            value={doctorData.about}
           ></textarea>
         </div>
-        <div className="add-doctor__btn-container w-60 h-20 flex justify-center items-center bg-amber-400">
-          <RegularBtn text={""}/>
-          {/* <button className="add-doctor__btn-container "></button> */}
+
+        <div className="add-doctor__btn-container w-full max-w-200 h-15 flex justify-center items-end">
+          <RegularBtn text={"Add Doctor"} type={"submit"} />
         </div>
       </div>
     </form>
