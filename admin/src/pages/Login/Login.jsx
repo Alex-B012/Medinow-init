@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { AdminContext } from "../../context/AppContext";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 import LoginInputField from "./LoginInputField";
-import LoginBtn from "./LoginBtn";
 import LoginToggleText from "./LoginText";
-import { toast } from "react-toastify";
+import RegularBtn from "../../components/Btns/RegularBtn";
 
 const Login = () => {
   const [role, setRole] = useState("Admin");
@@ -79,7 +79,7 @@ const Login = () => {
               required
             />
           </div>
-          <LoginBtn text={"Login"} />
+          <RegularBtn text={"Login"} />
           <LoginToggleText currentRole={role} setRole={setRole} />
         </div>
       </form>

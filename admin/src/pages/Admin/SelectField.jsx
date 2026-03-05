@@ -6,7 +6,7 @@ const SelectField = ({ label, id, name, options = [], value, onChange }) => {
       </label>
 
       <select
-        className="add-doctor__input w-60 px-2 py-0.5 mt-1 border border-gray-300 rounded-sm"
+        className="add-doctor__input w-full max-w-75 px-2 py-0.5 mt-1 border border-gray-300 rounded-sm"
         id={id}
         name={name}
         value={value}

@@ -14,7 +14,7 @@ const SideBar = () => {
             className={({ isActive }) => {
               return `sidebar__link min-h-10 max-h-12 max-w-60 min-w-45 flex items-center gap-3 px-2 py-2 ${
                 isActive
-                  ? "bg-gray-100 border-b sm:border-r-4 border-emerald-500 font-semibold"
+                  ? "bg-gray-100 sm:border-b-0 sm:border-r-4 border-emerald-500 font-semibold"
                   : ""
               }`;
             }}
