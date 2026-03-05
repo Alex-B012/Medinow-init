@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
 //add doctor
 export const addDoctor = async (req, res) => {
+  console.log("AddDoctor");
   try {
     const {
       name,
@@ -21,13 +22,6 @@ export const addDoctor = async (req, res) => {
     } = req.body;
 
     const imageFile = req.file;
-
-    // if (!imageFile) {
-    //   return res.status(400).json({
-    //     success: false,
-    //     message: "Image is required",
-    //   });
-    // }
 
     const validation = validateDoctorData(req.body);
 
@@ -67,7 +61,8 @@ export const addDoctor = async (req, res) => {
 
     res.json({ success: true, message: "Doctor added" });
   } catch (error) {
-    console.log("ERROR:", error);
+    // console.log("ERROR:", error);
+    console.log("ERROR message:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 };

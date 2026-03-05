@@ -10,22 +10,32 @@ import RegularBtn from "../../components/Btns/RegularBtn";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+import { useEffect } from "react";
+import { seedDoctorsToServer } from "../../utils/seedDoctors";
+
+const SEED = false;
+const INITIAL_DOCTOR = {
+  name: "",
+  email: "",
+  password: "",
+  experience: `${years_data[0].name}`,
+  fees: "",
+  specialty: `${specialties_data[0].name}`,
+  degree: "",
+  address: { line1: "", line2: "" },
+  about: "",
+  image: "",
+};
+
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false);
-  const [doctorData, setDoctorData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    experience: `${years_data[0].name}`,
-    fees: "",
-    specialty: `${specialties_data[0].name}`,
-    degree: "",
-    address: { line1: "", line2: "" },
-    about: "",
-    image: "",
-  });
+  const [doctorData, setDoctorData] = useState(INITIAL_DOCTOR);
+  const { backendUrl, aToken } = useContext(AdminContext);
 
-  const { backendURL, aToken } = useContext(AdminContext);
+  const resetDoctorForm = () => {
+    setDocImg(false);
+    setDoctorData(INITIAL_DOCTOR);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -74,40 +84,31 @@ const AddDoctor = () => {
 
       formDataToSend.append("image", docImg);
 
-      console.log("ADD Doctor - Form Data:", formDataToSend);
-      formDataToSend.forEach((value, key) => {
-        console.log(key, ":", value);
-      });
-
       const { data } = await axios.post(
-        backendURL + "/api/admin/add-doctor",
+        backendUrl + "/api/admin/add-doctor",
         formDataToSend,
-        { headers: { aToken } },
+        { headers: { a_token: aToken } },
       );
 
-      // 7:50:00
-    } catch (error) {}
-
-    // try {
-    //   if (role === "Admin") {
-    //     const url = backendUrl + "/api/admin/login";
-
-    //     const { data } = await axios.post(url, {
-    //       email: doctorData.email,
-    //       password: doctorData.password,
-    //     });
-
-    //     if (data.success) {
-    //       localStorage.setItem("aToken", data.token);
-    //       setAToken(data.token);
-    //     } else {
-    //       toast.error(data.message);
-    //     }
-    //   }
-    // } catch (err) {
-    //   console.log("Temp console -", err);
-    // }
+      if (data.success) {
+        toast.success(data.message);
+        resetDoctorForm();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      const message = error.response?.data?.message;
+      const error_data = error.response?.data;
+      toast.error(message);
+      console.log(error_data);
+    }
   };
+
+  useEffect(() => {
+    if (SEED && backendUrl && aToken) {
+      seedDoctorsToServer(backendUrl, aToken);
+    }
+  }, [backendUrl, aToken]);
 
   return (
     <form
@@ -116,10 +117,10 @@ const AddDoctor = () => {
     >
       <h3 className="add-doctor__title py-6 font-bold text-xl">Add Doctor</h3>
       <div className="add-doctor__content lg:max-w-175 xl:max-w-220 2xl:max-w-270 px-2 py-6 sm:px-6 bg-white border border-gray-200 drop-shadow-sm">
-        <div className="flex gap-5 items-center">
-          <label htmlFor="doc_img_id">
+        <div className="h-28 flex gap-5 items-center">
+          <label className="" htmlFor="doc_img_id">
             <img
-              className="add-doctor__icon flex w-20 h-20 cursor-pointer rounded-full"
+              className={`add-doctor__icon flex w-20 ${docImg ? "h-28" : "h-20"}  cursor-pointer rounded-md`}
               src={docImg ? URL.createObjectURL(docImg) : assets.upload_area}
               alt={"Upload Photo"}
             />

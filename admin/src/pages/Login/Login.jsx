@@ -79,7 +79,7 @@ const Login = () => {
               required
             />
           </div>
-          <RegularBtn text={"Login"} />
+          <RegularBtn text={"Login"} type="submit" />
           <LoginToggleText currentRole={role} setRole={setRole} />
         </div>
       </form>

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const authAdmin = async (req, res, next) => {
+  console.log("authAdmin");
   try {
     const { a_token } = req.headers;
 
