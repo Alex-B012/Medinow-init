@@ -21,11 +21,11 @@ const App = () => {
   console.log("aToken", aToken);
 
   return aToken ? (
-    <div className="App mx-4 md:mx-[10%] sm:mx-[5%] bg-amber-200">
+    <div className="App mx-4 md:mx-[10%] sm:mx-[5%] sm:bg-gray-100">
       <ScrollToTop />
       <ToastContainer />
       <Navbar />
-      <div className="flex items-start">
+      <div className="flex flex-col items-start sm:flex-row">
         <SideBar />
         <Routes>
           <Route path={"/"} element={<></>} />
