@@ -93,7 +93,7 @@ export const getAllDoctors = async (req, res) => {
   try {
     const doctors = await doctorModel
       .find({})
-      .select("-__v -date -createdAt -updatedAt");
+      .select("-password -__v -date -createdAt -updatedAt");
     res.json({ success: true, doctors });
   } catch (error) {
     console.log("ERROR:", error);

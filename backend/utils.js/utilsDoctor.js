@@ -1,5 +1,7 @@
 import validator from "validator";
 
+const password_length = Number(process.env.PASSWORD_VALID_LENGTH);
+
 const validateDoctorData = (data) => {
   const requiredFields = [
     "name",
@@ -30,7 +32,7 @@ const validateDoctorData = (data) => {
     };
   }
 
-  if (data.password.length < 8) {
+  if (data.password.length < password_length) {
     return {
       isValid: false,
       message: "Password must be at least 8 characters long",

@@ -7,6 +7,7 @@ import AppointmentDoctorImg from "./AppointmentDoctorImg";
 import AppointmentBtn from "./AppointmentBtn";
 import RelatedDoctors from "../../components/RelatedDoctors/RelatedDoctors";
 import SectionTitle from "../../components/Titles/SectionTitle";
+import Loading from "../../components/Loading";
 
 const PERIOD = 7;
 const STARTTIME_DEFAULT = 10;
@@ -166,7 +167,7 @@ const Appointment = () => {
           <RelatedDoctors docId={docId} specialty={docInfo.specialty} />
         </div>
       ) : (
-        <p className="text-center text-red-500 mt-10">Doctor not found.</p>
+        <Loading text={"Doctor not found."} />
       )}
     </div>
   );

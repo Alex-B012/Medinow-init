@@ -7,6 +7,7 @@ import DoctorsFilterBtn from "./DoctorsFilterBtn";
 import TopDoctorCard from "../../components/TopDoctors/TopDoctorCard";
 import TitleDescription from "../../components/Titles/TitleDescription";
 import { formatSpecialty } from "../../utils/utils";
+import Loading from "../../components/Loading";
 
 const Doctors = () => {
   const { specialty } = useParams();
@@ -14,7 +15,6 @@ const Doctors = () => {
     formatSpecialty(specialty) || "All",
   );
   const [showFilter, setShowFilter] = useState(false);
-
   const { doctors } = useContext(AppContext);
 
   const filteredDoctors =
@@ -73,9 +73,13 @@ const Doctors = () => {
         )}
 
         <div className="doctors__list w-full flex flex-wrap justify-center md:justify-start gap-4 lg:pl-10 xl:pl-18 2xl:pl-23">
-          {filteredDoctors.map((doctor) => (
-            <TopDoctorCard doctor={doctor} key={doctor._id} />
-          ))}
+          {filteredDoctors.length > 0 ? (
+            filteredDoctors.map((doctor) => (
+              <TopDoctorCard doctor={doctor} key={doctor._id} />
+            ))
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
     </div>

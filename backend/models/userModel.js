@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { person_default } from "../assets/images";
+import { person_default } from "../assets/images.js";
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   gender: { type: String, default: "Not Selected" },
   dob: { type: String, default: "Not Selected" },
   phone: { type: String, default: "00000000000" },
+  date: { type: Number, required: true },
 });
 
 const userModel = mongoose.models.user || mongoose.model("user", userSchema);
