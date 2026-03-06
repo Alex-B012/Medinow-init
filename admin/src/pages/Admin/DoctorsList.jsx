@@ -4,13 +4,14 @@ import AdminTitle from "./components/AdminTitle";
 import AdminContent from "./components/AdminContent";
 
 const DoctorsList = () => {
-  const { doctors, aToken, getAllDoctors } = useContext(AdminContext);
+  const { doctors, aToken, getAllDoctors, changeAvailability } =
+    useContext(AdminContext);
 
   useEffect(() => {
     if (aToken) {
       getAllDoctors();
     }
-  }, [aToken]);
+  }, [aToken, getAllDoctors]);
 
   return (
     <div className="doctors-list w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
@@ -35,6 +36,7 @@ const DoctorsList = () => {
                   className="mr-2"
                   type="checkbox"
                   checked={item.available}
+                  onChange={() => changeAvailability(item._id)}
                 />
                 <p
                   className={`${item.available ? "text-emerald-600" : ""} font-semibold`}
