@@ -18,7 +18,7 @@ app.use(cors());
 
 // api endpoint
 app.use("/api/admin", adminRouter);
-app.use("api/doctor", doctorRouter);
+app.use("/api/doctor", doctorRouter);
 
 app.get("/", (req, res) => res.send("API working"));
 

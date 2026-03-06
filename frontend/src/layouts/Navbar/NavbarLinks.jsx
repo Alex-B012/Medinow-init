@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 
 const NavbarLinks = ({ data, mobile = false }) => {
-  console.log("links:", data);
   let classes_display = `items-start gap-5 hidden md:flex`;
   if (mobile) classes_display = ` mt-[7vh] flex flex-col text-lg md:hidden `;
 
