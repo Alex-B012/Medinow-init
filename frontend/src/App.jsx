@@ -1,4 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import Home from "./pages/Home";
 import Doctors from "./pages/Doctors/Doctors";
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <div className="App mx-4 md:mx-[10%] sm:mx-[5%]">
+      <ToastContainer />
       <Navbar />
       <ScrollToTop />
       <Routes>

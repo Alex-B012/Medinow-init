@@ -89,6 +89,7 @@ export const loginAdmin = async (req, res) => {
 
 //API to fetch all doctors for the admin panel
 export const getAllDoctors = async (req, res) => {
+  console.log("getAllDoctors");
   try {
     const doctors = await doctorModel
       .find({})

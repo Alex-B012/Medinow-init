@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AdminContext } from "./AppContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useCallback } from "react";
 
 const AdminContextProvider = ({ children }) => {
   const [aToken, setAToken] = useState(
@@ -11,7 +12,7 @@ const AdminContextProvider = ({ children }) => {
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const getAllDoctors = async () => {
+  const getAllDoctors = useCallback(async () => {
     try {
       const { data } = await axios.post(
         backendUrl + "/api/admin/all-doctors",
@@ -28,7 +29,7 @@ const AdminContextProvider = ({ children }) => {
     } catch (error) {
       toast.error(error.message);
     }
-  };
+  }, [aToken, backendUrl]);
 
   const changeAvailability = async (docId) => {
     try {
