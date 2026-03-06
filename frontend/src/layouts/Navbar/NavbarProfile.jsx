@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const NavbarProfile = ({ assets, auth_links, setShowToken }) => {
+const NavbarProfile = ({ assets, auth_links, logoutFunc }) => {
   return (
     <div className="navbar__profile-wrapper flex items-center justify-end gap-2 cursor-pointer group relative">
       <img
@@ -24,7 +24,7 @@ const NavbarProfile = ({ assets, auth_links, setShowToken }) => {
                 <p
                   className="navbar__li py-1 hover:text-emerald-400"
                   onClick={() => {
-                    logout && setShowToken(false);
+                    logout && logoutFunc();
                   }}
                 >
                   {link.name}

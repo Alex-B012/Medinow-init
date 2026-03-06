@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth_links, navbar_links } from "../../data/links";
 import { assets } from "../../assets/assets";
@@ -8,12 +8,12 @@ import NavbarLinks from "./NavbarLinks";
 import NavbarProfile from "./NavbarProfile";
 import HamburgerMenu from "../../components/HamburgerMenu";
 import MobileMenu from "./MobileMenu";
+import { AppContext } from "../../context/AppContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
+  const { token, setToken } = useContext(AppContext);
   const [showMenu, setShowMenu] = useState(false);
-  const [token, setShowToken] = useState(true);
 
   useEffect(() => {
     if (showMenu) {
@@ -41,6 +41,11 @@ const Navbar = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const logout = () => {
+    setToken(false);
+    localStorage.removeItem("token");
+  };
+
   return (
     <div className="navbar flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
       <Logo isLink={true} />
@@ -51,7 +56,7 @@ const Navbar = () => {
           <NavbarProfile
             assets={assets}
             auth_links={auth_links}
-            setShowToken={setShowToken}
+            logoutFunc={logout}
           />
         ) : (
           <button
@@ -70,7 +75,7 @@ const Navbar = () => {
           auth_links={auth_links}
           token={token}
           assets={assets}
-          setShowToken={setShowToken}
+          setShowToken={setToken}
           setShowMenu={setShowMenu}
         />
       )}
