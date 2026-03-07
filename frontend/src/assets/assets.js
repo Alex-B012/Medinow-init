@@ -25,6 +25,7 @@ import neurologist from "./images/specialties/neurosurgeon.webp";
 import gastroenterologist from "./images/specialties/gastroenterologist.webp";
 
 import profile_pic from "./images/profile_pic.webp";
+import profile_icon from "./icons/profile_icon.webp";
 import dropdown_icon from "./icons/keyboard_arrow_down.webp";
 import verified_icon from "./icons/verified_icon.webp";
 import info_icon from "./icons/info_10023893.webp";
@@ -42,6 +43,7 @@ import contact_us_img from "./images/contact_us_img.webp";
 
 export const assets = {
   profile_pic: profile_pic,
+  profile_icon: profile_icon,
   dropdown_icon: dropdown_icon,
   verified_icon: verified_icon,
   info_icon: info_icon,
