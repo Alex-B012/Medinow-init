@@ -1,12 +1,16 @@
 import validator from "validator";
 import bcrypt from "bcrypt";
-import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
 
-const password_length = Number(process.env.PASSWORD_VALID_LENGTH);
+import userModel from "../models/userModel.js";
+import doctorModel from "../models/doctorModel.js";
+
+const PASSWORD_LENGTH = Number(process.env.PASSWORD_VALID_LENGTH);
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
 const INVALID_CREDENTIALS = "Invalid credentials";
+const EXCLUDED_FIELDS = "-password -__v -date -createdAt -updatedAt";
+
 // API to register user
 const registerUser = async (req, res) => {
   try {
@@ -22,7 +26,7 @@ const registerUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Enter a valid email" });
 
-    if (password.length < password_length)
+    if (password.length < PASSWORD_LENGTH)
       return res
         .status(400)
         .json({ success: false, message: "Enter a strong password" });
@@ -53,9 +57,6 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    console.log("email, password", email, password);
-
     const user = await userModel.findOne({ email });
 
     if (!user)
@@ -81,12 +82,8 @@ const loginUser = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     const userId = req.userId;
-    console.log("userId", userId);
 
-    const userData = await userModel
-      .findById(userId)
-      .select("-password -__v -date -createdAt -updatedAt");
-    console.log("userData", userData);
+    const userData = await userModel.findById(userId).select(EXCLUDED_FIELDS);
 
     res.json({ success: true, userData });
   } catch (error) {
@@ -124,6 +121,19 @@ const updateProfile = async (req, res) => {
     }
 
     res.json({ success: true, message: "Profile updated" });
+  } catch (error) {
+    console.log("ERROR:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// API to book an appointment
+const bookAppointment = async (req, res) => {
+  try {
+    const { userId, docId, slotDate, slotTime } = req.body;
+    const docData = await doctorModel.findById(docId).select(EXCLUDED_FIELDS);
+
+    //10:24:37
   } catch (error) {
     console.log("ERROR:", error);
     res.status(500).json({ success: false, message: error.message });

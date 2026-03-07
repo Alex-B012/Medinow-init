@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 
-const NavbarProfile = ({ assets, auth_links, logoutFunc }) => {
+const NavbarProfile = ({ assets, auth_links, logoutFunc, image }) => {
   return (
     <div className="navbar__profile-wrapper flex items-center justify-end gap-2 cursor-pointer group relative">
       <img
-        src={assets.profile_pic}
-        alt="profile image"
+        src={image ? image : assets.profile_icon}
+        alt="Header profile image"
         className="w-12 h-12 rounded-full "
       />
       <img className="w-5" src={assets.dropdown_icon} alt="dropdown icon" />

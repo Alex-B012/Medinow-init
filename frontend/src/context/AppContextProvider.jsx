@@ -38,8 +38,12 @@ const AppContextProvider = ({ children }) => {
 
       if (!data.token) setUserData(false);
 
-      if (data.success) setUserData(data.userData);
-      else toast.error(data.message);
+      if (data.success) {
+        setUserData({
+          ...data.userData,
+          address: JSON.parse(data.userData.address),
+        });
+      } else toast.error(data.message);
     } catch (error) {
       console.log(error);
       toast.error(error.message);

@@ -1,41 +1,93 @@
 import { useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import { assets } from "../../assets/assets";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 import TitleDescription from "../../components/Titles/TitleDescription";
 import MyProfileName from "./MyProfileName";
 import UserInformation from "./UserInformation";
 import BasicInformation from "./BasicInformation";
 import EditSaveBtns from "./EditSaveBtns";
-import { assets } from "../../assets/assets";
 
 const MyProfile = () => {
   const { userData, setUserData, token, backendUrl, loadUserProfileData } =
     useContext(AppContext);
   const [isEdit, setIsEdit] = useState(false);
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState(userData.image || false);
 
-  const updateUserProfileData = async () => {};
+  console.log("userData.image:", userData.image);
+
+  const updateUserProfileData = async () => {
+    console.log("updateUserProfileData - start");
+    try {
+      const formData = new FormData();
+
+      console.log(
+        "userData.address",
+        userData.address.line1,
+        userData.address.line2,
+      );
+
+      formData.append("name", userData.name);
+      formData.append("phone", userData.phone);
+      formData.append(
+        "address",
+        JSON.stringify({
+          line1: userData.address.line1,
+          line2: userData.address.line2,
+        }),
+      );
+      formData.append("gender", userData.gender);
+      formData.append("dob", userData.dob);
+
+      image && formData.append("image", image);
+
+      console.log("formData.address", formData.get("address"));
+
+      const { data } = await axios.put(
+        backendUrl + "/api/user/profile",
+        formData,
+        { headers: { token } },
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        await loadUserProfileData();
+        setIsEdit(false);
+        setImage(false);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
 
   return (
     userData && (
       <div className="my-profile w-full pb-10 flex flex-col gap-6">
-        10:03:12
         <TitleDescription title={"My profile"} case_class={"uppercase"} />
         {isEdit ? (
-          <label className="cursor-pointer" htmlFor="image_id">
-            <div className="my-profile__image-container w-80 h-60 flex justify-center items-center">
+          <label
+            className="w-full sm:w-117 mb-5 cursor-pointer rounded-4xl"
+            htmlFor="image_id"
+          >
+            <div className="my-profile__image-container w-full lg:w-80 h-60 flex justify-center items-center sm:justify-start sm:gap-5">
               <img
-                className={`my-profile__img w-40 h-40 mb-5 mr-5 rounded`}
+                className={`my-profile__img ${userData.image ? "w-40 h-40 sm:w-60 sm:h-60" : "w-20 h-20 sm:w-60 sm:h-60"}  mb-5 rounded-xl`}
                 src={image ? URL.createObjectURL(image) : userData.image}
                 alt="Profile image"
               />
               <img
-                className={`my-profile__img w-40 h-40 mb-5 rounded`}
+                className={`my-profile__img w-35 h-35 sm:w-50 sm:h-50 rounded-4xl ${image && "opacity-0"}`}
                 src={image ? "" : assets.profile_icon}
-                alt="Profile image"
+                alt=""
               />
             </div>
             <input
+              className=""
               onChange={(e) => setImage(e.target.files[0])}
               type="file"
               id="image_id"
@@ -43,10 +95,10 @@ const MyProfile = () => {
             />
           </label>
         ) : (
-          <div className="my-profile__image-container w-60 h-60 flex justify-center items-center">
+          <div className="my-profile__image-container w-full lg:w-80 h-60 flex justify-center items-center sm:justify-start">
             <img
-              className={`my-profile__img w-60 h-60" mb-5 rounded`}
-              src={userData.img}
+              className={`my-profile__img ${userData.image ? "w-60 h-60" : "w-40 h-40"} mb-5 rounded-xl`}
+              src={userData.image || assets.profile_icon}
               alt="Profile image"
             />
           </div>
@@ -67,7 +119,11 @@ const MyProfile = () => {
           userData={userData}
           setUserData={setUserData}
         />
-        <EditSaveBtns isEdit={isEdit} setIsEdit={setIsEdit} />
+        <EditSaveBtns
+          isEdit={isEdit}
+          setIsEdit={setIsEdit}
+          update={updateUserProfileData}
+        />
       </div>
     )
   );

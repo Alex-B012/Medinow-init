@@ -10,9 +10,12 @@ import HamburgerMenu from "../../components/HamburgerMenu";
 import MobileMenu from "./MobileMenu";
 import { AppContext } from "../../context/AppContext";
 
+const MD_RESOLUTION = 768;
+const CHECK_PERIOD = 4000;
+
 const Navbar = () => {
   const navigate = useNavigate();
-  const { token, setToken } = useContext(AppContext);
+  const { token, setToken, userData } = useContext(AppContext);
   const [showMenu, setShowMenu] = useState(false);
 
   useEffect(() => {
@@ -29,12 +32,12 @@ const Navbar = () => {
 
   useEffect(() => {
     const checkWidth = () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > MD_RESOLUTION) {
         setShowMenu(false);
       }
     };
 
-    const interval = setInterval(checkWidth, 4000);
+    const interval = setInterval(checkWidth, CHECK_PERIOD);
 
     checkWidth();
 
@@ -57,6 +60,7 @@ const Navbar = () => {
             assets={assets}
             auth_links={auth_links}
             logoutFunc={logout}
+            image={userData.image}
           />
         ) : (
           <button
@@ -66,9 +70,10 @@ const Navbar = () => {
             Create account
           </button>
         )}
-        {/* <img src={"menu_btn"} alt="Menu button" /> */}
       </div>
+
       <HamburgerMenu showMenu={showMenu} setShowMenu={setShowMenu} />
+
       {showMenu && (
         <MobileMenu
           links={navbar_links}
