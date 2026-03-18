@@ -186,4 +186,26 @@ const bookAppointment = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment };
+// API to get user appointments for frontend My Appointments page
+const listAppointments = async (req, res) => {
+  console.log("listAppointments");
+  try {
+    const { userId } = req;
+    const appointments = await appointmentModel.find({ userId });
+    console.log("appointments", appointments);
+
+    res.json({ success: true, appointments });
+  } catch (error) {
+    console.log("ERROR:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export {
+  registerUser,
+  loginUser,
+  getProfile,
+  updateProfile,
+  bookAppointment,
+  listAppointments,
+};

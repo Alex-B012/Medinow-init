@@ -26,7 +26,7 @@ const Appointment = () => {
   const loginUrl = auth_links.find((link) => link.name === "Login");
   const myAppointmentsUrl = auth_links.find(
     (link) => link.name === "My Appointments",
-  );
+  ).path;
 
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
@@ -64,10 +64,27 @@ const Appointment = () => {
           hour: "2-digit",
           minute: "2-digit",
         });
-        timeSlots.push({
-          datetime: new Date(currentDate),
-          time: formattedTime,
-        });
+
+        const day = currentDate.getDate();
+        const month = currentDate.getMonth() + 1;
+        const year = currentDate.getFullYear();
+
+        const slotDate = day + "_" + month + "_" + year;
+        const slotTime = formattedTime;
+
+        const isSlotAvailable =
+          docInfo.slots_booked[slotDate] &&
+          docInfo.slots_booked[slotDate].includes(slotTime)
+            ? false
+            : true;
+
+        if (isSlotAvailable) {
+          timeSlots.push({
+            datetime: new Date(currentDate),
+            time: formattedTime,
+          });
+        }
+
         currentDate.setMinutes(currentDate.getMinutes() + MINUTES);
       }
 
@@ -95,9 +112,9 @@ const Appointment = () => {
 
     try {
       const date = docSlots[selectedDayIndex].slots[selectedSlotIndex].datetime;
-      let day = date.getDate();
-      let month = date.getMonth() + 1;
-      let year = date.getFullYear();
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
 
       const slotDate = day + "_" + month + "_" + year;
       const slotTime = docSlots[selectedDayIndex].slots[selectedSlotIndex].time;
@@ -135,25 +152,8 @@ const Appointment = () => {
     }
 
     setError("");
-
     bookAppointment();
-
-    // const selectedDay = docSlots[selectedDayIndex];
-    // const selectedSlot = selectedDay.slots[selectedSlotIndex];
-
-    // const bookingData = {
-    //   doctorId: docInfo._id,
-    //   doctorName: docInfo.name,
-    //   specialty: docInfo.specialty,
-    //   date: selectedDay.date,
-    //   time: selectedSlot.time,
-    //   datetime: selectedSlot.datetime,
-    //   fees: docInfo.fees,
-    // };
-
-    // console.log("Booking Data:", bookingData);
-
-    setSuccess("Success - Review Console");
+    setSuccess("Success");
   };
 
   return (

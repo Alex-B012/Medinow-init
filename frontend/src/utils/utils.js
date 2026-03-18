@@ -23,6 +23,7 @@ export const navigateTo = (name, links, navigate) => {
   if (link) navigate(link.path);
 };
 
+// Get a required url by name from an array with link objects
 export const getUrlByName = (name, arr) => {
   return arr.find((obj) => obj.name === name)?.path;
 };
