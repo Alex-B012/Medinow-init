@@ -20,7 +20,8 @@ const getDoctorList = async (req, res) => {
   try {
     const doctors = await doctorModel
       .find({})
-      .select(["-email", "-password -__v -date -createdAt -updatedAt"]);
+      .select("-email -password -__v -date -createdAt -updatedAt");
+
     res.json({ success: true, doctors });
   } catch (error) {
     console.log("ERROR:", error);
@@ -28,4 +29,19 @@ const getDoctorList = async (req, res) => {
   }
 };
 
-export { changeAvailability, getDoctorList };
+const getDoctor = async (req, res) => {
+  try {
+    const { docId } = req.params;
+
+    const doctor = await doctorModel
+      .findById(docId)
+      .select("-email -password -__v -date -createdAt -updatedAt");
+
+    res.json({ success: true, doctor });
+  } catch (error) {
+    console.log("ERROR:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export { changeAvailability, getDoctorList, getDoctor };

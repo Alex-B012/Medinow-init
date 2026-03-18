@@ -27,3 +27,8 @@ export const navigateTo = (name, links, navigate) => {
 export const getUrlByName = (name, arr) => {
   return arr.find((obj) => obj.name === name)?.path;
 };
+
+// Get extract error message from a server or axios error response
+export const getErrorMessage = (error, text = "Something went wrong") => {
+  return error.response?.data?.message || error.message || text;
+};

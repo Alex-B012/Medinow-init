@@ -11,6 +11,7 @@ import AppointmentBtn from "./AppointmentBtn";
 import RelatedDoctors from "../../components/RelatedDoctors/RelatedDoctors";
 import SectionTitle from "../../components/Titles/SectionTitle";
 import Loading from "../../components/Loading";
+import { useEffect } from "react";
 
 const PERIOD = 7;
 const STARTTIME_DEFAULT = 10;
@@ -19,8 +20,8 @@ const MINUTES = 30;
 
 const Appointment = () => {
   const { docId } = useParams();
-  const { doctors, token, backendUrl, getDoctorData } = useContext(AppContext);
-  const docInfo = doctors.find((doctor) => doctor._id === docId);
+  const { token, backendUrl, getDoctorData } = useContext(AppContext);
+  const [docInfo, setDocInfo] = useState(null);
 
   const navigate = useNavigate();
   const loginUrl = auth_links.find((link) => link.name === "Login");
@@ -34,6 +35,8 @@ const Appointment = () => {
   const [success, setSuccess] = useState("");
 
   const docSlots = useMemo(() => {
+    if (!docInfo) return;
+
     const today = new Date();
     const allDays = [];
 
@@ -99,7 +102,7 @@ const Appointment = () => {
     }
 
     return allDays;
-  }, []);
+  }, [docInfo]);
 
   const formatDayLabel = (date) =>
     date.toLocaleDateString([], { weekday: "short", day: "numeric" });
@@ -124,8 +127,6 @@ const Appointment = () => {
         { docId, slotDate, slotTime },
         { headers: { token } },
       );
-
-      console.log("data", data);
 
       if (data.success) {
         toast.success(data.message);
@@ -155,6 +156,24 @@ const Appointment = () => {
     bookAppointment();
     setSuccess("Success");
   };
+
+  useEffect(() => {
+    const fetchDoctor = async () => {
+      try {
+        const { data } = await axios.get(
+          `${backendUrl}/api/doctor/get-doctor/${docId}`,
+        );
+
+        if (data.success) {
+          setDocInfo(data.doctor);
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    };
+
+    if (docId) fetchDoctor();
+  }, [docId, token, backendUrl]);
 
   return (
     <div className="appointment flex flex-col gap-6 items-center w-full py-8">
