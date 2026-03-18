@@ -6,15 +6,20 @@ import {
   loginUser,
   getProfile,
   updateProfile,
+  bookAppointment,
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
 
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
-userRouter.get("/profile", authUser, getProfile);
-userRouter.put("/profile", authUser, upload.single("image"), updateProfile);
+userRouter.post("/profile", authUser, getProfile);
+userRouter.post(
+  "/update-profile",
+  authUser,
+  upload.single("image"),
+  updateProfile,
+);
+userRouter.post("/book-appointment", authUser, bookAppointment);
 
 export default userRouter;
-
-// 9:45:44

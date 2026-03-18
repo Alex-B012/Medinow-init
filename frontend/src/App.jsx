@@ -16,6 +16,13 @@ import NotFound from "./pages/NotFound/NotFound";
 import Navbar from "./layouts/Navbar/Navbar";
 import Footer from "./layouts/Footer";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import { getUrlByName } from "./utils/utils.js";
+import {
+  appointment_links,
+  auth_links,
+  footer_links,
+  navbar_links,
+} from "./data/links.js";
 
 function App() {
   const location = useLocation();
@@ -26,22 +33,43 @@ function App() {
       <Navbar />
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/doctors" element={<Doctors />} />
+        <Route path={getUrlByName("Home", navbar_links)} element={<Home />} />
         <Route
-          path="/doctors/:specialty"
+          path={getUrlByName("All Doctors", navbar_links)}
+          element={<Doctors />}
+        />
+        <Route
+          path={`${getUrlByName("All Doctors", navbar_links)}/:specialty`}
           element={<Doctors key={location.pathname} />}
         />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/career" element={<Career />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/login" element={<LoginCreateAccount />} />
-        <Route path="/my-profile" element={<MyProfile />} />
-        <Route path="/my-appointments" element={<MyAppointments />} />
+        <Route path={getUrlByName("About", navbar_links)} element={<About />} />
         <Route
-          path="/appointment/:docId"
+          path={getUrlByName("Contact", navbar_links)}
+          element={<Contact />}
+        />
+        <Route
+          path={getUrlByName("Login", auth_links)}
+          element={<LoginCreateAccount />}
+        />
+        <Route
+          path={getUrlByName("My Profile", auth_links)}
+          element={<MyProfile />}
+        />
+        <Route
+          path={getUrlByName("My Appointments", auth_links)}
+          element={<MyAppointments />}
+        />
+        <Route
+          path={`${getUrlByName("Appointment", appointment_links)}/:docId`}
           element={<Appointment key={location.pathname} />}
+        />
+        <Route
+          path={getUrlByName("Career", footer_links)}
+          element={<Career />}
+        />
+        <Route
+          path={getUrlByName("Privacy Policy", footer_links)}
+          element={<PrivacyPolicy />}
         />
         <Route path="*" element={<NotFound />} />
       </Routes>

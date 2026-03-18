@@ -30,11 +30,30 @@ const AppContextProvider = ({ children }) => {
     fetchDoctors();
   }, [backendUrl]);
 
+  const getDoctorData = async () => {
+    try {
+      const { data } = await axios.get(backendUrl + "/api/doctor/list");
+
+      if (data.success) {
+        setDoctors(data.doctors);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
   const loadUserProfileData = useCallback(async () => {
     try {
-      const { data } = await axios.get(backendUrl + "/api/user/profile", {
-        headers: { token },
-      });
+      const { data } = await axios.post(
+        backendUrl + "/api/user/profile",
+        {},
+        {
+          headers: { token },
+        },
+      );
 
       if (!data.token) setUserData(false);
 
@@ -61,6 +80,7 @@ const AppContextProvider = ({ children }) => {
   const value = useMemo(
     () => ({
       doctors,
+      getDoctorData,
       currencySymbol,
       token,
       setToken,
@@ -76,3 +96,4 @@ const AppContextProvider = ({ children }) => {
 };
 
 export default AppContextProvider;
+// 11:40:27 - check doctor

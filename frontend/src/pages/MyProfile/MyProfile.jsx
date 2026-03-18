@@ -45,8 +45,8 @@ const MyProfile = () => {
 
       console.log("formData.address", formData.get("address"));
 
-      const { data } = await axios.put(
-        backendUrl + "/api/user/profile",
+      const { data } = await axios.post(
+        backendUrl + "/api/user/update-profile",
         formData,
         { headers: { token } },
       );

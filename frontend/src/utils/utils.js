@@ -22,3 +22,7 @@ export const navigateTo = (name, links, navigate) => {
   const link = links.find((item) => item.name === name);
   if (link) navigate(link.path);
 };
+
+export const getUrlByName = (name, arr) => {
+  return arr.find((obj) => obj.name === name)?.path;
+};

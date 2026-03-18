@@ -1,6 +1,9 @@
 import { useContext, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { auth_links } from "../../data/links";
 import { AppContext } from "../../context/AppContext";
+import axios from "axios";
 
 import AppointmentDoctorDetails from "./AppointmentDoctorDetails";
 import AppointmentDoctorImg from "./AppointmentDoctorImg";
@@ -16,8 +19,14 @@ const MINUTES = 30;
 
 const Appointment = () => {
   const { docId } = useParams();
-  const { doctors } = useContext(AppContext);
-  const docInfo = doctors.find((doctor) => doctor._id === Number(docId));
+  const { doctors, token, backendUrl, getDoctorData } = useContext(AppContext);
+  const docInfo = doctors.find((doctor) => doctor._id === docId);
+
+  const navigate = useNavigate();
+  const loginUrl = auth_links.find((link) => link.name === "Login");
+  const myAppointmentsUrl = auth_links.find(
+    (link) => link.name === "My Appointments",
+  );
 
   const [selectedDayIndex, setSelectedDayIndex] = useState(0);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
@@ -78,6 +87,46 @@ const Appointment = () => {
   const formatDayLabel = (date) =>
     date.toLocaleDateString([], { weekday: "short", day: "numeric" });
 
+  const bookAppointment = async () => {
+    if (!token) {
+      toast.warn("Login to book appointment");
+      return navigate(loginUrl.path);
+    }
+
+    try {
+      const date = docSlots[selectedDayIndex].slots[selectedSlotIndex].datetime;
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+
+      const slotDate = day + "_" + month + "_" + year;
+      const slotTime = docSlots[selectedDayIndex].slots[selectedSlotIndex].time;
+
+      const { data } = await axios.post(
+        backendUrl + "/api/user/book-appointment",
+        { docId, slotDate, slotTime },
+        { headers: { token } },
+      );
+
+      console.log("data", data);
+
+      if (data.success) {
+        toast.success(data.message);
+        getDoctorData();
+        navigate(myAppointmentsUrl);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        "Something went wrong";
+      console.log("ERROR:", message);
+      toast.error(message);
+    }
+  };
+
   const handleBooking = () => {
     if (selectedSlotIndex === null) {
       setError("Please select a time slot before booking.");
@@ -87,20 +136,23 @@ const Appointment = () => {
 
     setError("");
 
-    const selectedDay = docSlots[selectedDayIndex];
-    const selectedSlot = selectedDay.slots[selectedSlotIndex];
+    bookAppointment();
 
-    const bookingData = {
-      doctorId: docInfo._id,
-      doctorName: docInfo.name,
-      specialty: docInfo.specialty,
-      date: selectedDay.date,
-      time: selectedSlot.time,
-      datetime: selectedSlot.datetime,
-      fees: docInfo.fees,
-    };
+    // const selectedDay = docSlots[selectedDayIndex];
+    // const selectedSlot = selectedDay.slots[selectedSlotIndex];
 
-    console.log("Booking Data:", bookingData);
+    // const bookingData = {
+    //   doctorId: docInfo._id,
+    //   doctorName: docInfo.name,
+    //   specialty: docInfo.specialty,
+    //   date: selectedDay.date,
+    //   time: selectedSlot.time,
+    //   datetime: selectedSlot.datetime,
+    //   fees: docInfo.fees,
+    // };
+
+    // console.log("Booking Data:", bookingData);
+
     setSuccess("Success - Review Console");
   };
 

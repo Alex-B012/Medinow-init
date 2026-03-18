@@ -2,9 +2,15 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 
 import TitleDescription from "../../components/Titles/TitleDescription";
+import Loading from "../../components/Loading";
+
+const NO_APPOINTMENTS = "No appointments found";
 
 const MyAppointments = () => {
   const { doctors } = useContext(AppContext);
+  const doctors_filtered = doctors.filter(
+    (doctor) => Object.keys(doctor.slots_booked || {}).length > 0,
+  );
 
   return (
     <div className="my-appointments w-full pb-10 flex flex-col gap-6">
@@ -14,10 +20,13 @@ const MyAppointments = () => {
         My Appointment
       </p>
 
-      {doctors.slice(0, 2).map((doctor) => (
+      {!doctors_filtered ||
+        (doctors_filtered.length === 0 && <Loading text={NO_APPOINTMENTS} />)}
+
+      {doctors_filtered.map((doctor) => (
         <div
           className="my-appointments__card pb-8 py-2 flex flex-col items-center gap-8 border-b border-gray-300 sm:flex-row sm:items-start"
-          key={doctor.id}
+          key={doctor._id}
         >
           <img className="my-appointments__img w-40 h-56" src={doctor.image} />
 
