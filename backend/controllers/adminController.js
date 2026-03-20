@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 import doctorModel from "../models/doctorModel.js";
 import appointmentModel from "../models/appointmentModel.js";
+import userModel from "../models/userModel.js";
 
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
 
@@ -105,7 +106,9 @@ const getAllDoctors = async (req, res) => {
 const appointmentsAdmin = async (req, res) => {
   console.log("appointmentsAdmin - start");
   try {
-    const appointments = await appointmentModel.find({});
+    const appointments = await appointmentModel
+      .find({})
+      .select("-__v -date -createdAt -updatedAt");
     res.json({ success: true, appointments });
   } catch (error) {
     handleServerError(res, error);
@@ -118,14 +121,18 @@ const appointmentCancelAdmin = async (req, res) => {
   try {
     const { appointmentId } = req.body;
 
-    const appointmentData = await appointmentModel.findById(appointmentId);
+    const appointmentData = await appointmentModel
+      .findById(appointmentId)
+      .select("-__v -date -createdAt -updatedAt");
 
     await appointmentModel.findByIdAndUpdate(appointmentId, {
       cancelled: true,
     });
 
     const { docId, slotDate, slotTime } = appointmentData;
-    const doctorData = await doctorModel.findById(docId);
+    const doctorData = await doctorModel
+      .findById(docId)
+      .select("-password -__v -date -createdAt -updatedAt");
 
     let slots_booked = doctorData.slots_booked;
 
@@ -141,10 +148,38 @@ const appointmentCancelAdmin = async (req, res) => {
   }
 };
 
+//API to get dashboard data for Admin panel
+const adminDashboard = async (req, res) => {
+  try {
+    const doctors = await doctorModel
+      .find({})
+      .select("-password -__v -date -createdAt -updatedAt");
+
+    const users = await userModel
+      .find({})
+      .select("-password -__v -date -createdAt -updatedAt");
+
+    const appointments = await appointmentModel
+      .find({})
+      .select("-__v -date -createdAt -updatedAt");
+
+    const dashboardData = {
+      doctors: doctors.length,
+      appointments: appointments.length,
+      patients: users.length,
+      latestAppointments: [...appointments].reverse().slice(0, 5),
+    };
+    res.json({ success: true, dashboardData });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
 export {
   addDoctor,
   loginAdmin,
   getAllDoctors,
   appointmentsAdmin,
   appointmentCancelAdmin,
+  adminDashboard,
 };

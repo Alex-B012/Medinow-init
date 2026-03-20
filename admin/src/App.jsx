@@ -8,7 +8,7 @@ import Login from "./pages/Login/Login.jsx";
 import Navbar from "./layouts/Navbar.jsx";
 import SideBar from "./layouts/SideBar.jsx";
 
-import Dashboard from "./pages/Admin/Dashboard.jsx";
+import Dashboard from "./pages/Admin/Dashboard/Dashboard.jsx";
 import AllAppointment from "./pages/Admin/AllAppointments/AllAppointments.jsx";
 import AddDoctor from "./pages/Admin/AddDoctor.jsx";
 import DoctorsList from "./pages/Admin/DoctorsList.jsx";

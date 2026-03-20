@@ -10,6 +10,7 @@ const AdminContextProvider = ({ children }) => {
   );
   const [doctors, setDoctors] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [dashboardData, setDashboardData] = useState(false);
 
   const adminApi = "/api/admin";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -17,9 +18,8 @@ const AdminContextProvider = ({ children }) => {
   // API to get all the doctors for the Admin panel
   const getAllDoctors = useCallback(async () => {
     if (!aToken) {
-      if (import.meta.env.MODE === "development") {
+      if (import.meta.env.MODE === "development")
         console.warn("Skipping getAllDoctors: no token");
-      }
       return;
     }
 
@@ -44,9 +44,8 @@ const AdminContextProvider = ({ children }) => {
   // API to change the availability of a doctor on the Admin panel
   const changeAvailability = async (docId) => {
     if (!aToken) {
-      if (import.meta.env.MODE === "development") {
+      if (import.meta.env.MODE === "development")
         console.warn("Skipping changeAvailability: no token");
-      }
       return;
     }
 
@@ -71,9 +70,8 @@ const AdminContextProvider = ({ children }) => {
   // API to get all the appointments for the Admin panel
   const getAllAppointments = useCallback(async () => {
     if (!aToken) {
-      if (import.meta.env.MODE === "development") {
+      if (import.meta.env.MODE === "development")
         console.warn("Skipping getAllAppointments: no token");
-      }
       return;
     }
 
@@ -86,7 +84,6 @@ const AdminContextProvider = ({ children }) => {
 
       if (data.success) {
         setAppointments(data.appointments);
-        console.log("Appointments fetched:", data.appointments);
       } else {
         toast.error(data.message);
       }
@@ -100,9 +97,8 @@ const AdminContextProvider = ({ children }) => {
     console.log("cancelAppointment - start");
 
     if (!aToken) {
-      if (import.meta.env.MODE === "development") {
+      if (import.meta.env.MODE === "development")
         console.warn("Skipping cancelAppointment: no token");
-      }
       return;
     }
 
@@ -124,6 +120,32 @@ const AdminContextProvider = ({ children }) => {
     }
   };
 
+  const getDashboardData = useCallback(async () => {
+    console.log("getDashboardData - start");
+
+    if (!aToken) {
+      if (import.meta.env.MODE === "development")
+        console.warn("Skipping getDashboardData: no token");
+      return;
+    }
+    try {
+      const { data } = await axios.post(
+        backendUrl + `${adminApi}/dashboard`,
+        {},
+        { headers: { a_token: aToken } },
+      );
+
+      if (data.success) {
+        setDashboardData(data.dashboardData);
+        console.log("dashboardData:", data.dashboardData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }, [aToken, backendUrl]);
+
   const value = {
     aToken,
     setAToken,
@@ -135,6 +157,8 @@ const AdminContextProvider = ({ children }) => {
     setAppointments,
     getAllAppointments,
     cancelAppointment,
+    dashboardData,
+    getDashboardData,
   };
 
   return (
