@@ -39,7 +39,11 @@ const Dashboard = () => {
         <Loading text={"No data found"} />
       )}
       <div className="mt-12"></div>
-      {dashboardData && <AdminContent></AdminContent>}
+      {dashboardData && (
+        <AdminContent>
+          <div></div>
+        </AdminContent>
+      )}
     </div>
   );
 };
