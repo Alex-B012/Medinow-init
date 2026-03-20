@@ -6,16 +6,16 @@ import "./index.css";
 import App from "./App.jsx";
 import AdminContextProvider from "./context/AdminContextProvider.jsx";
 import DoctorContextProvider from "./context/DoctorContextProvider.jsx";
-import AppContextProvider from "./context/AppContextProvider.jsx";
+import ApplicationContextProvider from "./context/ApplicationContextProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AdminContextProvider>
         <DoctorContextProvider>
-          <AppContextProvider>
+          <ApplicationContextProvider>
             <App />
-          </AppContextProvider>
+          </ApplicationContextProvider>
         </DoctorContextProvider>
       </AdminContextProvider>
     </BrowserRouter>

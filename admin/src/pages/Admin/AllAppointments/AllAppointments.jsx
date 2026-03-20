@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AdminContext } from "../../../context/AppContext";
+import { AdminContext, ApplicationContext } from "../../../context/AppContext";
 import { useEffect } from "react";
 
 import AdminTitle from "../components/AdminTitle";
@@ -8,7 +8,9 @@ import TableHeaderCell from "./TableHeaderCell";
 import TableBodyRow from "./TableBodyRow";
 
 const AllAppointments = () => {
-  const { aToken, appointments, getAllAppointments } = useContext(AdminContext);
+  const { aToken, appointments, getAllAppointments, cancelAppointment } =
+    useContext(AdminContext);
+  const { currency } = useContext(ApplicationContext);
 
   useEffect(() => {
     if (aToken) {
@@ -34,7 +36,11 @@ const AllAppointments = () => {
         <div className="appointments__body py-3">
           {appointments.map((appointment, idx) => (
             <TableBodyRow
-              data={appointment}
+              componentData={{
+                data: appointment,
+                currency: currency,
+                cancel_appointment: cancelAppointment,
+              }}
               number={idx + 1}
               key={appointment._id}
             />

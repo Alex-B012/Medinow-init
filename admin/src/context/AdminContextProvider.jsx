@@ -16,6 +16,13 @@ const AdminContextProvider = ({ children }) => {
 
   // API to get all the doctors for the Admin panel
   const getAllDoctors = useCallback(async () => {
+    if (!aToken) {
+      if (import.meta.env.MODE === "development") {
+        console.warn("Skipping getAllDoctors: no token");
+      }
+      return;
+    }
+
     try {
       const { data } = await axios.post(
         backendUrl + `${adminApi}/all-doctors`,
@@ -36,6 +43,13 @@ const AdminContextProvider = ({ children }) => {
 
   // API to change the availability of a doctor on the Admin panel
   const changeAvailability = async (docId) => {
+    if (!aToken) {
+      if (import.meta.env.MODE === "development") {
+        console.warn("Skipping changeAvailability: no token");
+      }
+      return;
+    }
+
     try {
       const { data } = await axios.post(
         backendUrl + `${adminApi}/change-availability`,
@@ -56,7 +70,12 @@ const AdminContextProvider = ({ children }) => {
 
   // API to get all the appointments for the Admin panel
   const getAllAppointments = useCallback(async () => {
-    if (!aToken) return;
+    if (!aToken) {
+      if (import.meta.env.MODE === "development") {
+        console.warn("Skipping getAllAppointments: no token");
+      }
+      return;
+    }
 
     try {
       const { data } = await axios.post(
@@ -76,6 +95,35 @@ const AdminContextProvider = ({ children }) => {
     }
   }, [aToken, backendUrl]);
 
+  // API to cancel an appointment on the Admin panel
+  const cancelAppointment = async (appointmentId) => {
+    console.log("cancelAppointment - start");
+
+    if (!aToken) {
+      if (import.meta.env.MODE === "development") {
+        console.warn("Skipping cancelAppointment: no token");
+      }
+      return;
+    }
+
+    try {
+      const { data } = await axios.post(
+        backendUrl + `${adminApi}/cancel-appointment`,
+        { appointmentId },
+        { headers: { a_token: aToken } },
+      );
+
+      if (data.success) {
+        getAllAppointments();
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   const value = {
     aToken,
     setAToken,
@@ -86,6 +134,7 @@ const AdminContextProvider = ({ children }) => {
     appointments,
     setAppointments,
     getAllAppointments,
+    cancelAppointment,
   };
 
   return (
