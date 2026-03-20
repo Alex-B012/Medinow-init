@@ -238,6 +238,7 @@ const razorpayInstance = new razorpay({
 
 // API to make a payment for an appointment using Razorpay
 const paymentRazorpay = async (req, res) => {
+  console.log("paymentRazorpay");
   try {
     const { appointmentId } = req.body;
     const appointmentData = await appointmentModel.findById(appointmentId);
@@ -260,7 +261,13 @@ const paymentRazorpay = async (req, res) => {
       receipt: appointmentId,
     };
 
-    const order = await razorpayInstance.orders.create(options);
+    const order = await new Promise((resolve, reject) => {
+      razorpayInstance.orders.create(options, (err, order) => {
+        if (err) reject(err);
+        else resolve(order);
+      });
+    });
+
     res.json({ success: true, order });
   } catch (error) {
     handleServerError(res, error);
@@ -268,13 +275,22 @@ const paymentRazorpay = async (req, res) => {
 };
 
 // API to verify payment of Razorpay
-
 const verifyRazorpay = async (req, res) => {
+  console.log("verifyRazorpay");
   try {
     const { razorpay_order_id } = req.body;
     const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
 
-    console.log(orderInfo);
+    // console.log(orderInfo);
+
+    if (orderInfo.status === "paid") {
+      await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {
+        payment: true,
+      });
+      res.json({ success: true, message: "Payment successful" });
+    } else {
+      res.json({ success: false, message: "Payment failed" });
+    }
   } catch (error) {
     handleServerError(res, error);
   }

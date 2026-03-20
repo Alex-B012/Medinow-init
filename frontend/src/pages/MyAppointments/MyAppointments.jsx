@@ -1,18 +1,23 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import axios from "axios";
 
-import TitleDescription from "../../components/Titles/TitleDescription";
-import Loading from "../../components/Loading";
 import { toast } from "react-toastify";
 import { getAppointmentDateAndTime } from "../../utils/appointment";
-import { displayErrorMessage } from "../../utils/utils";
+import { displayErrorMessage, getUrlByName } from "../../utils/utils";
+import { auth_links } from "../../data/links";
+
+import TitleDescription from "../../components/Titles/TitleDescription";
+import Loading from "../../components/Loading";
 
 const NO_APPOINTMENTS = "No appointments found";
 
 const MyAppointments = () => {
   const { backendUrl, token } = useContext(AppContext);
   const [appointments, setAppointments] = useState([]);
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
   const [cancelLoading, setCancelLoading] = useState(null);
 
@@ -100,6 +105,21 @@ const MyAppointments = () => {
       receipt: order.receipt,
       handler: async (response) => {
         console.log("response:", response);
+
+        try {
+          const { data } = await axios.post(
+            backendUrl + "/api/user/verify-razorpay",
+            response,
+            { headers: { token } },
+          );
+
+          if (data.success) {
+            getUserAppointments();
+            navigate(getUrlByName("My Appointments"));
+          }
+        } catch (error) {
+          displayErrorMessage(error);
+        }
       },
     };
     const rzp = new window.Razorpay(options);
@@ -108,6 +128,8 @@ const MyAppointments = () => {
   };
 
   const appointmentRazorpay = async (appointmentId) => {
+    console.log("appointmentRazorpay - start");
+
     try {
       const { data } = await axios.post(
         backendUrl + "/api/user/payment-razorpay",
@@ -178,12 +200,18 @@ const MyAppointments = () => {
             <div className="m-auto"></div>
             {!item.cancelled ? (
               <div className=" flex gap-6 justify-end sm:h-56 sm:flex-col">
-                <button
-                  className="px-2 py-1 text-stone-500 text-center border rounded cursor-pointer hover:border-emerald-400 hover:bg-emerald-400 hover:text-white transition-colors duration-700 min-[400px]:py-2 min-[400px]:px-4"
-                  onClick={() => appointmentRazorpay(item._id)}
-                >
-                  Pay Online
-                </button>
+                {item.payment ? (
+                  <button className="px-2 py-1 bg-emerald-50 text-stone-500 text-center border rounded  min-[400px]:py-2 min-[400px]:px-4">
+                    Paid
+                  </button>
+                ) : (
+                  <button
+                    className="px-2 py-1 text-stone-500 text-center border rounded cursor-pointer hover:border-emerald-400 hover:bg-emerald-400 hover:text-white transition-colors duration-700 min-[400px]:py-2 min-[400px]:px-4"
+                    onClick={() => appointmentRazorpay(item._id)}
+                  >
+                    Pay Online
+                  </button>
+                )}
 
                 <button
                   className="px-2 py-1 text-stone-500 text-center border rounded cursor-pointer hover:border-red-400 hover:bg-red-400 hover:text-white transition-colors duration-700 min-[400px]:py-2 min-[400px]:px-4"
