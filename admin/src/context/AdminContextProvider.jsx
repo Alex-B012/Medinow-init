@@ -9,13 +9,16 @@ const AdminContextProvider = ({ children }) => {
     localStorage.getItem("aToken") ? localStorage.getItem("aToken") : "",
   );
   const [doctors, setDoctors] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
+  const adminApi = "/api/admin";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
+  // API to get all the doctors for the Admin panel
   const getAllDoctors = useCallback(async () => {
     try {
       const { data } = await axios.post(
-        backendUrl + "/api/admin/all-doctors",
+        backendUrl + `${adminApi}/all-doctors`,
         {},
         { headers: { a_token: aToken } },
       );
@@ -31,10 +34,11 @@ const AdminContextProvider = ({ children }) => {
     }
   }, [aToken, backendUrl]);
 
+  // API to change the availability of a doctor on the Admin panel
   const changeAvailability = async (docId) => {
     try {
       const { data } = await axios.post(
-        backendUrl + "/api/admin/change-availability",
+        backendUrl + `${adminApi}/change-availability`,
         { docId },
         { headers: { a_token: aToken } },
       );
@@ -50,6 +54,28 @@ const AdminContextProvider = ({ children }) => {
     }
   };
 
+  // API to get all the appointments for the Admin panel
+  const getAllAppointments = useCallback(async () => {
+    if (!aToken) return;
+
+    try {
+      const { data } = await axios.post(
+        backendUrl + `${adminApi}/all-appointments`,
+        {},
+        { headers: { a_token: aToken } },
+      );
+
+      if (data.success) {
+        setAppointments(data.appointments);
+        console.log("Appointments fetched:", data.appointments);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }, [aToken, backendUrl]);
+
   const value = {
     aToken,
     setAToken,
@@ -57,6 +83,9 @@ const AdminContextProvider = ({ children }) => {
     doctors,
     getAllDoctors,
     changeAvailability,
+    appointments,
+    setAppointments,
+    getAllAppointments,
   };
 
   return (

@@ -257,5 +257,3 @@ export const doctorsData = [
     },
   },
 ];
-
-console.log("doctors:", doctorsData);

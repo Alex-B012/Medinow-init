@@ -35,7 +35,6 @@ const registerUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Enter a strong password" });
 
-    //hashing user password
     const salt = await bcrypt.genSalt(BCRYPT_ROUNDS);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -280,8 +279,6 @@ const verifyRazorpay = async (req, res) => {
   try {
     const { razorpay_order_id } = req.body;
     const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
-
-    // console.log(orderInfo);
 
     if (orderInfo.status === "paid") {
       await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {

@@ -1,0 +1,48 @@
+import { useContext } from "react";
+import { AdminContext } from "../../../context/AppContext";
+import { useEffect } from "react";
+
+import AdminTitle from "../components/AdminTitle";
+import AdminContent from "../components/AdminContent";
+import TableHeaderCell from "./TableHeaderCell";
+import TableBodyRow from "./TableBodyRow";
+
+const AllAppointments = () => {
+  const { aToken, appointments, getAllAppointments } = useContext(AdminContext);
+
+  useEffect(() => {
+    if (aToken) {
+      getAllAppointments();
+    }
+  }, [aToken, getAllAppointments]);
+
+  return (
+    <div className="appointments w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
+      <AdminTitle title={"All Appointments"} />
+      <AdminContent>
+        <div className="appointments__table"></div>
+        <div className="appointments__header py-3 px-0 hidden border-b sm:grid grid-cols-[0.5fr_3fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col ">
+          <TableHeaderCell data={"#"} text_position={"center"} />
+          <TableHeaderCell data={"Patient"} />
+          <TableHeaderCell data={"Age"} text_position={"center"} />
+          <TableHeaderCell data={"Date & Time"} text_position={"center"} />
+          <TableHeaderCell data={"Doctor"} text_position={"center"} />
+          <TableHeaderCell data={"Fees"} text_position={"center"} />
+          <TableHeaderCell data={"Actions"} />
+        </div>
+
+        <div className="appointments__body py-3">
+          {appointments.map((appointment, idx) => (
+            <TableBodyRow
+              data={appointment}
+              number={idx + 1}
+              key={appointment._id}
+            />
+          ))}
+        </div>
+      </AdminContent>
+    </div>
+  );
+};
+
+export default AllAppointments;

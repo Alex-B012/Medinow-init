@@ -70,7 +70,6 @@ const MyAppointments = () => {
   };
 
   const cancelAppointment = async (appointmentId) => {
-    console.log("appointmentId:", appointmentId);
     try {
       setCancelLoading(appointmentId);
       const { data } = await axios.post(
@@ -115,7 +114,7 @@ const MyAppointments = () => {
 
           if (data.success) {
             getUserAppointments();
-            navigate(getUrlByName("My Appointments"));
+            navigate(getUrlByName("My Appointments", auth_links));
           }
         } catch (error) {
           displayErrorMessage(error);
@@ -124,12 +123,9 @@ const MyAppointments = () => {
     };
     const rzp = new window.Razorpay(options);
     rzp.open();
-    // console.log("options", options);
   };
 
   const appointmentRazorpay = async (appointmentId) => {
-    console.log("appointmentRazorpay - start");
-
     try {
       const { data } = await axios.post(
         backendUrl + "/api/user/payment-razorpay",
@@ -137,10 +133,7 @@ const MyAppointments = () => {
         { headers: token },
       );
 
-      if (data.success) {
-        // console.log("data.order", data.order);
-        initPay(data.order);
-      }
+      if (data.success) initPay(data.order);
     } catch (error) {
       displayErrorMessage(error);
     }

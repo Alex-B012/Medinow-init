@@ -11,5 +11,11 @@ export const getAppointmentDateAndTime = (dateStr, time) => {
     year: "numeric",
   }).format(date);
 
-  return `${formattedDate}${time ? ` | ${time}` : ""}`;
+  let formattedTime = "";
+
+  if (time) {
+    formattedTime = time.replace(/^0(\d:)/, "$1");
+  }
+
+  return `${formattedDate}${formattedTime ? ` | ${formattedTime}` : ""}`;
 };

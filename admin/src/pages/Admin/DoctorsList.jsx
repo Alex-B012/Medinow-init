@@ -16,7 +16,6 @@ const DoctorsList = () => {
   return (
     <div className="doctors-list w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
       <AdminTitle title={"All Doctors"} />
-      8:19:21
       <AdminContent>
         <div className="doctors-list__list w-full max-h-[80vh] py-6 flex flex-wrap justify-evenly gap-8 overflow-y-scroll lg:justify-start xl:gap-12 xl:px-6">
           {doctors.map((item) => (
@@ -31,6 +30,7 @@ const DoctorsList = () => {
               />
               <p className="font-semibold pt-2 text-lg">{item.name}</p>
               <p className="text-gray-700">{item.specialty}</p>
+
               <div className="mt-2 flex px-3">
                 <input
                   className="mr-2"

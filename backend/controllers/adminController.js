@@ -5,11 +5,12 @@ import { v2 as cloudinary } from "cloudinary";
 import jwt from "jsonwebtoken";
 
 import doctorModel from "../models/doctorModel.js";
+import appointmentModel from "../models/appointmentModel.js";
 
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
 
-//add doctor
-export const addDoctor = async (req, res) => {
+//API to add a doctor
+const addDoctor = async (req, res) => {
   console.log("AddDoctor");
   try {
     const {
@@ -68,8 +69,8 @@ export const addDoctor = async (req, res) => {
   }
 };
 
-//API for admin Login
-export const loginAdmin = async (req, res) => {
+//API for admin login
+const loginAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -88,7 +89,7 @@ export const loginAdmin = async (req, res) => {
 };
 
 //API to fetch all doctors for the admin panel
-export const getAllDoctors = async (req, res) => {
+const getAllDoctors = async (req, res) => {
   console.log("getAllDoctors");
   try {
     const doctors = await doctorModel
@@ -99,3 +100,16 @@ export const getAllDoctors = async (req, res) => {
     handleServerError(res, error);
   }
 };
+
+//API to get all appointments list
+const appointmentsAdmin = async (req, res) => {
+  console.log("appointmentsAdmin - start");
+  try {
+    const appointments = await appointmentModel.find({});
+    res.json({ success: true, appointments });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
+export { addDoctor, loginAdmin, getAllDoctors, appointmentsAdmin };
