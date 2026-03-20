@@ -1,4 +1,5 @@
 import doctorModel from "../models/doctorModel.js";
+import { handleServerError } from "../utils/utils.js";
 
 const changeAvailability = async (req, res) => {
   console.log("changeAvailability");
@@ -10,8 +11,7 @@ const changeAvailability = async (req, res) => {
     });
     res.json({ success: true, message: "Availability Changed" });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -24,8 +24,7 @@ const getDoctorList = async (req, res) => {
 
     res.json({ success: true, doctors });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -39,8 +38,7 @@ const getDoctor = async (req, res) => {
 
     res.json({ success: true, doctor });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 

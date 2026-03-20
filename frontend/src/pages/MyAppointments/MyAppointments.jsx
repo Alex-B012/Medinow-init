@@ -6,7 +6,7 @@ import TitleDescription from "../../components/Titles/TitleDescription";
 import Loading from "../../components/Loading";
 import { toast } from "react-toastify";
 import { getAppointmentDateAndTime } from "../../utils/appointment";
-import { getErrorMessage } from "../../utils/utils";
+import { displayErrorMessage } from "../../utils/utils";
 
 const NO_APPOINTMENTS = "No appointments found";
 
@@ -34,8 +34,7 @@ const MyAppointments = () => {
           setAppointments([...data.appointments].reverse());
         }
       } catch (error) {
-        console.log("ERROR:", error);
-        toast.error(getErrorMessage(error));
+        displayErrorMessage(error);
       } finally {
         setLoading(false);
       }
@@ -59,8 +58,7 @@ const MyAppointments = () => {
         setAppointments([...data.appointments].reverse());
       }
     } catch (error) {
-      console.log("ERROR:", error);
-      toast.error(getErrorMessage(error));
+      displayErrorMessage(error);
     } finally {
       setLoading(false);
     }
@@ -85,17 +83,50 @@ const MyAppointments = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      console.log("ERROR:", error);
-      toast.error(getErrorMessage(error));
+      displayErrorMessage(error);
     } finally {
       setCancelLoading(null);
+    }
+  };
+
+  const initPay = (order) => {
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      name: "Appointment Payment",
+      description: "Appointment Payment Description",
+      order_id: order.id,
+      receipt: order.receipt,
+      handler: async (response) => {
+        console.log("response:", response);
+      },
+    };
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+    // console.log("options", options);
+  };
+
+  const appointmentRazorpay = async (appointmentId) => {
+    try {
+      const { data } = await axios.post(
+        backendUrl + "/api/user/payment-razorpay",
+        { appointmentId },
+        { headers: token },
+      );
+
+      if (data.success) {
+        // console.log("data.order", data.order);
+        initPay(data.order);
+      }
+    } catch (error) {
+      displayErrorMessage(error);
     }
   };
 
   return (
     <div className="my-appointments w-full pb-10 flex flex-col gap-6">
       <TitleDescription title={"My Appointments"} case_class={"uppercase"} />
-      11:34:31
       <p className="my-appointments__text pb-3 font-medium text-zinc-600 border-b border-gray-300  ">
         My Appointment
       </p>
@@ -147,7 +178,10 @@ const MyAppointments = () => {
             <div className="m-auto"></div>
             {!item.cancelled ? (
               <div className=" flex gap-6 justify-end sm:h-56 sm:flex-col">
-                <button className="px-2 py-1 text-stone-500 text-center border rounded cursor-pointer hover:border-emerald-400 hover:bg-emerald-400 hover:text-white transition-colors duration-700 min-[400px]:py-2 min-[400px]:px-4">
+                <button
+                  className="px-2 py-1 text-stone-500 text-center border rounded cursor-pointer hover:border-emerald-400 hover:bg-emerald-400 hover:text-white transition-colors duration-700 min-[400px]:py-2 min-[400px]:px-4"
+                  onClick={() => appointmentRazorpay(item._id)}
+                >
                   Pay Online
                 </button>
 

@@ -1,7 +1,9 @@
 import validator from "validator";
 import bcrypt from "bcrypt";
+import { handleServerError } from "../utils/utils.js";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
+import razorpay from "razorpay";
 
 import userModel from "../models/userModel.js";
 import doctorModel from "../models/doctorModel.js";
@@ -50,8 +52,7 @@ const registerUser = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.json({ success: true, token });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -76,8 +77,7 @@ const loginUser = async (req, res) => {
       res.status(401).json({ success: false, message: INVALID_CREDENTIALS });
     }
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -91,8 +91,7 @@ const getProfile = async (req, res) => {
 
     res.json({ success: true, userData });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -126,8 +125,7 @@ const updateProfile = async (req, res) => {
 
     res.json({ success: true, message: "Profile updated" });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -181,8 +179,7 @@ const bookAppointment = async (req, res) => {
 
     res.json({ success: true, message: "Appointment Booked" });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -195,13 +192,11 @@ const listAppointments = async (req, res) => {
 
     res.json({ success: true, appointments });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
 // API to cancel an appointment on the My Appointments page
-
 const cancelAppointment = async (req, res) => {
   console.log("cancelAppointment");
   try {
@@ -232,10 +227,59 @@ const cancelAppointment = async (req, res) => {
 
     res.json({ success: true, message: "Appointment Cancelled" });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
+
+const razorpayInstance = new razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+// API to make a payment for an appointment using Razorpay
+const paymentRazorpay = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const appointmentData = await appointmentModel.findById(appointmentId);
+
+    if (!appointmentData)
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found",
+      });
+
+    if (appointmentData.cancelled)
+      return res.status(400).json({
+        success: false,
+        message: "Appointment is cancelled",
+      });
+
+    const options = {
+      amount: appointmentData.amount * 100,
+      currency: process.env.RAZORPAY_CURRENCY,
+      receipt: appointmentId,
+    };
+
+    const order = await razorpayInstance.orders.create(options);
+    res.json({ success: true, order });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
+// API to verify payment of Razorpay
+
+const verifyRazorpay = async (req, res) => {
+  try {
+    const { razorpay_order_id } = req.body;
+    const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+
+    console.log(orderInfo);
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
 export {
   registerUser,
   loginUser,
@@ -244,4 +288,6 @@ export {
   bookAppointment,
   listAppointments,
   cancelAppointment,
+  paymentRazorpay,
+  verifyRazorpay,
 };

@@ -1,8 +1,10 @@
 import bcrypt from "bcrypt";
+import { handleServerError } from "../utils/utils.js";
+import validateDoctorData from "../utils/utilsDoctor.js";
 import { v2 as cloudinary } from "cloudinary";
-import doctorModel from "../models/doctorModel.js";
-import validateDoctorData from "../utils.js/utilsDoctor.js";
 import jwt from "jsonwebtoken";
+
+import doctorModel from "../models/doctorModel.js";
 
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
 
@@ -62,8 +64,7 @@ export const addDoctor = async (req, res) => {
 
     res.json({ success: true, message: "Doctor added" });
   } catch (error) {
-    console.log("ERROR message:", error.message);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -82,8 +83,7 @@ export const loginAdmin = async (req, res) => {
       res.json({ success: false, message: "Invalid credentials" });
     }
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };
 
@@ -96,7 +96,6 @@ export const getAllDoctors = async (req, res) => {
       .select("-password -__v -date -createdAt -updatedAt");
     res.json({ success: true, doctors });
   } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ success: false, message: error.message });
+    handleServerError(res, error);
   }
 };

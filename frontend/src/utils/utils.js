@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 //Format the doctor's specialty
 export const formatSpecialty = (str = "") => {
   const withSpace = str.replace("-", " ").toLowerCase();
@@ -31,4 +33,10 @@ export const getUrlByName = (name, arr) => {
 // Get extract error message from a server or axios error response
 export const getErrorMessage = (error, text = "Something went wrong") => {
   return error.response?.data?.message || error.message || text;
+};
+
+// Display an error message in the catch(error) block
+export const displayErrorMessage = (error, text) => {
+  console.error("ERROR:", error);
+  toast.error(getErrorMessage(error, text));
 };
