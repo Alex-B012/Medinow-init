@@ -7,6 +7,7 @@ import upload_area from "./icons/admin_upload_person.webp";
 import cancel_icon from "./icons/cancel_btn.webp";
 import doctor_icon from "./icons/dashboard_doctor.webp";
 import list_icon from "./icons/dashboard_appointments.webp";
+import patients_icon from "./icons/dashboard_patient.webp";
 
 import doc1 from "./images/doctors/doctor_1.webp";
 import doc2 from "./images/doctors/doctor_2.webp";
@@ -32,7 +33,7 @@ export const assets = {
   doctor_icon,
   upload_area,
   home_icon,
-  //   patients_icon,
+  patients_icon,
   people_icon,
   list_icon,
   //   tick_icon,

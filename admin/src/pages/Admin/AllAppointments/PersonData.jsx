@@ -6,7 +6,7 @@ const PersonData = ({ name, image, doctor = false }) => {
         src={image}
         alt={name}
       />
-      <div className="person-data__name w-full h-full text-center xl:text-left xl:pl-3 2xl:flex 2xl:items-center">
+      <div className="person-data__name w-full h-full text-center xl:pl-3 2xl:flex 2xl:items-center ">
         {name}
       </div>
     </div>

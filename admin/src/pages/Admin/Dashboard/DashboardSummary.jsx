@@ -5,7 +5,7 @@ const DashboardSummary = ({ data }) => {
   const summaryData = {
     doctors: { number: data.doctors, icon: assets.doctor_icon },
     appointments: { number: data.appointments, icon: assets.list_icon },
-    patients: { number: data.patients, icon: assets.doctor_icon },
+    patients: { number: data.patients, icon: assets.patients_icon },
   };
 
   return (
