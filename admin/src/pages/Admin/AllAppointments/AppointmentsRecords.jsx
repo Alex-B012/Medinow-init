@@ -8,8 +8,6 @@ import CancelAppointment from "./CancelAppointment";
 const AppointmentsRecords = ({ componentData }) => {
   const { data, currency, cancel_appointment } = { ...componentData };
 
-  console.log("data:", data);
-
   return (
     <div className="appointments-records py-3 px-6 flex flex-col gap-12 sm:hidden">
       {data.map((item, idx) => {

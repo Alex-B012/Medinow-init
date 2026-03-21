@@ -32,7 +32,6 @@ const AdminContextProvider = ({ children }) => {
 
       if (data.success) {
         setDoctors(data.doctors);
-        console.log("Doctors fetched:", data.doctors);
       } else {
         toast.error(data.message);
       }
@@ -137,7 +136,6 @@ const AdminContextProvider = ({ children }) => {
 
       if (data.success) {
         setDashboardData(data.dashboardData);
-        console.log("dashboardData:", data.dashboardData);
       } else {
         toast.error(data.message);
       }

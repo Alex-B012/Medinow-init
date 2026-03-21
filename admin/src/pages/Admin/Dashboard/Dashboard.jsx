@@ -9,8 +9,14 @@ import LatestAppointments from "./LatestAppointments";
 import Loading from "../../../components/Loading";
 
 const Dashboard = () => {
-  const { aToken, dashboardData, getDashboardData, cancelAppointment } =
-    useContext(AdminContext);
+  const {
+    aToken,
+    dashboardData,
+    getDashboardData,
+    cancelAppointment,
+    appointments,
+  } = useContext(AdminContext);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,9 +31,7 @@ const Dashboard = () => {
     };
 
     fetchDashboard();
-  }, [aToken, getDashboardData]);
-
-  // console.log(dashboardData);
+  }, [aToken, getDashboardData, appointments]);
 
   return (
     <div className="dashboard w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">

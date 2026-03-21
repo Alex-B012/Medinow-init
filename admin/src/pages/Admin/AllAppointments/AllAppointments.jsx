@@ -19,8 +19,6 @@ const AllAppointments = () => {
     }
   }, [aToken, getAllAppointments]);
 
-  console.log("appointments", appointments);
-
   return (
     <div className="appointments w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
       <AdminTitle title={"All Appointments"} />
