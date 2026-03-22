@@ -60,7 +60,7 @@ const loginUser = async (req, res) => {
   console.log("loginUser");
   try {
     const { email, password } = req.body;
-    const user = await userModel.findOne({ email });
+    const user = await userModel.findOne({ email }).select("password");
 
     if (!user)
       return res
@@ -85,7 +85,6 @@ const getProfile = async (req, res) => {
   console.log("getProfile");
   try {
     const userId = req.userId;
-
     const userData = await userModel.findById(userId).select(EXCLUDED_FIELDS);
 
     res.json({ success: true, userData });

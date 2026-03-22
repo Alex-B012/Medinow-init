@@ -1,18 +1,16 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { assets } from "../../assets/assets";
 import { specialties_data, years_data } from "../../data/data.js";
 import { AdminContext } from "../../context/AppContext.jsx";
+import { seedDoctorsToServer } from "../../utils/seedDoctors";
 
+import AdminTitle from "./components/AdminTitle.jsx";
 import InfoContainer from "./components/InfoContainer";
 import GeneralInputField from "./components/GeneralInputField";
 import SelectField from "./components/SelectField";
 import RegularBtn from "../../components/Btns/RegularBtn";
-import { toast } from "react-toastify";
-import axios from "axios";
-
-import { useEffect } from "react";
-import { seedDoctorsToServer } from "../../utils/seedDoctors";
-import AdminTitle from "./components/AdminTitle.jsx";
 import AdminContent from "./components/AdminContent.jsx";
 
 const SEED = false;

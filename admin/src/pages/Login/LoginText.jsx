@@ -1,8 +1,9 @@
-const LoginToggleText = ({ currentRole, setRole }) => {
-  const isAdmin = currentRole === "Admin";
+const LoginToggleText = ({ currentRole, setRole, roles }) => {
+  const { adminRole, doctorRole } = { ...roles };
+  const isAdmin = currentRole === adminRole;
 
   const toggleRole = () => {
-    setRole(isAdmin ? "Doctor" : "Admin");
+    setRole(isAdmin ? doctorRole : adminRole);
   };
 
   return (

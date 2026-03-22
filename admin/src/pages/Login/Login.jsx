@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { AdminContext } from "../../context/AppContext";
+import { AdminContext, DoctorContext } from "../../context/AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -8,8 +8,11 @@ import LoginToggleText from "./LoginText";
 import RegularBtn from "../../components/Btns/RegularBtn";
 
 const Login = () => {
-  const [role, setRole] = useState("Admin");
+  const adminRole = "Admin";
+  const doctorRole = "Doctor";
+  const [role, setRole] = useState(adminRole);
   const { setAToken, backendUrl } = useContext(AdminContext);
+  const { setDToken } = useContext(DoctorContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -26,7 +29,7 @@ const Login = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      if (role === "Admin") {
+      if (role === adminRole) {
         const url = backendUrl + "/api/admin/login";
 
         const { data } = await axios.post(url, {
@@ -40,9 +43,21 @@ const Login = () => {
         } else {
           toast.error(data.message);
         }
+      } else if (role === doctorRole) {
+        const { data } = await axios.post(backendUrl + "/api/doctor/login", {
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (data.success) {
+          localStorage.setItem("dToken", data.token);
+          setDToken(data.token);
+        } else {
+          toast.error(data.message);
+        }
       }
     } catch (err) {
-      console.log("Temp console -", err);
+      console.log("ERROR:", err);
     }
   };
 
@@ -80,7 +95,11 @@ const Login = () => {
             />
           </div>
           <RegularBtn text={"Login"} type="submit" />
-          <LoginToggleText currentRole={role} setRole={setRole} />
+          <LoginToggleText
+            currentRole={role}
+            roles={{ adminRole, doctorRole }}
+            setRole={setRole}
+          />
         </div>
       </form>
     </div>

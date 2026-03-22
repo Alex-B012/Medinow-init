@@ -7,6 +7,7 @@ export const seedDoctorsToServer = async (backendUrl, aToken) => {
   try {
     for (const doc of doctorsData) {
       const formData = new FormData();
+
       try {
         formData.append("name", doc.name);
         formData.append(
@@ -19,17 +20,13 @@ export const seedDoctorsToServer = async (backendUrl, aToken) => {
         formData.append("specialty", doc.specialty);
         formData.append("degree", doc.degree);
         formData.append("about", doc.about);
-
         formData.append("address", JSON.stringify(doc.address));
 
         // convert image path to file
         const imgResponse = await fetch(doc.image);
         const blob = await imgResponse.blob();
         const file = new File([blob], "doctor.jpg", { type: blob.type });
-
         formData.append("image", file);
-
-        console.log("formData", formData);
 
         await axios.post(backendUrl + "/api/admin/add-doctor", formData, {
           headers: { a_token: aToken },
