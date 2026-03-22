@@ -2,26 +2,24 @@ import { useContext } from "react";
 import { AdminContext, ApplicationContext } from "../../../context/AppContext";
 import { useEffect } from "react";
 
-import AdminTitle from "../components/AdminTitle";
+import Title from "../../../components/Title";
 import AdminContent from "../components/AdminContent";
-import TableHeaderCell from "./TableHeaderCell";
-import TableBodyRow from "./TableBodyRow";
-import AppointmentsRecords from "./AppointmentsRecords";
+import TableHeaderCell from "../../../components/AppointmentsTable/TableHeaderCell";
+import TableBodyRow from "../../../components/AppointmentsTable/TableBodyRow";
+import AppointmentsRecords from "../../../components/AppointmentsTable/AppointmentsRecords";
 
-const AllAppointments = () => {
+const AdminAppointments = () => {
   const { aToken, appointments, getAllAppointments, cancelAppointment } =
     useContext(AdminContext);
   const { currency } = useContext(ApplicationContext);
 
   useEffect(() => {
-    if (aToken) {
-      getAllAppointments();
-    }
+    if (aToken) getAllAppointments();
   }, [aToken, getAllAppointments]);
 
   return (
     <div className="appointments w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
-      <AdminTitle title={"All Appointments"} />
+      <Title title={"All Appointments"} />
       <AdminContent>
         <div className="appointments__table hidden sm:flex flex-col">
           <div className="appointments__header py-3 px-0 hidden border-b sm:grid grid-cols-[0.5fr_3fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col ">
@@ -60,4 +58,4 @@ const AllAppointments = () => {
   );
 };
 
-export default AllAppointments;
+export default AdminAppointments;

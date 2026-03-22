@@ -23,6 +23,24 @@ export const admin_links = {
   },
 };
 
+export const doctor_links = {
+  doctor_dashboard: {
+    name: "Dashboard",
+    icon: assets.home_icon,
+    url: "doctor-dashboard",
+  },
+  doctor_appointments: {
+    name: "Appointments",
+    icon: assets.appointment_icon,
+    url: "doctor-appointments",
+  },
+  doctor_profile: {
+    name: "Profile",
+    icon: assets.doctor_icon,
+    url: "doctor-profile",
+  },
+};
+
 export const specialties_data = [
   { id: 1, name: "General physician" },
   { id: 2, name: "Gynecologist" },
@@ -68,3 +86,8 @@ export const years_data = [
   { id: 30, name: "30 Years" },
   { id: 31, name: "15+ Years" },
 ];
+
+export const appointment_payment_options = {
+  online: "Online",
+  cash: "Cash",
+};

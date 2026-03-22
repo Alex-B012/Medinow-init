@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getFormattedDate, getFormattedTime } from "../../../utils/utils";
-import CancelAppointment from "../AllAppointments/CancelAppointment";
+import CancelAppointment from "../../../components/AppointmentsTable/CancelAppointment";
 
 const LatestAppointments = ({ data }) => {
   const { dashData, cancel_func } = { ...data };

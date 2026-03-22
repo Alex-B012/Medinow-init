@@ -6,7 +6,7 @@ import { specialties_data, years_data } from "../../data/data.js";
 import { AdminContext } from "../../context/AppContext.jsx";
 import { seedDoctorsToServer } from "../../utils/seedDoctors";
 
-import AdminTitle from "./components/AdminTitle.jsx";
+import Title from "../../components/Title.jsx";
 import InfoContainer from "./components/InfoContainer";
 import GeneralInputField from "./components/GeneralInputField";
 import SelectField from "./components/SelectField";
@@ -115,7 +115,7 @@ const AddDoctor = () => {
       onSubmit={onSubmitHandler}
       className="add-doctor w-full pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100"
     >
-      <AdminTitle title={"Add Doctor"} />
+      <Title title={"Add Doctor"} />
 
       <AdminContent>
         <div className="h-28 flex gap-5 items-center">

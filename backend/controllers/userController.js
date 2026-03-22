@@ -184,6 +184,7 @@ const bookAppointment = async (req, res) => {
 // API to get user appointments for frontend My Appointments page
 const listAppointments = async (req, res) => {
   console.log("listAppointments");
+
   try {
     const { userId } = req;
     const appointments = await appointmentModel.find({ userId });
@@ -237,6 +238,7 @@ const razorpayInstance = new razorpay({
 // API to make a payment for an appointment using Razorpay
 const paymentRazorpay = async (req, res) => {
   console.log("paymentRazorpay");
+
   try {
     const { appointmentId } = req.body;
     const appointmentData = await appointmentModel.findById(appointmentId);

@@ -2,7 +2,7 @@ import {
   getFormattedDate,
   getFormattedTime,
   getPatientAge,
-} from "../../../utils/utils";
+} from "../../utils/utils";
 import CancelAppointment from "./CancelAppointment";
 import PersonData from "./PersonData";
 import TableBodyCell from "./TableBodyCell";
@@ -20,7 +20,7 @@ const TableBodyRow = ({ componentData, number }) => {
         text_position="center"
       />
 
-      <div className="appointment__date w-full h-full flex flex-col justify-center items-center">
+      <div className="appointment-row__date w-full h-full flex flex-col justify-center items-center">
         <div className="px-1 text-center xl:hidden">{`${getFormattedDate(data.slotDate)}`}</div>
         <div className="text-center xl:hidden">{`${getFormattedTime(data.slotTime)}`}</div>
         <div className="text-center hidden xl:flex">{`${getFormattedDate(data.slotDate)} - ${getFormattedTime(data.slotTime)}`}</div>

@@ -2,25 +2,33 @@ import {
   getFormattedDate,
   getFormattedTime,
   getPatientAge,
-} from "../../../utils/utils";
+} from "../../utils/utils";
 import CancelAppointment from "./CancelAppointment";
 
-const AppointmentsRecords = ({ componentData }) => {
-  const { data, currency, cancel_appointment } = { ...componentData };
+const AppointmentsRecordsDoctor = ({ componentData }) => {
+  const {
+    data,
+    currency,
+    cancel_appointment,
+    paymentOptions,
+    appointmentCompleted,
+  } = {
+    ...componentData,
+  };
 
   return (
-    <div className="appointments-records py-3 px-6 flex flex-col gap-12 sm:hidden">
+    <div className="appointments-records-doctor py-3 px-6 flex flex-col gap-12 sm:hidden">
       {data.map((item, idx) => {
         return (
           <div
-            className="appointments-records__item flex flex-col gap-3"
+            className="appointments-records-doctor__item p-2 flex flex-col gap-3 hover:bg-emerald-50 rounded-lg"
             key={item._id}
           >
             <div className="flex">
               <span className="w-10 text-lg">{idx + 1}.</span>
               <div className="w-full flex flex-col items-center text-center ">
                 <img
-                  className="w-43 h-43"
+                  className="w-43 h-43 rounded-xl"
                   src={item.userData?.image}
                   alt={item.userData?.name}
                 />
@@ -31,21 +39,25 @@ const AppointmentsRecords = ({ componentData }) => {
             </div>
 
             <div>
+              <span className="font-semibold pr-2">Payment:</span>
+              {data.payment ? paymentOptions.online : paymentOptions.cash}
+            </div>
+
+            <div>
               <span className="font-semibold pr-2">Age:</span>
               {getPatientAge(item.userData?.dob)}
             </div>
+
             <div>
               <span className="font-semibold pr-2">Date & Time:</span>
               {`${getFormattedDate(item.slotDate)}, ${getFormattedTime(item.slotTime)}`}
             </div>
-            <div>
-              <span className="font-semibold pr-2">Doctor:</span>{" "}
-              {item.docData?.name}
-            </div>
+
             <div>
               <span className="font-semibold pr-2">Fees:</span> {currency}{" "}
               {item.amount}
             </div>
+
             <CancelAppointment
               cancelled={item.cancelled}
               cancel_func={cancel_appointment}
@@ -58,4 +70,4 @@ const AppointmentsRecords = ({ componentData }) => {
   );
 };
 
-export default AppointmentsRecords;
+export default AppointmentsRecordsDoctor;

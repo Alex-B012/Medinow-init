@@ -3,7 +3,7 @@ import { AdminContext } from "../../../context/AppContext";
 import { useEffect } from "react";
 
 import AdminContent from "../components/AdminContent";
-import AdminTitle from "../components/AdminTitle";
+import Title from "../../../components/Title";
 import DashboardSummary from "./DashboardSummary";
 import LatestAppointments from "./LatestAppointments";
 import Loading from "../../../components/Loading";
@@ -35,7 +35,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
-      <AdminTitle title={"Dashboard"} />
+      <Title title={"Dashboard"} />
       {loading ? (
         <Loading />
       ) : dashboardData ? (

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { AdminContext } from "../../context/AppContext";
-import AdminTitle from "./components/AdminTitle";
+import Title from "../../components/Title";
 import AdminContent from "./components/AdminContent";
 
 const DoctorsList = () => {
@@ -15,7 +15,7 @@ const DoctorsList = () => {
 
   return (
     <div className="doctors-list w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
-      <AdminTitle title={"All Doctors"} />
+      <Title title={"All Doctors"} />
       <AdminContent>
         <div className="doctors-list__list w-full max-h-[80vh] py-6 flex flex-wrap justify-evenly gap-8 overflow-y-scroll lg:justify-start xl:gap-12 xl:px-6">
           {doctors.map((item) => (

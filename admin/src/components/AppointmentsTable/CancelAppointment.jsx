@@ -1,10 +1,10 @@
-import { assets } from "../../../assets/assets";
+import { assets } from "../../assets/assets";
 
 const CancelAppointment = ({ cancelled, cancel_func, id }) => {
   return (
     <div className="appointment__cancel-btn-container w-full h-full flex flex-col justify-center items-center">
       {cancelled ? (
-        <p className="appointment__cancel-btn w-13 h-13 rounded-2xl flex flex-col justify-center items-center text-stone-500 ">
+        <p className="appointment__cancel-btn w-13 h-13 ml-1 xl:ml-0 rounded-2xl flex flex-col justify-center items-center text-stone-500 ">
           Cancelled
         </p>
       ) : (
