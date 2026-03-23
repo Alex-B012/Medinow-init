@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import { assets } from "../../assets/assets";
 import axios from "axios";
+import { assets } from "../../assets/assets";
 import { toast } from "react-toastify";
 
 import TitleDescription from "../../components/Titles/TitleDescription";
@@ -14,20 +14,13 @@ const MyProfile = () => {
   const { userData, setUserData, token, backendUrl, loadUserProfileData } =
     useContext(AppContext);
   const [isEdit, setIsEdit] = useState(false);
-  const [image, setImage] = useState(userData.image || false);
-
-  console.log("userData.image:", userData.image);
+  const [image, setImage] = useState(null);
 
   const updateUserProfileData = async () => {
-    console.log("updateUserProfileData - start");
+    if (import.meta.env.DEV) console.log("updateUserProfileData - start");
+
     try {
       const formData = new FormData();
-
-      console.log(
-        "userData.address",
-        userData.address.line1,
-        userData.address.line2,
-      );
 
       formData.append("name", userData.name);
       formData.append("phone", userData.phone);
@@ -42,8 +35,6 @@ const MyProfile = () => {
       formData.append("dob", userData.dob);
 
       image && formData.append("image", image);
-
-      console.log("formData.address", formData.get("address"));
 
       const { data } = await axios.post(
         backendUrl + "/api/user/update-profile",
@@ -71,17 +62,21 @@ const MyProfile = () => {
         <TitleDescription title={"My profile"} case_class={"uppercase"} />
         {isEdit ? (
           <label
-            className="w-full sm:w-117 mb-5 cursor-pointer rounded-4xl"
+            className="w-full  mb-5 cursor-pointer rounded-4xl sm:w-117"
             htmlFor="image_id"
           >
-            <div className="my-profile__image-container w-full lg:w-80 h-60 flex justify-center items-center sm:justify-start sm:gap-5">
+            <div className="my-profile__image-container w-full max-w-80 lg:w-130 h-60 flex justify-evenly items-center sm:max-w-120 sm:justify-start sm:gap-5">
               <img
                 className={`my-profile__img ${userData.image ? "w-40 h-40 sm:w-60 sm:h-60" : "w-20 h-20 sm:w-60 sm:h-60"}  mb-5 rounded-xl`}
-                src={image ? URL.createObjectURL(image) : userData.image}
+                src={
+                  image instanceof File
+                    ? URL.createObjectURL(image)
+                    : userData.image
+                }
                 alt="Profile image"
               />
               <img
-                className={`my-profile__img w-35 h-35 sm:w-50 sm:h-50 rounded-4xl ${image && "opacity-0"}`}
+                className={`my-profile__img w-25 h-25 sm:w-50 sm:h-50 rounded-4xl ${image && "opacity-0"}`}
                 src={image ? "" : assets.profile_icon}
                 alt=""
               />

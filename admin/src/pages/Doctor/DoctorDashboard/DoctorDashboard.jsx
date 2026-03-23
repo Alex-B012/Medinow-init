@@ -11,12 +11,11 @@ const DoctorDashboard = () => {
   const {
     dToken,
     dashData,
-    setDashData,
+    // setDashData,
     getDashData,
     completeAppointment,
     cancelAppointment,
   } = useContext(DoctorContext);
-
   const { currency } = useContext(ApplicationContext);
   const [loading, setLoading] = useState(true);
 
@@ -53,6 +52,7 @@ const DoctorDashboard = () => {
               cancel_func: cancelAppointment,
               complete_func: completeAppointment,
             }}
+            role={"Doctor"}
           />
         </AdminContent>
       )}

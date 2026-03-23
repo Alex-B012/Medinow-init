@@ -31,7 +31,8 @@ const App = () => {
         <SideBar />
         <Routes>
           {/* Admin route */}
-          <Route path={`/`} element={<Dashboard />} />
+          {aToken && <Route path={`/`} element={<Dashboard />} />}
+
           <Route
             path={`/${admin_links.admin_dashboard.url}`}
             element={<Dashboard />}
@@ -49,6 +50,8 @@ const App = () => {
             element={<DoctorsList />}
           />
           {/* Doctor route */}
+
+          {dToken && <Route path={`/`} element={<DoctorDashboard />} />}
           <Route
             path={`/${doctor_links.doctor_dashboard.url}`}
             element={<DoctorDashboard />}

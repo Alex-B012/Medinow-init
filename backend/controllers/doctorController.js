@@ -1,8 +1,8 @@
-import appointmentModel from "../models/appointmentModel.js";
-import doctorModel from "../models/doctorModel.js";
-import { handleServerError } from "../utils/utils.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { handleServerError } from "../utils/utils.js";
+import appointmentModel from "../models/appointmentModel.js";
+import doctorModel from "../models/doctorModel.js";
 
 const EXCLUDED_DATA = "-__v -date -createdAt -updatedAt";
 
@@ -185,6 +185,39 @@ const doctorDashboard = async (req, res) => {
   }
 };
 
+// API to get the doctor’s profile for the doctor panel
+const doctorProfile = async (req, res) => {
+  if (process.env.NODE_ENV) console.log("doctorProfile - start");
+
+  try {
+    const { docId } = req;
+
+    const profileData = await doctorModel
+      .findById(docId)
+      .select(`-password ${EXCLUDED_DATA || ""}`.trim());
+
+    res.json({ success: true, profileData });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
+// API to update the doctor’s profile for the doctor panel
+const updateDoctorProfile = async (req, res) => {
+  if (process.env.NODE_ENV) console.log("updateDoctorProfile - start");
+
+  try {
+    const { docId } = req;
+    const { fees, address, available } = req.body;
+
+    await doctorModel.findByIdAndUpdate(docId, { fees, address, available });
+
+    res.json({ success: true, message: "Profile Updated" });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
 export {
   changeAvailability,
   getDoctorList,
@@ -194,4 +227,6 @@ export {
   appointmentCompleteDoctor,
   cancelAppointmentDoctor,
   doctorDashboard,
+  doctorProfile,
+  updateDoctorProfile,
 };

@@ -36,7 +36,7 @@ const Navbar = () => {
         </p>
 
         <button
-          className="navbar__logout bg-emerald-500 text-white font-semibold px-10 py-2 rounded-full cursor-pointer hover:bg-emerald-400 transition-colors duration-700"
+          className="navbar__logout bg-emerald-500 text-white font-semibold px-3 py-0.5 -ml-12 -mt-9 rounded-full cursor-pointer hover:bg-emerald-400 transition-colors duration-700 sm:px-10 sm:py-2 sm:ml-0 sm:mt-0"
           onClick={logout}
         >
           Logout

@@ -10,6 +10,7 @@ const DoctorContextProvider = ({ children }) => {
 
   const [doctorAppointments, setDoctorAppointments] = useState([]);
   const [dashData, setDashData] = useState(false);
+  const [profileData, setProfileData] = useState(false);
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const doctorApi = "/api/doctor";
@@ -90,7 +91,25 @@ const DoctorContextProvider = ({ children }) => {
 
       if (data.success) {
         setDashData(data.dashData);
-        console.log("data.dashData:", data.dashData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }, [backendUrl, dToken]);
+
+  const getProfileData = useCallback(async () => {
+    if (import.meta.env.DEV) console.log("getProfileData - start");
+
+    try {
+      const { data } = await axios.get(backendUrl + `${doctorApi}/profile`, {
+        headers: { d_token: dToken },
+      });
+
+      if (data.success) {
+        setProfileData(data.profileData);
+        console.log("data:", data);
       } else {
         toast.error(data.message);
       }
@@ -111,6 +130,9 @@ const DoctorContextProvider = ({ children }) => {
     dashData,
     setDashData,
     getDashData,
+    profileData,
+    setProfileData,
+    getProfileData,
   };
 
   return (
