@@ -1,9 +1,5 @@
 import { useContext, useEffect } from "react";
-import {
-  AdminContext,
-  ApplicationContext,
-  DoctorContext,
-} from "../../../context/AppContext";
+import { ApplicationContext, DoctorContext } from "../../../context/AppContext";
 import { appointment_payment_options } from "../../../data/data";
 
 import Title from "../../../components/Title";
@@ -13,9 +9,14 @@ import TableBodyRowDoctor from "../../../components/AppointmentsTable/TableBodyR
 import AppointmentsRecordsDoctor from "../../../components/AppointmentsTable/AppointmentsRecordsDoctor";
 
 const DoctorAppointments = () => {
-  const { dToken, doctorAppointments, getDoctorAppointments } =
-    useContext(DoctorContext);
-  const { cancelAppointment } = useContext(AdminContext);
+  const {
+    dToken,
+    doctorAppointments,
+    getDoctorAppointments,
+    completeAppointment,
+    cancelAppointment,
+  } = useContext(DoctorContext);
+  // const { cancelAppointment } = useContext(AdminContext);
   const { currency } = useContext(ApplicationContext);
 
   useEffect(() => {
@@ -24,7 +25,6 @@ const DoctorAppointments = () => {
 
   return (
     <div className="doctor-appointments w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
-      14:13:22
       <Title title={"All Appointments"} />
       <AdminContent>
         <div className="appointments__table hidden sm:flex flex-col">
@@ -45,6 +45,7 @@ const DoctorAppointments = () => {
                   data: appointment,
                   currency: currency,
                   cancel_appointment: cancelAppointment,
+                  complete_appointment: completeAppointment,
                   paymentOptions: appointment_payment_options,
                 }}
                 number={idx + 1}
@@ -59,8 +60,8 @@ const DoctorAppointments = () => {
             data: doctorAppointments,
             currency: currency,
             cancel_appointment: cancelAppointment,
+            complete_appointment: completeAppointment,
             paymentOptions: appointment_payment_options,
-            appointmentCompleted: "",
           }}
         />
       </AdminContent>

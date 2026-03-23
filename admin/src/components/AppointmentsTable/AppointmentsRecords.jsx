@@ -20,7 +20,7 @@ const AppointmentsRecords = ({ componentData }) => {
               <span className="w-10 text-lg">{idx + 1}.</span>
               <div className="w-full flex flex-col items-center text-center ">
                 <img
-                  className="w-43 h-43 rounded-xl"
+                  className="w-40 h-40 rounded-xl"
                   src={item.userData?.image}
                   alt={item.userData?.name}
                 />

@@ -13,8 +13,9 @@ const DoctorContextProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const doctorApi = "/api/doctor";
 
+  // API to get all appointments for a doctor
   const getDoctorAppointments = useCallback(async () => {
-    console.log("getDoctorAppointments - start");
+    if (import.meta.env.DEV) console.log("getDoctorAppointments - start");
 
     try {
       const { data } = await axios.post(
@@ -33,6 +34,50 @@ const DoctorContextProvider = ({ children }) => {
     }
   }, [dToken, backendUrl]);
 
+  // API to mark a selected appointment as completed in the doctor panel
+  const completeAppointment = async (appointmentId) => {
+    if (import.meta.env.DEV) console.log("completeAppointment - start");
+
+    try {
+      const { data } = await axios.post(
+        backendUrl + `${doctorApi}/complete-appointment`,
+        { appointmentId },
+        { headers: { d_token: dToken } },
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        getDoctorAppointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  // API to cancel a selected appointment in the doctor panel
+  const cancelAppointment = async (appointmentId) => {
+    if (import.meta.env.DEV) console.log("cancelAppointment - start");
+
+    try {
+      const { data } = await axios.post(
+        backendUrl + `${doctorApi}/cancel-appointment`,
+        { appointmentId },
+        { headers: { d_token: dToken } },
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        getDoctorAppointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   const value = {
     dToken,
     setDToken,
@@ -40,6 +85,8 @@ const DoctorContextProvider = ({ children }) => {
     doctorAppointments,
     setDoctorAppointments,
     getDoctorAppointments,
+    completeAppointment,
+    cancelAppointment,
   };
 
   return (

@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 const authDoctor = async (req, res, next) => {
-  console.log("authDoctor");
+  if (process.env.NODE_ENV) console.log("authDoctor - start");
 
   try {
     const { d_token } = req.headers;

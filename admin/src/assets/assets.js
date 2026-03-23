@@ -8,6 +8,7 @@ import cancel_icon from "./icons/cancel_btn.webp";
 import doctor_icon from "./icons/dashboard_doctor.webp";
 import list_icon from "./icons/dashboard_appointments.webp";
 import patients_icon from "./icons/dashboard_patient.webp";
+import tick_icon from "./icons/check-mark.webp";
 
 import doc1 from "./images/doctors/doctor_1.webp";
 import doc2 from "./images/doctors/doctor_2.webp";
@@ -36,7 +37,7 @@ export const assets = {
   patients_icon,
   people_icon,
   list_icon,
-  //   tick_icon,
+  tick_icon,
   //   earnings_icon,
 };
 

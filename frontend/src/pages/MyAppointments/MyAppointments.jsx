@@ -191,7 +191,12 @@ const MyAppointments = () => {
               </p>
             </div>
             <div className="m-auto"></div>
-            {!item.cancelled ? (
+
+            {item.isCompleted ? (
+              <div className="text-emerald-400 flex gap-6 justify-end sm:h-56 sm:flex-col sm:text-end">
+                Appointment Completed
+              </div>
+            ) : !item.cancelled ? (
               <div className=" flex gap-6 justify-end sm:h-56 sm:flex-col">
                 {item.payment ? (
                   <button className="px-2 py-1 bg-emerald-50 text-stone-500 text-center border rounded  min-[400px]:py-2 min-[400px]:px-4">

@@ -4,14 +4,15 @@ import {
   getPatientAge,
 } from "../../utils/utils";
 import CancelAppointment from "./CancelAppointment";
+import CompleteAppointment from "./CompleteAppointment";
 
 const AppointmentsRecordsDoctor = ({ componentData }) => {
   const {
     data,
     currency,
     cancel_appointment,
+    complete_appointment,
     paymentOptions,
-    appointmentCompleted,
   } = {
     ...componentData,
   };
@@ -28,7 +29,7 @@ const AppointmentsRecordsDoctor = ({ componentData }) => {
               <span className="w-10 text-lg">{idx + 1}.</span>
               <div className="w-full flex flex-col items-center text-center ">
                 <img
-                  className="w-43 h-43 rounded-xl"
+                  className="w-40 h-40 rounded-xl"
                   src={item.userData?.image}
                   alt={item.userData?.name}
                 />
@@ -58,11 +59,23 @@ const AppointmentsRecordsDoctor = ({ componentData }) => {
               {item.amount}
             </div>
 
-            <CancelAppointment
-              cancelled={item.cancelled}
-              cancel_func={cancel_appointment}
-              id={item._id}
-            />
+            <div className="w-full h-full flex mt-6 gap-1 sm:flex-col sm:mt-0">
+              {!item.isCompleted && (
+                <CancelAppointment
+                  cancelled={item.cancelled}
+                  cancel_func={cancel_appointment}
+                  id={item._id}
+                />
+              )}
+
+              {!item.cancelled && (
+                <CompleteAppointment
+                  completed={item.isCompleted}
+                  complete_func={complete_appointment}
+                  id={item._id}
+                />
+              )}
+            </div>
           </div>
         );
       })}

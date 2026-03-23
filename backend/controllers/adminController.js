@@ -12,7 +12,8 @@ const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
 
 //API to add a doctor
 const addDoctor = async (req, res) => {
-  console.log("AddDoctor");
+  if (process.env.NODE_ENV) console.log("addDoctor - start");
+
   try {
     const {
       name,
@@ -72,6 +73,8 @@ const addDoctor = async (req, res) => {
 
 //API for admin login
 const loginAdmin = async (req, res) => {
+  if (process.env.NODE_ENV) console.log("loginAdmin - start");
+
   try {
     const { email, password } = req.body;
 
@@ -91,7 +94,8 @@ const loginAdmin = async (req, res) => {
 
 //API to fetch all doctors for the admin panel
 const getAllDoctors = async (req, res) => {
-  console.log("getAllDoctors");
+  if (process.env.NODE_ENV) console.log("getAllDoctors - start");
+
   try {
     const doctors = await doctorModel
       .find({})
@@ -104,7 +108,8 @@ const getAllDoctors = async (req, res) => {
 
 //API to get all appointments list
 const appointmentsAdmin = async (req, res) => {
-  console.log("appointmentsAdmin - start");
+  if (process.env.NODE_ENV) console.log("appointmentsAdmin - start");
+
   try {
     const appointments = await appointmentModel
       .find({})
@@ -117,7 +122,8 @@ const appointmentsAdmin = async (req, res) => {
 
 //API for appointment cancellation
 const appointmentCancelAdmin = async (req, res) => {
-  console.log("cancelAppointmentAdmin");
+  if (process.env.NODE_ENV) console.log("cancelAppointmentAdmin - start");
+
   try {
     const { appointmentId } = req.body;
 
@@ -150,6 +156,8 @@ const appointmentCancelAdmin = async (req, res) => {
 
 //API to get dashboard data for Admin panel
 const adminDashboard = async (req, res) => {
+  if (process.env.NODE_ENV) console.log("adminDashboard - start");
+
   try {
     const doctors = await doctorModel
       .find({})

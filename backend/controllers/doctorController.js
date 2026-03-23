@@ -8,7 +8,7 @@ const EXCLUDED_DATA = "-__v -date -createdAt -updatedAt";
 
 // API for fetching all doctors
 const getDoctorList = async (req, res) => {
-  console.log("getDoctorList - start");
+  if (process.env.NODE_ENV) console.log("getDoctorList - start");
 
   try {
     const doctors = await doctorModel
@@ -23,7 +23,7 @@ const getDoctorList = async (req, res) => {
 
 // API to retrieve data for the selected doctor
 const getDoctor = async (req, res) => {
-  console.log("getDoctor - start");
+  if (process.env.NODE_ENV) console.log("getDoctor - start");
 
   try {
     const { docId } = req.params;
@@ -40,7 +40,7 @@ const getDoctor = async (req, res) => {
 
 // API to change the availability of the selected doctor
 const changeAvailability = async (req, res) => {
-  console.log("changeAvailability - start");
+  if (process.env.NODE_ENV) console.log("changeAvailability - start");
 
   try {
     const { docId } = req.body;
@@ -56,7 +56,7 @@ const changeAvailability = async (req, res) => {
 
 //API for doctor Login
 const loginDoctor = async (req, res) => {
-  console.log("loginDoctor - start");
+  if (process.env.NODE_ENV) console.log("loginDoctor - start");
 
   try {
     const { email, password } = req.body;
@@ -84,7 +84,7 @@ const loginDoctor = async (req, res) => {
 
 // API to get doctor appointments for doctor panel
 const appointmentsDoctor = async (req, res) => {
-  console.log("appointmentsDoctor - start");
+  if (process.env.NODE_ENV) console.log("appointmentsDoctor - start");
 
   try {
     const { docId } = req;
@@ -98,10 +98,68 @@ const appointmentsDoctor = async (req, res) => {
   }
 };
 
+// API to set an appointment status to completed in the doctor panel
+const appointmentCompleteDoctor = async (req, res) => {
+  if (process.env.NODE_ENV) console.log("appointmentCompleteDoctor - start");
+
+  try {
+    const { docId } = req;
+    const { appointmentId } = req.body;
+
+    const appointmentData = await appointmentModel
+      .findById(appointmentId)
+      .select(EXCLUDED_DATA);
+
+    if (appointmentData && appointmentData.docId === docId) {
+      await appointmentModel.findByIdAndUpdate(appointmentId, {
+        isCompleted: true,
+      });
+      res.json({ success: true, message: "Appointment Completed" });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Completion Failed",
+      });
+    }
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
+// API to cancel an appointment in the doctor panel
+const cancelAppointmentDoctor = async (req, res) => {
+  if (process.env.NODE_ENV) console.log("cancelAppointmentDoctor - start");
+
+  try {
+    const { docId } = req;
+    const { appointmentId } = req.body;
+
+    const appointmentData = await appointmentModel
+      .findById(appointmentId)
+      .select(EXCLUDED_DATA);
+
+    if (appointmentData && appointmentData.docId === docId) {
+      await appointmentModel.findByIdAndUpdate(appointmentId, {
+        cancelled: true,
+      });
+      res.json({ success: true, message: "Appointment Cancelled" });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: "Cancellation Failed",
+      });
+    }
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
 export {
   changeAvailability,
   getDoctorList,
   getDoctor,
   loginDoctor,
   appointmentsDoctor,
+  appointmentCompleteDoctor,
+  cancelAppointmentDoctor,
 };
