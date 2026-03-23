@@ -4,9 +4,10 @@ import { useEffect } from "react";
 
 import AdminContent from "../components/AdminContent";
 import Title from "../../../components/Title";
-import DashboardSummary from "./DashboardSummary";
-import LatestAppointments from "./LatestAppointments";
+
 import Loading from "../../../components/Loading";
+import DashboardSummary from "../../../components/Dashboard/DashboardSummary";
+import LatestAppointments from "../../../components/Dashboard/LatestAppointments";
 
 const Dashboard = () => {
   const {

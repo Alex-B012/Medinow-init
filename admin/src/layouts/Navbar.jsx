@@ -1,16 +1,22 @@
 import { useContext } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AdminContext } from "../context/AppContext";
+import { AdminContext, DoctorContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
 
 const Navbar = () => {
   const { aToken, setAToken } = useContext(AdminContext);
+  const { dToken, setDToken } = useContext(DoctorContext);
   const navigate = useNavigate();
 
   const logout = () => {
     navigate("/");
-    aToken && setAToken("");
-    aToken && localStorage.removeItem("aToken");
+    if (aToken) {
+      setAToken("");
+      localStorage.removeItem("aToken");
+    } else if (dToken) {
+      setDToken("");
+      localStorage.removeItem("dToken");
+    }
   };
 
   return (

@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
-import { getFormattedDate, getFormattedTime } from "../../../utils/utils";
-import CancelAppointment from "../../../components/AppointmentsTable/CancelAppointment";
+import { getFormattedDate, getFormattedTime } from "../../utils/utils";
+import CancelAppointment from "../../components/AppointmentsTable/CancelAppointment";
+import CompleteAppointment from "../../components/AppointmentsTable/CompleteAppointment";
 
 const LatestAppointments = ({ data }) => {
-  const { dashData, cancel_func } = { ...data };
+  const { dashData, cancel_func, complete_func } = { ...data };
   const [appointmentsData, setAppointmentsData] = useState([]);
 
   useEffect(() => {
     setAppointmentsData(dashData.latestAppointments);
   }, [dashData]);
+
+  console.log("appointmentsData", appointmentsData);
 
   return (
     <div className="latest-appointments pt-1">
@@ -38,6 +41,11 @@ const LatestAppointments = ({ data }) => {
               <CancelAppointment
                 cancelled={item.cancelled}
                 cancel_func={cancel_func}
+                id={item._id}
+              />
+              <CompleteAppointment
+                completed={item.isCompleted}
+                complete_func={complete_func}
                 id={item._id}
               />
             </div>

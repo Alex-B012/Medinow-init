@@ -9,6 +9,7 @@ const DoctorContextProvider = ({ children }) => {
   );
 
   const [doctorAppointments, setDoctorAppointments] = useState([]);
+  const [dashData, setDashData] = useState(false);
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const doctorApi = "/api/doctor";
@@ -78,6 +79,26 @@ const DoctorContextProvider = ({ children }) => {
     }
   };
 
+  // API to get dashboard data for doctor panel
+  const getDashData = useCallback(async () => {
+    if (import.meta.env.DEV) console.log("getDashData - start");
+
+    try {
+      const { data } = await axios.get(backendUrl + `${doctorApi}/dashboard`, {
+        headers: { d_token: dToken },
+      });
+
+      if (data.success) {
+        setDashData(data.dashData);
+        console.log("data.dashData:", data.dashData);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }, [backendUrl, dToken]);
+
   const value = {
     dToken,
     setDToken,
@@ -87,6 +108,9 @@ const DoctorContextProvider = ({ children }) => {
     getDoctorAppointments,
     completeAppointment,
     cancelAppointment,
+    dashData,
+    setDashData,
+    getDashData,
   };
 
   return (

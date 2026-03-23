@@ -9,6 +9,7 @@ import doctor_icon from "./icons/dashboard_doctor.webp";
 import list_icon from "./icons/dashboard_appointments.webp";
 import patients_icon from "./icons/dashboard_patient.webp";
 import tick_icon from "./icons/check-mark.webp";
+import earnings_icon from "./icons/earnings.webp";
 
 import doc1 from "./images/doctors/doctor_1.webp";
 import doc2 from "./images/doctors/doctor_2.webp";
@@ -38,7 +39,7 @@ export const assets = {
   people_icon,
   list_icon,
   tick_icon,
-  //   earnings_icon,
+  earnings_icon,
 };
 
 export const doctors = {

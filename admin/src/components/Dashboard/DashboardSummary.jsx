@@ -1,9 +1,14 @@
-import { assets } from "../../../assets/assets";
+import { assets } from "../../assets/assets";
 import DashboardSummaryItem from "./DashboardSummaryItem";
 
-const DashboardSummary = ({ data }) => {
+const DashboardSummary = ({ data, role = "Admin", currency = "$" }) => {
   const summaryData = {
-    doctors: { number: data.doctors, icon: assets.doctor_icon },
+    ...(role === "Admin" && {
+      doctors: { number: data.doctors, icon: assets.doctor_icon },
+    }),
+    ...(role === "Doctor" && {
+      earnings: { number: data.earnings, icon: assets.earnings_icon },
+    }),
     appointments: { number: data.appointments, icon: assets.list_icon },
     patients: { number: data.patients, icon: assets.patients_icon },
   };
@@ -13,6 +18,7 @@ const DashboardSummary = ({ data }) => {
       {Object.entries(summaryData).map(([key, value]) => (
         <DashboardSummaryItem
           key={key}
+          currency={currency}
           icon={value.icon}
           value={value.number}
           label={key.charAt(0).toUpperCase() + key.slice(1)}
