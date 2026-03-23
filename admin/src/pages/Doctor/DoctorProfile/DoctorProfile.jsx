@@ -5,6 +5,7 @@ import Loading from "../../../components/Loading";
 import AdminContent from "../../Admin/components/AdminContent";
 import Title from "../../../components/Title";
 import EditSaveBtns from "./EditSaveBtns";
+import { toast } from "react-toastify";
 
 const DoctorProfile = () => {
   const { dToken, profileData, setProfileData, getProfileData } =
@@ -30,45 +31,46 @@ const DoctorProfile = () => {
   const updateDoctorProfileData = async () => {
     if (import.meta.env.DEV) console.log("updateUserProfileData - start");
 
-    try {
-      const formData = new FormData();
+    // try {
+    //   const formData = new FormData();
 
-      formData.append("name", userData.name);
-      formData.append("phone", userData.phone);
-      formData.append(
-        "address",
-        JSON.stringify({
-          line1: userData.address.line1,
-          line2: userData.address.line2,
-        }),
-      );
-      formData.append("gender", userData.gender);
-      formData.append("dob", userData.dob);
+    //   formData.append("name", userData.name);
+    //   formData.append("phone", userData.phone);
+    //   formData.append(
+    //     "address",
+    //     JSON.stringify({
+    //       line1: userData.address.line1,
+    //       line2: userData.address.line2,
+    //     }),
+    //   );
+    //   formData.append("gender", userData.gender);
+    //   formData.append("dob", userData.dob);
 
-      image && formData.append("image", image);
+    //   image && formData.append("image", image);
 
-      const { data } = await axios.post(
-        backendUrl + "/api/user/update-profile",
-        formData,
-        { headers: { token } },
-      );
+    //   const { data } = await axios.post(
+    //     backendUrl + "/api/user/update-profile",
+    //     formData,
+    //     { headers: { token } },
+    //   );
 
-      if (data.success) {
-        toast.success(data.message);
-        await loadUserProfileData();
-        setIsEdit(false);
-        setImage(false);
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
+    //   if (data.success) {
+    //     toast.success(data.message);
+    //     await loadUserProfileData();
+    //     setIsEdit(false);
+    //     setImage(false);
+    //   } else {
+    //     toast.error(data.message);
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   toast.error(error.message);
+    // }
   };
 
   return (
     <div className="doctor-profile w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
+      15:16:15
       <Title title={"Profile"} />
       {loading ? (
         <Loading />
@@ -113,10 +115,12 @@ const DoctorProfile = () => {
                 </span>{" "}
               </p>
 
-              <div className="flex gap-2 py-2">
+              <div className="flex flex-col gap-2 py-2">
                 <p className="font-semibold">Address:</p>
-                <p>{profileData.address.line1}</p>
-                <p>{profileData.address.line2}</p>
+                <div>
+                  <p>{profileData.address.line1}</p>
+                  <p>{profileData.address.line2}</p>
+                </div>
               </div>
 
               <div className="mb-10">
