@@ -9,6 +9,7 @@ import appointmentModel from "../models/appointmentModel.js";
 import userModel from "../models/userModel.js";
 
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
+const EXCLUDED_DATA = "-__v -date -createdAt -updatedAt";
 
 //API to add a doctor
 const addDoctor = async (req, res) => {
@@ -111,10 +112,35 @@ const appointmentsAdmin = async (req, res) => {
   if (process.env.NODE_ENV) console.log("appointmentsAdmin - start");
 
   try {
-    const appointments = await appointmentModel
-      .find({})
-      .select("-__v -date -createdAt -updatedAt");
+    const appointments = await appointmentModel.find({}).select(EXCLUDED_DATA);
     res.json({ success: true, appointments });
+  } catch (error) {
+    handleServerError(res, error);
+  }
+};
+
+// API to set an appointment status to completed in the admin panel
+const appointmentCompleteAdmin = async (req, res) => {
+  if (process.env.NODE_ENV) console.log("appointmentCompleteAdmin - start");
+
+  try {
+    const { appointmentId } = req.body;
+
+    const appointmentData = await appointmentModel
+      .findById(appointmentId)
+      .select(EXCLUDED_DATA);
+
+    if (appointmentData) {
+      await appointmentModel.findByIdAndUpdate(appointmentId, {
+        isCompleted: true,
+      });
+      res.json({ success: true, message: "Appointment Completed" });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
   } catch (error) {
     handleServerError(res, error);
   }
@@ -129,7 +155,7 @@ const appointmentCancelAdmin = async (req, res) => {
 
     const appointmentData = await appointmentModel
       .findById(appointmentId)
-      .select("-__v -date -createdAt -updatedAt");
+      .select(EXCLUDED_DATA);
 
     await appointmentModel.findByIdAndUpdate(appointmentId, {
       cancelled: true,
@@ -167,9 +193,7 @@ const adminDashboard = async (req, res) => {
       .find({})
       .select("-password -__v -date -createdAt -updatedAt");
 
-    const appointments = await appointmentModel
-      .find({})
-      .select("-__v -date -createdAt -updatedAt");
+    const appointments = await appointmentModel.find({}).select(EXCLUDED_DATA);
 
     const dashboardData = {
       doctors: doctors.length,
@@ -189,5 +213,6 @@ export {
   getAllDoctors,
   appointmentsAdmin,
   appointmentCancelAdmin,
+  appointmentCompleteAdmin,
   adminDashboard,
 };

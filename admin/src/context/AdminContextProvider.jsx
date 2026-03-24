@@ -81,7 +81,7 @@ const AdminContextProvider = ({ children }) => {
       );
 
       if (data.success) {
-        setAppointments(data.appointments);
+        setAppointments([...data.appointments].reverse());
       } else {
         toast.error(data.message);
       }
@@ -90,9 +90,31 @@ const AdminContextProvider = ({ children }) => {
     }
   }, [aToken, backendUrl]);
 
+  // API to mark a selected appointment as completed in the doctor panel
+  const completeAppointmentAdmin = async (appointmentId) => {
+    if (import.meta.env.DEV) console.log("completeAppointmentAdmin - start");
+
+    try {
+      const { data } = await axios.post(
+        backendUrl + `${adminApi}/complete-appointment`,
+        { appointmentId },
+        { headers: { a_token: aToken } },
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        getAllAppointments();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   // API to cancel an appointment on the Admin panel
-  const cancelAppointment = async (appointmentId) => {
-    console.log("cancelAppointment - start");
+  const cancelAppointmentAdmin = async (appointmentId) => {
+    console.log("cancelAppointmentAdmin - start");
 
     if (!aToken) {
       if (import.meta.env.MODE === "development")
@@ -153,7 +175,8 @@ const AdminContextProvider = ({ children }) => {
     appointments,
     setAppointments,
     getAllAppointments,
-    cancelAppointment,
+    cancelAppointmentAdmin,
+    completeAppointmentAdmin,
     dashboardData,
     getDashboardData,
   };

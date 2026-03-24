@@ -14,8 +14,9 @@ const Dashboard = () => {
     aToken,
     dashboardData,
     getDashboardData,
-    cancelAppointment,
     appointments,
+    cancelAppointmentAdmin,
+    completeAppointmentAdmin,
   } = useContext(AdminContext);
 
   const [loading, setLoading] = useState(true);
@@ -48,7 +49,11 @@ const Dashboard = () => {
       {dashboardData && (
         <AdminContent>
           <LatestAppointments
-            data={{ dashData: dashboardData, cancel_func: cancelAppointment }}
+            data={{
+              dashData: dashboardData,
+              cancel_func: cancelAppointmentAdmin,
+              complete_func: completeAppointmentAdmin,
+            }}
           />
         </AdminContent>
       )}

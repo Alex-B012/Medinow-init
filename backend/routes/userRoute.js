@@ -17,7 +17,7 @@ const userRouter = express.Router();
 
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
-userRouter.post("/profile", authUser, getProfile);
+userRouter.post("/profile", authUser, getProfile); //get
 userRouter.post(
   "/update-profile",
   authUser,
@@ -25,7 +25,7 @@ userRouter.post(
   updateProfile,
 );
 userRouter.post("/book-appointment", authUser, bookAppointment);
-userRouter.post("/appointments", authUser, listAppointments);
+userRouter.post("/appointments", authUser, listAppointments); //get
 userRouter.post("/cancel-appointment", authUser, cancelAppointment);
 userRouter.post("/payment-razorpay", authUser, paymentRazorpay);
 userRouter.post("/verify-razorpay", authUser, verifyRazorpay);

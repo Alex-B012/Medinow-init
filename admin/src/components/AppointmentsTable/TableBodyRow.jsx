@@ -4,11 +4,13 @@ import {
   getPatientAge,
 } from "../../utils/utils";
 import CancelAppointment from "./CancelAppointment";
+import CompleteAppointment from "./CompleteAppointment";
 import PersonData from "./PersonData";
 import TableBodyCell from "./TableBodyCell";
 
 const TableBodyRow = ({ componentData, number }) => {
-  const { data, currency, cancel_appointment } = componentData;
+  const { data, currency, cancel_appointment, complete_appointment } =
+    componentData;
 
   return (
     <div className="appointment-row w-full hidden sm:grid sm:py-4 grid-cols-[0.5fr_3fr_1fr_3fr_3fr_1fr_1fr] grid-flow-col border-b border-stone-200 hover:bg-emerald-50">
@@ -37,11 +39,23 @@ const TableBodyRow = ({ componentData, number }) => {
         text_position={"center"}
       />
 
-      <CancelAppointment
-        cancelled={data.cancelled}
-        cancel_func={cancel_appointment}
-        id={data._id}
-      />
+      <div className="w-full h-full flex flex-col gap-1">
+        {!data.isCompleted && (
+          <CancelAppointment
+            cancelled={data.cancelled}
+            cancel_func={cancel_appointment}
+            id={data._id}
+          />
+        )}
+
+        {!data.cancelled && (
+          <CompleteAppointment
+            completed={data.isCompleted}
+            complete_func={complete_appointment}
+            id={data._id}
+          />
+        )}
+      </div>
     </div>
   );
 };

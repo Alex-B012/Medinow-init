@@ -19,6 +19,16 @@ const DoctorDashboard = () => {
   const { currency } = useContext(ApplicationContext);
   const [loading, setLoading] = useState(true);
 
+  const handleCancel = async (id) => {
+    await cancelAppointment(id);
+    await getDashData();
+  };
+
+  const handleComplete = async (id) => {
+    await completeAppointment(id);
+    await getDashData();
+  };
+
   useEffect(() => {
     if (!dToken) return;
 
@@ -49,8 +59,8 @@ const DoctorDashboard = () => {
           <LatestAppointments
             data={{
               dashData: dashData.latestAppointments,
-              cancel_func: cancelAppointment,
-              complete_func: completeAppointment,
+              cancel_func: handleCancel,
+              complete_func: handleComplete,
             }}
             role={"Doctor"}
           />
