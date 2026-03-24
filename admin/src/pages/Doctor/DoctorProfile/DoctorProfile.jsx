@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { ApplicationContext, DoctorContext } from "../../../context/AppContext";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 import Loading from "../../../components/Loading";
 import AdminContent from "../../Admin/components/AdminContent";
 import Title from "../../../components/Title";
 import EditSaveBtns from "./EditSaveBtns";
-import { toast } from "react-toastify";
 
 const DoctorProfile = () => {
   const { dToken, profileData, setProfileData, getProfileData } =
@@ -31,46 +32,36 @@ const DoctorProfile = () => {
   const updateDoctorProfileData = async () => {
     if (import.meta.env.DEV) console.log("updateUserProfileData - start");
 
-    // try {
-    //   const formData = new FormData();
+    try {
+      const updateData = {
+        address: profileData.address,
+        fees: profileData.fees,
+        available: profileData.available,
+      };
 
-    //   formData.append("name", userData.name);
-    //   formData.append("phone", userData.phone);
-    //   formData.append(
-    //     "address",
-    //     JSON.stringify({
-    //       line1: userData.address.line1,
-    //       line2: userData.address.line2,
-    //     }),
-    //   );
-    //   formData.append("gender", userData.gender);
-    //   formData.append("dob", userData.dob);
+      const { data } = await axios.post(
+        backendUrl + "/api/doctor/update-profile",
+        updateData,
+        { headers: { dToken } },
+      );
 
-    //   image && formData.append("image", image);
-
-    //   const { data } = await axios.post(
-    //     backendUrl + "/api/user/update-profile",
-    //     formData,
-    //     { headers: { token } },
-    //   );
-
-    //   if (data.success) {
-    //     toast.success(data.message);
-    //     await loadUserProfileData();
-    //     setIsEdit(false);
-    //     setImage(false);
-    //   } else {
-    //     toast.error(data.message);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   toast.error(error.message);
-    // }
+      // if (data.success) {
+      //   toast.success(data.message);
+      //   await loadUserProfileData();
+      //   setIsEdit(false);
+      //   setImage(false);
+      // } else {
+      //   toast.error(data.message);
+      // }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
   };
 
   return (
     <div className="doctor-profile w-full min-h-screen pb-10 px-0 sm:px-6 lg:min-w-screen lg:bg-gray-100">
-      15:16:15
+      15L:31:40
       <Title title={"Profile"} />
       {loading ? (
         <Loading />
@@ -106,26 +97,98 @@ const DoctorProfile = () => {
                 </p>
               </div>
 
-              <p>
+              <p className="flex h-10 items-center">
                 <span className="mr-2 font-medium text-neutral-800">
                   Appointment fee:{" "}
                 </span>
-                <span className="text-gray-800">
-                  {currency} {profileData.fees}
+                <span className=" text-gray-800">
+                  {currency}{" "}
+                  {isEdit ? (
+                    <input
+                      id="doctor_fees_id"
+                      className="w-full max-w-27 px-3 py-1 border border-gray-300 rounded-sm"
+                      type="number"
+                      name="fees"
+                      placeholder="Your fees"
+                      min="0"
+                      step="0.01"
+                      onChange={(e) =>
+                        setProfileData((prev) => ({
+                          ...prev,
+                          fees: e.target.value,
+                        }))
+                      }
+                      value={profileData.fees}
+                    ></input>
+                  ) : (
+                    profileData.fees
+                  )}
                 </span>{" "}
               </p>
 
               <div className="flex flex-col gap-2 py-2">
                 <p className="font-semibold">Address:</p>
                 <div>
-                  <p>{profileData.address.line1}</p>
-                  <p>{profileData.address.line2}</p>
+                  <p>
+                    {isEdit ? (
+                      <input
+                        id="doctor_address_id"
+                        className="w-full max-w-27 px-3 py-1 border border-gray-300 rounded-sm"
+                        type="text"
+                        name="address.line1"
+                        placeholder="Address 1"
+                        onChange={(e) =>
+                          setProfileData((prev) => ({
+                            ...prev,
+                            address: { ...prev.address, line1: e.target.value },
+                          }))
+                        }
+                        value={profileData.address.line1}
+                      ></input>
+                    ) : (
+                      profileData.address.line1
+                    )}
+                  </p>
+                  <p>
+                    {isEdit ? (
+                      <input
+                        id="doctor_address_id2"
+                        className="w-full max-w-27 px-3 py-1 border border-gray-300 rounded-sm"
+                        type="text"
+                        name="address.line2"
+                        placeholder="Address 2"
+                        onChange={(e) =>
+                          setProfileData((prev) => ({
+                            ...prev,
+                            address: { ...prev.address, line2: e.target.value },
+                          }))
+                        }
+                        value={profileData.address.line2}
+                      ></input>
+                    ) : (
+                      profileData.address.line2
+                    )}
+                  </p>
                 </div>
               </div>
 
               <div className="mb-10">
-                <input className="mr-2" type="checkbox" name="" id="" />
-                <label className="" htmlFor="">
+                <input
+                  checked={profileData.available}
+                  className={`mr-2 ${isEdit && "cursor-pointer"}`}
+                  type="checkbox"
+                  name="availability_checkbox"
+                  id="availability_checkbox_id"
+                  onChange={(e) =>
+                    isEdit &&
+                    setProfileData((prev) => ({
+                      ...prev,
+                      available: e.target.checked,
+                    }))
+                  }
+                  disabled={!isEdit}
+                />
+                <label className="" htmlFor="availability_checkbox_id">
                   Available
                 </label>
               </div>
