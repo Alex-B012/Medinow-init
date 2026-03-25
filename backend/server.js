@@ -6,6 +6,7 @@ import connectCloudinary from "./config/cloudinary.js";
 import adminRouter from "./routes/adminRoute.js";
 import doctorRouter from "./routes/doctorRoute.js";
 import userRouter from "./routes/userRoute.js";
+import { deleteCloudinaryRedundantImages } from "./controllers/serviceController.js";
 
 // app config
 const app = express();
@@ -25,3 +26,5 @@ app.use("/api/user", userRouter);
 app.get("/", (req, res) => res.send("API working"));
 
 app.listen(port, () => console.log("Server started on port", port));
+
+deleteCloudinaryRedundantImages();

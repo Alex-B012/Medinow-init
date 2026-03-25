@@ -12,11 +12,20 @@ const BasicInformation = ({ isEdit, userData, setUserData }) => {
         {isEdit ? (
           <select
             className="w-25 px-2 border border-gray-300 text-center"
-            onChange={(e) =>
-              setUserData((prev) => ({ ...prev, gender: e.target.value }))
+            onChange={(e) => {
+              setUserData((prev) => ({ ...prev, gender: e.target.value }));
+            }}
+            value={
+              userData.gender === "Male" || userData.gender === "male"
+                ? "Male"
+                : userData.gender === "Female" || userData.gender === "female"
+                  ? "Female"
+                  : ""
             }
-            value={userData.gender}
           >
+            <option value="" disabled>
+              Not Selected
+            </option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
           </select>

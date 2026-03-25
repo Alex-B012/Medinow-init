@@ -11,6 +11,7 @@ import appointmentModel from "../models/appointmentModel.js";
 
 const PASSWORD_LENGTH = Number(process.env.PASSWORD_VALID_LENGTH);
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
+const CLOUDINARY_PROJECT_NAME = process.env.CLOUDINARY_PROJECT_NAME;
 const INVALID_CREDENTIALS = "Invalid credentials";
 const EXCLUDED_FIELDS = "-password -__v -date -createdAt -updatedAt";
 
@@ -115,10 +116,18 @@ const updateProfile = async (req, res) => {
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
         resource_type: "image",
+        folder: `${CLOUDINARY_PROJECT_NAME}/users`,
       });
-      const imageURL = imageUpload.secure_url;
 
-      await userModel.findByIdAndUpdate(userId, { image: imageURL });
+      if (!imageUpload || !imageUpload.public_id || !imageUpload.secure_url)
+        throw new Error(
+          "Cloudinary upload failed or returned invalid response",
+        );
+
+      await userModel.findByIdAndUpdate(userId, {
+        image_id: imageUpload.public_id,
+        image: imageUpload.secure_url,
+      });
     }
 
     res.json({ success: true, message: "Profile updated" });

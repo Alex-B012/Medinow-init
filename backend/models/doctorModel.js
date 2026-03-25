@@ -3,9 +3,10 @@ import mongoose from "mongoose";
 const doctorSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     password: { type: String, required: true },
     image: { type: String },
+    image_id: { type: String },
     specialty: { type: String, required: true },
     degree: { type: String },
     experience: { type: String, required: true },
@@ -18,6 +19,8 @@ const doctorSchema = new mongoose.Schema(
   },
   { minimize: false },
 );
+
+doctorSchema.index({ email: 1 }, { unique: true });
 
 const doctorModel =
   mongoose.models.doctor || mongoose.model("doctor", doctorSchema);

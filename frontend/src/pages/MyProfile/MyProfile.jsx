@@ -36,6 +36,8 @@ const MyProfile = () => {
 
       image && formData.append("image", image);
 
+      console.log("formData", formData);
+
       const { data } = await axios.post(
         backendUrl + "/api/user/update-profile",
         formData,
@@ -72,6 +74,8 @@ const MyProfile = () => {
                   image instanceof File
                     ? URL.createObjectURL(image)
                     : userData.image
+                      ? userData.image
+                      : ""
                 }
                 alt="Profile image"
               />

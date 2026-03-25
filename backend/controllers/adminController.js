@@ -9,6 +9,7 @@ import appointmentModel from "../models/appointmentModel.js";
 import userModel from "../models/userModel.js";
 
 const BCRYPT_ROUNDS = Number(process.env.BCRYPT_ROUNDS);
+const CLOUDINARY_PROJECT_NAME = process.env.CLOUDINARY_PROJECT_NAME;
 const EXCLUDED_DATA = "-__v -date -createdAt -updatedAt";
 
 //API to add a doctor
@@ -58,9 +59,11 @@ const addDoctor = async (req, res) => {
     if (imageFile) {
       const imageUpload = await cloudinary.uploader.upload(imageFile.path, {
         resource_type: "image",
+        folder: `${CLOUDINARY_PROJECT_NAME}/doctors`,
       });
-      const imageUrl = imageUpload.secure_url;
-      doctorData.image = imageUrl;
+
+      doctorData.image_id = imageUpload.public_id;
+      doctorData.image = imageUpload.secure_url;
     }
 
     const newDoctor = new doctorModel(doctorData);

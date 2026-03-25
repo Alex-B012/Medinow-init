@@ -60,7 +60,10 @@ const AppContextProvider = ({ children }) => {
       if (data.success) {
         setUserData({
           ...data.userData,
-          address: JSON.parse(data.userData.address),
+          address:
+            typeof data.userData.address === "string"
+              ? JSON.parse(data.userData.address)
+              : data.userData.address,
         });
       } else toast.error(data.message);
     } catch (error) {
