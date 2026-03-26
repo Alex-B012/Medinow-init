@@ -11,11 +11,12 @@ const AdminContextProvider = ({ children }) => {
   const [appointments, setAppointments] = useState([]);
   const [dashboardData, setDashboardData] = useState(false);
 
-  const adminApi = "/api/admin";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const ADMIN_API = "/api/admin";
 
   // API to get all the doctors for the Admin panel
   const getAllDoctors = useCallback(async () => {
+    if (import.meta.env.DEV) console.log("getAllDoctors - start");
     if (!aToken) {
       if (import.meta.env.MODE === "development")
         console.warn("Skipping getAllDoctors: no token");
@@ -23,10 +24,11 @@ const AdminContextProvider = ({ children }) => {
     }
 
     try {
-      const { data } = await axios.post(
-        backendUrl + `${adminApi}/all-doctors`,
-        {},
-        { headers: { a_token: aToken } },
+      const { data } = await axios.get(
+        backendUrl + `${ADMIN_API}/all-doctors`,
+        {
+          headers: { a_token: aToken },
+        },
       );
 
       if (data.success) {
@@ -41,6 +43,7 @@ const AdminContextProvider = ({ children }) => {
 
   // API to change the availability of a doctor on the Admin panel
   const changeAvailability = async (docId) => {
+    if (import.meta.env.DEV) console.log("changeAvailability - start");
     if (!aToken) {
       if (import.meta.env.MODE === "development")
         console.warn("Skipping changeAvailability: no token");
@@ -49,7 +52,7 @@ const AdminContextProvider = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        backendUrl + `${adminApi}/change-availability`,
+        backendUrl + `${ADMIN_API}/change-availability`,
         { docId },
         { headers: { a_token: aToken } },
       );
@@ -67,6 +70,7 @@ const AdminContextProvider = ({ children }) => {
 
   // API to get all the appointments for the Admin panel
   const getAllAppointments = useCallback(async () => {
+    if (import.meta.env.DEV) console.log("getAllAppointments - start");
     if (!aToken) {
       if (import.meta.env.MODE === "development")
         console.warn("Skipping getAllAppointments: no token");
@@ -74,9 +78,8 @@ const AdminContextProvider = ({ children }) => {
     }
 
     try {
-      const { data } = await axios.post(
-        backendUrl + `${adminApi}/all-appointments`,
-        {},
+      const { data } = await axios.get(
+        backendUrl + `${ADMIN_API}/all-appointments`,
         { headers: { a_token: aToken } },
       );
 
@@ -96,7 +99,7 @@ const AdminContextProvider = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        backendUrl + `${adminApi}/complete-appointment`,
+        backendUrl + `${ADMIN_API}/complete-appointment`,
         { appointmentId },
         { headers: { a_token: aToken } },
       );
@@ -124,7 +127,7 @@ const AdminContextProvider = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        backendUrl + `${adminApi}/cancel-appointment`,
+        backendUrl + `${ADMIN_API}/cancel-appointment`,
         { appointmentId },
         { headers: { a_token: aToken } },
       );
@@ -148,12 +151,11 @@ const AdminContextProvider = ({ children }) => {
         console.warn("Skipping getDashboardData: no token");
       return;
     }
+
     try {
-      const { data } = await axios.post(
-        backendUrl + `${adminApi}/dashboard`,
-        {},
-        { headers: { a_token: aToken } },
-      );
+      const { data } = await axios.get(backendUrl + `${ADMIN_API}/dashboard`, {
+        headers: { a_token: aToken },
+      });
 
       if (data.success) {
         setDashboardData(data.dashboardData);
@@ -179,6 +181,7 @@ const AdminContextProvider = ({ children }) => {
     completeAppointmentAdmin,
     dashboardData,
     getDashboardData,
+    ADMIN_API,
   };
 
   return (

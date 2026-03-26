@@ -13,8 +13,14 @@ import DoctorAppointmentFee from "./DoctorAppointmentFee";
 import DoctorInfo from "./DoctorInfo";
 
 const DoctorProfile = () => {
-  const { dToken, profileData, setProfileData, getProfileData, backendUrl } =
-    useContext(DoctorContext);
+  const {
+    dToken,
+    profileData,
+    setProfileData,
+    getProfileData,
+    backendUrl,
+    DOCTOR_API,
+  } = useContext(DoctorContext);
   const { currency } = useContext(ApplicationContext);
   const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -44,7 +50,7 @@ const DoctorProfile = () => {
       };
 
       const { data } = await axios.post(
-        backendUrl + "/api/doctor/update-profile",
+        backendUrl + `${DOCTOR_API}/update-profile`,
         updateData,
         { headers: { d_token: dToken } },
       );

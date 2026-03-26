@@ -1,26 +1,26 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useCallback, useState, useMemo } from "react";
 import { AppContext } from "./AppContext";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useCallback } from "react";
 
 const AppContextProvider = ({ children }) => {
-  const currencySymbol = "$";
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [doctors, setDoctors] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [userData, setUserData] = useState(false);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const currencySymbol = "$";
+
+  const DOCTOR_API = "/api/doctor";
+  const USER_API = "/api/user";
 
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const { data } = await axios.get(backendUrl + "/api/doctor/list");
+        const { data } = await axios.get(backendUrl + `${DOCTOR_API}/list`);
 
-        if (data.success) {
-          setDoctors(data.doctors);
-        } else {
-          toast.error(data.message);
-        }
+        if (!data.success) return toast.error(data.message);
+
+        setDoctors(data.doctors);
       } catch (error) {
         console.log(error);
         toast.error(error.message);
@@ -30,30 +30,24 @@ const AppContextProvider = ({ children }) => {
     fetchDoctors();
   }, [backendUrl]);
 
-  const getDoctorData = async () => {
+  const getDoctorData = useCallback(async () => {
     try {
-      const { data } = await axios.get(backendUrl + "/api/doctor/list");
+      const { data } = await axios.get(backendUrl + `${DOCTOR_API}/list`);
 
-      if (data.success) {
-        setDoctors(data.doctors);
-      } else {
-        toast.error(data.message);
-      }
+      if (!data.success) return toast.error(data.message);
+
+      setDoctors(data.doctors);
     } catch (error) {
       console.log(error);
       toast.error(error.message);
     }
-  };
+  }, [backendUrl]);
 
   const loadUserProfileData = useCallback(async () => {
     try {
-      const { data } = await axios.post(
-        backendUrl + "/api/user/profile",
-        {},
-        {
-          headers: { token },
-        },
-      );
+      const { data } = await axios.get(backendUrl + `${USER_API}/profile`, {
+        headers: { token },
+      });
 
       if (!data.token) setUserData(false);
 
@@ -91,12 +85,20 @@ const AppContextProvider = ({ children }) => {
       userData,
       setUserData,
       loadUserProfileData,
+      USER_API,
     }),
-    [doctors, token, backendUrl, userData, loadUserProfileData],
+    [
+      doctors,
+      token,
+      backendUrl,
+      userData,
+      loadUserProfileData,
+      getDoctorData,
+      USER_API,
+    ],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export default AppContextProvider;
-// 11:40:27 - check doctor

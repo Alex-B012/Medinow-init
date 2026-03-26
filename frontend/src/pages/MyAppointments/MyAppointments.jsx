@@ -14,7 +14,7 @@ import Loading from "../../components/Loading";
 const NO_APPOINTMENTS = "No appointments found";
 
 const MyAppointments = () => {
-  const { backendUrl, token } = useContext(AppContext);
+  const { backendUrl, token, USER_API } = useContext(AppContext);
   const [appointments, setAppointments] = useState([]);
   const navigate = useNavigate();
 
@@ -27,9 +27,8 @@ const MyAppointments = () => {
     const fetchAppointments = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.post(
-          `${backendUrl}/api/user/appointments`,
-          {},
+        const { data } = await axios.get(
+          `${backendUrl}${USER_API}/appointments`,
           {
             headers: { token },
           },

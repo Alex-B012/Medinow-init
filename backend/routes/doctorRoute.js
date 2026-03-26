@@ -17,7 +17,7 @@ const doctorRouter = express.Router();
 doctorRouter.get("/list", getDoctorList);
 doctorRouter.get("/get-doctor/:docId", getDoctor);
 doctorRouter.post("/login", loginDoctor);
-doctorRouter.post("/doctor-appointments", authDoctor, appointmentsDoctor);
+doctorRouter.get("/doctor-appointments", authDoctor, appointmentsDoctor);
 doctorRouter.post(
   "/complete-appointment",
   authDoctor,

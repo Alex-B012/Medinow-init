@@ -16,11 +16,11 @@ const adminRouter = express.Router();
 
 adminRouter.post("/login", loginAdmin);
 adminRouter.post("/add-doctor", authAdmin, upload.single("image"), addDoctor);
-adminRouter.post("/all-doctors", authAdmin, getAllDoctors); //get
+adminRouter.get("/all-doctors", authAdmin, getAllDoctors);
 adminRouter.post("/change-availability", authAdmin, changeAvailability);
-adminRouter.post("/all-appointments", authAdmin, appointmentsAdmin); //get
+adminRouter.get("/all-appointments", authAdmin, appointmentsAdmin);
 adminRouter.post("/complete-appointment", authAdmin, appointmentCompleteAdmin);
 adminRouter.post("/cancel-appointment", authAdmin, appointmentCancelAdmin);
-adminRouter.post("/dashboard", authAdmin, adminDashboard); //get
+adminRouter.get("/dashboard", authAdmin, adminDashboard);
 
 export default adminRouter;

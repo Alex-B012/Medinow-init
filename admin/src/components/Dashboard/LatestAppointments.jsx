@@ -8,7 +8,7 @@ const LatestAppointments = ({ data, role = "Admin" }) => {
   const [appointmentsData, setAppointmentsData] = useState([]);
 
   useEffect(() => {
-    setAppointmentsData(dashData.latestAppointments);
+    setAppointmentsData(dashData);
   }, [dashData]);
 
   return (

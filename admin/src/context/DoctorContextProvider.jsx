@@ -13,16 +13,15 @@ const DoctorContextProvider = ({ children }) => {
   const [profileData, setProfileData] = useState(false);
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
-  const doctorApi = "/api/doctor";
+  const DOCTOR_API = "/api/doctor";
 
   // API to get all appointments for a doctor
   const getDoctorAppointments = useCallback(async () => {
     if (import.meta.env.DEV) console.log("getDoctorAppointments - start");
 
     try {
-      const { data } = await axios.post(
-        backendUrl + `${doctorApi}/doctor-appointments`,
-        {},
+      const { data } = await axios.get(
+        backendUrl + `${DOCTOR_API}/doctor-appointments`,
         { headers: { d_token: dToken } },
       );
 
@@ -42,7 +41,7 @@ const DoctorContextProvider = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        backendUrl + `${doctorApi}/complete-appointment`,
+        backendUrl + `${DOCTOR_API}/complete-appointment`,
         { appointmentId },
         { headers: { d_token: dToken } },
       );
@@ -64,7 +63,7 @@ const DoctorContextProvider = ({ children }) => {
 
     try {
       const { data } = await axios.post(
-        backendUrl + `${doctorApi}/cancel-appointment`,
+        backendUrl + `${DOCTOR_API}/cancel-appointment`,
         { appointmentId },
         { headers: { d_token: dToken } },
       );
@@ -85,7 +84,7 @@ const DoctorContextProvider = ({ children }) => {
     if (import.meta.env.DEV) console.log("getDashData - start");
 
     try {
-      const { data } = await axios.get(backendUrl + `${doctorApi}/dashboard`, {
+      const { data } = await axios.get(backendUrl + `${DOCTOR_API}/dashboard`, {
         headers: { d_token: dToken },
       });
 
@@ -103,7 +102,7 @@ const DoctorContextProvider = ({ children }) => {
     if (import.meta.env.DEV) console.log("getProfileData - start");
 
     try {
-      const { data } = await axios.get(backendUrl + `${doctorApi}/profile`, {
+      const { data } = await axios.get(backendUrl + `${DOCTOR_API}/profile`, {
         headers: { d_token: dToken },
       });
 

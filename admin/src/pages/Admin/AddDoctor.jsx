@@ -30,7 +30,7 @@ const INITIAL_DOCTOR = {
 const AddDoctor = () => {
   const [docImg, setDocImg] = useState(false);
   const [doctorData, setDoctorData] = useState(INITIAL_DOCTOR);
-  const { backendUrl, aToken } = useContext(AdminContext);
+  const { backendUrl, aToken, ADMIN_API } = useContext(AdminContext);
 
   const resetDoctorForm = () => {
     setDocImg(false);
@@ -85,7 +85,7 @@ const AddDoctor = () => {
       formDataToSend.append("image", docImg);
 
       const { data } = await axios.post(
-        backendUrl + "/api/admin/add-doctor",
+        backendUrl + `${ADMIN_API}/add-doctor`,
         formDataToSend,
         { headers: { a_token: aToken } },
       );

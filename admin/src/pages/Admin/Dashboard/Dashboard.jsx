@@ -4,7 +4,6 @@ import { useEffect } from "react";
 
 import AdminContent from "../components/AdminContent";
 import Title from "../../../components/Title";
-
 import Loading from "../../../components/Loading";
 import DashboardSummary from "../../../components/Dashboard/DashboardSummary";
 import LatestAppointments from "../../../components/Dashboard/LatestAppointments";
@@ -50,7 +49,7 @@ const Dashboard = () => {
         <AdminContent>
           <LatestAppointments
             data={{
-              dashData: dashboardData,
+              dashData: dashboardData.latestAppointments,
               cancel_func: cancelAppointmentAdmin,
               complete_func: completeAppointmentAdmin,
             }}
